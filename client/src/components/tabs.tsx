@@ -8,8 +8,10 @@ import {
 } from "@expo/vector-icons";
 
 import Home from "../screens/home";
+import Createpatient from "../screens/createpatient";
 import Patients from "../screens/patients";
 import Add from "./add";
+import Create from "../screens/createscan";
 import Scans from "../screens/scans";
 import Settings from "../screens/settings";
 
@@ -47,8 +49,8 @@ const Tabs: FC = (): JSX.Element => {
         }}
       />
       <Tab.Screen
-        name="Add"
-        component={Patients}
+        name="Createpatient"
+        component={Createpatient}
         options={{
           tabBarIcon: () => <Add style={styles.icons} />,
         }}
