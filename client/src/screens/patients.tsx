@@ -9,12 +9,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { format } from "date-fns";
-import Btn from "../components/btn";
 import Screen from "../components/screen";
 import { Feather } from "@expo/vector-icons";
 import { DataTable } from "react-native-paper";
 
-const Patients: FC = (): JSX.Element => {
+interface Props {
+  navigation: {
+    navigate: (name: string) => void;
+  };
+}
+
+const Patients: FC<Props> = ({ navigation }) => {
+
   return (
     <Screen>
       <View style={styles.header}>
@@ -41,7 +47,7 @@ const Patients: FC = (): JSX.Element => {
             placeholder="Search"
             placeholderTextColor="#000000"
           />
-          <TouchableOpacity style={{ marginLeft: "auto" }}>
+          <TouchableOpacity onPress={() => { navigation.navigate('Createpatient')}} style={{ marginLeft: "auto" }}>
             <Feather name="user-plus" size="30" />
           </TouchableOpacity>
         </View>
