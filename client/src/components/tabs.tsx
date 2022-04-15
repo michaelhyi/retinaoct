@@ -14,6 +14,11 @@ import Add from "./add";
 import Create from "../screens/createscan";
 import Scans from "../screens/scans";
 import Settings from "../screens/settings";
+import Patientinfo from "../screens/patientinfo";
+import Uploadleft from "../screens/uploadleft";
+import Uploadright from "../screens/uploadright";
+import Leftresults from "../screens/leftresults";
+import Rightresults from "../screens/rightresults";
 
 const Tab = createBottomTabNavigator();
 
@@ -66,7 +71,7 @@ const Tabs: FC = (): JSX.Element => {
       />
       <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={Rightresults}
         options={{
           tabBarIcon: () => (
             <FontAwesome name="gear" size={25} style={styles.icons} />
