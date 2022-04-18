@@ -16,7 +16,7 @@ const Createpatient: FC<Props> = ({ navigation }) => {
 
     return(
         <Screen>
-            <TouchableOpacity>
+            <TouchableOpacity style={{padding: 10}}>
                 <FontAwesome5 name="less-than" size={15} />
             </TouchableOpacity>
 
