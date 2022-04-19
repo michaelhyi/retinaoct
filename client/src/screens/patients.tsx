@@ -20,7 +20,6 @@ interface Props {
 }
 
 const Patients: FC<Props> = ({ navigation }) => {
-
   return (
     <Screen>
       <View style={styles.header}>
@@ -41,14 +40,19 @@ const Patients: FC<Props> = ({ navigation }) => {
         <View
           style={{ width: "100%", flexDirection: "row", alignItems: "center" }}
         >
-          <Feather name="search" size="30" />
+          <Feather name="search" size={30} />
           <TextInput
             style={styles.input}
             placeholder="Search"
             placeholderTextColor="#000000"
           />
-          <TouchableOpacity onPress={() => { navigation.navigate('Createpatient')}} style={{ marginLeft: "auto" }}>
-            <Feather name="user-plus" size="30" />
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Createpatient");
+            }}
+            style={{ marginLeft: "auto" }}
+          >
+            <Feather name="user-plus" size={30} />
           </TouchableOpacity>
         </View>
       </View>

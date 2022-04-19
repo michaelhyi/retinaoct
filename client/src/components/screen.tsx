@@ -7,14 +7,21 @@ interface Props {
 }
 
 const Screen: FC<Props> = ({ children }): JSX.Element => {
-  return <View style={styles.container}>{children}</View>;
+  return (
+    <View style={styles.container}>
+      <View style={{ marginHorizontal: Dimensions.get("window").width / 15 }}>
+        {children}
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "white",
     paddingTop:
       Constants.statusBarHeight + Dimensions.get("window").height / 15,
-    marginHorizontal: Dimensions.get("window").width / 15,
   },
 });
 

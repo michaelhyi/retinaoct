@@ -4,11 +4,15 @@ import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   style: object;
+  onPress: () => void;
 }
 
-const Add: FC<Props> = ({ style }): JSX.Element => {
+const Add: FC<Props> = ({ style, onPress }): JSX.Element => {
   return (
-    <TouchableOpacity style={{ ...style, ...styles.container }}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{ ...style, ...styles.container }}
+    >
       <Ionicons name="add" size={25} />
     </TouchableOpacity>
   );

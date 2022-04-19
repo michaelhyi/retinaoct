@@ -15,51 +15,47 @@ import { FontAwesome } from "@expo/vector-icons";
 const Home: FC = (): JSX.Element => {
   return (
     <Screen>
-      <View>
-        <Text
-          style={{
-            fontFamily: "Montserrat-SemiBold",
-            fontSize: 48,
-            shadowColor: "black",
-            shadowOpacity: 0.25,
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-          }}
-        >
-          Home
-        </Text>
-        <Text
-          style={{
-            fontFamily: "Montserrat-Medium",
-            fontSize: 18,
-            color: "#999999",
-          }}
-        >
-          {format(new Date(), "EEEE, MMMM do, yyyy")}
-        </Text>
-        <Text
-          style={{
-            fontFamily: "Montserrat-Medium",
-            fontSize: 18,
-            color: "#999999",
-          }}
-        >
-          {format(new Date(), "p")}
-        </Text>
-      </View>
-      <View style={{ alignItems: "left" }}>
-        <Text
-          style={{
-            marginTop: 30,
-            fontFamily: "Montserrat-Medium",
-            fontSize: 24,
-          }}
-        >
-          Recent Patient Updates
-        </Text>
-      </View>
+      <Text
+        style={{
+          fontFamily: "Montserrat-SemiBold",
+          fontSize: 48,
+          shadowColor: "black",
+          shadowOpacity: 0.25,
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+        }}
+      >
+        Home
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Montserrat-Medium",
+          fontSize: 18,
+          color: "#999999",
+        }}
+      >
+        {format(new Date(), "EEEE, MMMM do, yyyy")}
+      </Text>
+      <Text
+        style={{
+          fontFamily: "Montserrat-Medium",
+          fontSize: 18,
+          color: "#999999",
+        }}
+      >
+        {format(new Date(), "p")}
+      </Text>
+      <Text
+        style={{
+          marginTop: 30,
+          fontFamily: "Montserrat-Medium",
+          fontSize: 24,
+        }}
+      >
+        Recent Patient Updates
+      </Text>
       <View>
         <View
           style={{
@@ -110,7 +106,7 @@ const Home: FC = (): JSX.Element => {
               marginRight: 15,
               backgroundColor: "white",
             }}
-            icon={<FontAwesome name="user" size="30" color="#B6DCFE" />}
+            icon={<FontAwesome name="user" size={30} color="#B6DCFE" />}
           />
           <Btn
             text="000000"
@@ -122,12 +118,16 @@ const Home: FC = (): JSX.Element => {
               marginRight: 15,
               backgroundColor: "white",
             }}
-            icon={<FontAwesome name="user" size="30" color="#B6DCFE" />}
+            icon={<FontAwesome name="user" size={30} color="#B6DCFE" />}
           />
         </View>
       </View>
       <Text
-        style={{ marginTop: 30, fontFamily: "Montserrat-Medium", fontSize: 24 }}
+        style={{
+          marginTop: 30,
+          fontFamily: "Montserrat-Medium",
+          fontSize: 24,
+        }}
       >
         Recent Scans
       </Text>
