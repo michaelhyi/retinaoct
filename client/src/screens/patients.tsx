@@ -48,7 +48,7 @@ const Patients: FC<Props> = ({ navigation }) => {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Createpatient");
+              navigation.navigate("Create Patient");
             }}
             style={{ marginLeft: "auto" }}
           >
@@ -56,69 +56,140 @@ const Patients: FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-
-      <View>
-        <DataTable>
-          <DataTable.Header>
-            <DataTable.Title>
-              <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-                MRN
-              </Text>
-            </DataTable.Title>
-            <DataTable.Title>
-              <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-                LAST UPDATED
-              </Text>
-            </DataTable.Title>
-          </DataTable.Header>
-
-          <DataTable.Row>
-            <DataTable.Cell>
-              <Text
-                style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}
-              ></Text>
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              MRN
+            </Text>
+          </DataTable.Title>
+          <DataTable.Title>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              LAST UPDATED
+            </Text>
+          </DataTable.Title>
+        </DataTable.Header>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
               000000
-            </DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-          <DataTable.Row>
-            <DataTable.Cell>000000</DataTable.Cell>
-            <DataTable.Cell>12/2/22 2:48 PM</DataTable.Cell>
-          </DataTable.Row>
-        </DataTable>
-      </View>
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+        <DataTable.Row>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              000000
+            </Text>
+          </DataTable.Cell>
+          <DataTable.Cell>
+            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
+              12/2/22 2:48 PM
+            </Text>
+          </DataTable.Cell>
+        </DataTable.Row>
+      </DataTable>
     </Screen>
   );
 };

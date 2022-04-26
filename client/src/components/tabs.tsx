@@ -8,17 +8,17 @@ import {
 } from "@expo/vector-icons";
 
 import Home from "../screens/home";
-import Createpatient from "../screens/createpatient";
+import CreatePatient from "../screens/create-patient";
 import Patients from "../screens/patients";
 import Add from "./add";
-import Create from "../screens/createscan";
+import Create from "../screens/create-scan";
 import Scans from "../screens/scans";
 import Settings from "../screens/settings";
-import Patientinfo from "../screens/patientinfo";
-import Uploadleft from "../screens/uploadleft";
-import Uploadright from "../screens/uploadright";
-import Leftresults from "../screens/leftresults";
-import Rightresults from "../screens/rightresults";
+import PatientInfo from "../screens/patient-info";
+import UploadLeft from "../screens/upload-left";
+import UploadRight from "../screens/upload-right";
+import LeftResults from "../screens/left-results";
+import RightResults from "../screens/right-results";
 
 const Tab = createBottomTabNavigator();
 
@@ -54,8 +54,8 @@ const Tabs: FC = (): JSX.Element => {
         }}
       />
       <Tab.Screen
-        name="Createpatient"
-        component={Createpatient}
+        name="Create Patient"
+        component={CreatePatient}
         options={{
           tabBarIcon: () => <Add style={styles.icons} />,
         }}
@@ -71,7 +71,7 @@ const Tabs: FC = (): JSX.Element => {
       />
       <Tab.Screen
         name="Settings"
-        component={Rightresults}
+        component={RightResults}
         options={{
           tabBarIcon: () => (
             <FontAwesome name="gear" size={25} style={styles.icons} />
@@ -90,9 +90,10 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     shadowColor: "black",
     shadowOpacity: 0.25,
+    shadowRadius: 2,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
   },
 

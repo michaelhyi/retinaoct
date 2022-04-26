@@ -12,7 +12,7 @@ interface Props {
   style?: any;
 }
 
-const Btn: FC<Props> = ({
+const ScanBtn: FC<Props> = ({
   onPress,
   header,
   left,
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Btn;
+export default ScanBtn;

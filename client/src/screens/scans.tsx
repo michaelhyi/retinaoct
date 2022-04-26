@@ -1,8 +1,6 @@
 import { FC } from "react";
-import { StyleSheet, Dimensions, View, Text, Image } from "react-native";
-import { format } from "date-fns";
-import Btn from "../components/btn";
-import Headerbtn from "../components/headerbtn";
+import { StyleSheet, View, Text, Image } from "react-native";
+import HeaderBtn from "../components/header-btn";
 import Screen from "../components/screen";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -32,7 +30,7 @@ const Scans: FC = (): JSX.Element => {
               marginTop: 30,
             }}
           >
-            <Headerbtn
+            <HeaderBtn
               header="000000"
               desc="Abnormal"
               date="12/11/21 12:59 AM"
@@ -57,7 +55,7 @@ const Scans: FC = (): JSX.Element => {
               marginTop: 30,
             }}
           >
-            <Headerbtn
+            <HeaderBtn
               header="000000"
               desc="Abnormal"
               date="12/11/21 12:59 AM"
@@ -82,7 +80,7 @@ const Scans: FC = (): JSX.Element => {
               marginTop: 30,
             }}
           >
-            <Headerbtn
+            <HeaderBtn
               header="000000"
               desc="Abnormal"
               date="12/11/21 12:59 AM"
@@ -107,7 +105,7 @@ const Scans: FC = (): JSX.Element => {
               marginTop: 30,
             }}
           >
-            <Headerbtn
+            <HeaderBtn
               header="000000"
               desc="Abnormal"
               date="12/11/21 12:59 AM"

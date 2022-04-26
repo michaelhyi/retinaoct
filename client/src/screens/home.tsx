@@ -1,136 +1,38 @@
 import { FC } from "react";
-import {
-  StyleSheet,
-  Dimensions,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import { format } from "date-fns";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+
 import Btn from "../components/btn";
 import Screen from "../components/screen";
-import { FontAwesome } from "@expo/vector-icons";
+import HomeHeader from "../components/home-header";
+import RecentPatient from "../components/recent-patient";
 
 const Home: FC = (): JSX.Element => {
   return (
     <Screen>
-      <Text
+      <HomeHeader />
+      <Text style={styles.header}>Recent Patient Updates</Text>
+      <View
         style={{
-          fontFamily: "Montserrat-SemiBold",
-          fontSize: 48,
-          shadowColor: "black",
-          shadowOpacity: 0.25,
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 20,
         }}
       >
-        Home
-      </Text>
-      <Text
-        style={{
-          fontFamily: "Montserrat-Medium",
-          fontSize: 18,
-          color: "#999999",
-        }}
-      >
-        {format(new Date(), "EEEE, MMMM do, yyyy")}
-      </Text>
-      <Text
-        style={{
-          fontFamily: "Montserrat-Medium",
-          fontSize: 18,
-          color: "#999999",
-        }}
-      >
-        {format(new Date(), "p")}
-      </Text>
-      <Text
-        style={{
-          marginTop: 30,
-          fontFamily: "Montserrat-Medium",
-          fontSize: 24,
-        }}
-      >
-        Recent Patient Updates
-      </Text>
-      <View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginTop: 20,
-          }}
-        >
-          <Btn
-            text="000000"
-            desc="12/11/21 12:59 AM"
-            style={{
-              flexGrow: 1,
-              alignItems: "center",
-              padding: 20,
-              marginRight: 15,
-              backgroundColor: "white",
-            }}
-            icon={<FontAwesome name="user" size={30} color="#B6DCFE" />}
-          />
-          <Btn
-            text="000000"
-            desc="12/11/21 12:59 AM"
-            style={{
-              flexGrow: 1,
-              alignItems: "center",
-              padding: 20,
-              marginRight: 15,
-              backgroundColor: "white",
-            }}
-            icon={<FontAwesome name="user" size={30} color="#B6DCFE" />}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginTop: 20,
-          }}
-        >
-          <Btn
-            text="000000"
-            desc="12/11/21 12:59 AM"
-            style={{
-              flexGrow: 1,
-              alignItems: "center",
-              padding: 20,
-              marginRight: 15,
-              backgroundColor: "white",
-            }}
-            icon={<FontAwesome name="user" size={30} color="#B6DCFE" />}
-          />
-          <Btn
-            text="000000"
-            desc="12/11/21 12:59 AM"
-            style={{
-              flexGrow: 1,
-              alignItems: "center",
-              padding: 20,
-              marginRight: 15,
-              backgroundColor: "white",
-            }}
-            icon={<FontAwesome name="user" size={30} color="#B6DCFE" />}
-          />
-        </View>
+        <RecentPatient />
+        <RecentPatient />
       </View>
-      <Text
+      <View
         style={{
-          marginTop: 30,
-          fontFamily: "Montserrat-Medium",
-          fontSize: 24,
+          flexDirection: "row",
+          justifyContent: "center",
+          marginTop: 20,
         }}
       >
-        Recent Scans
-      </Text>
+        <RecentPatient />
+        <RecentPatient />
+      </View>
+      <Text style={styles.header}>Recent Scans</Text>
       <View
         style={{
           flexDirection: "row",
@@ -160,6 +62,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+
+  header: {
+    marginTop: 30,
+    fontFamily: "Montserrat-Medium",
+    fontSize: 24,
   },
 });
 

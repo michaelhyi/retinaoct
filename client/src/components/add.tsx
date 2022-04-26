@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 interface Props {
   style: object;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 const Add: FC<Props> = ({ style, onPress }): JSX.Element => {
