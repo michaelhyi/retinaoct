@@ -8,16 +8,8 @@ import {
 } from "@expo/vector-icons";
 
 import Home from "../screens/home";
-import CreatePatient from "../screens/create-patient";
-import Patients from "../screens/patients";
-import Add from "./add";
-import Create from "../screens/create-scan";
+import PatientsStack from "./patients-stack";
 import Scans from "../screens/scans";
-import Settings from "../screens/settings";
-import PatientInfo from "../screens/patient-info";
-import UploadLeft from "../screens/upload-left";
-import UploadRight from "../screens/upload-right";
-import LeftResults from "../screens/left-results";
 import RightResults from "../screens/right-results";
 
 const Tab = createBottomTabNavigator();
@@ -42,7 +34,7 @@ const Tabs: FC = (): JSX.Element => {
       />
       <Tab.Screen
         name="Patients"
-        component={Patients}
+        component={PatientsStack}
         options={{
           tabBarIcon: () => (
             <MaterialCommunityIcons
@@ -53,13 +45,13 @@ const Tabs: FC = (): JSX.Element => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Create Patient"
         component={CreatePatient}
         options={{
           tabBarIcon: () => <Add style={styles.icons} />,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Scans"
         component={Scans}

@@ -15,6 +15,7 @@ import Screen from "../components/screen";
 interface Props {
   navigation: {
     navigate: (name: string) => void;
+    goBack: () => void;
   };
 }
 
@@ -23,7 +24,10 @@ const CreatePatient: FC<Props> = ({ navigation }) => {
 
   return (
     <Screen>
-      <TouchableOpacity style={{ padding: 10 }}>
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={{ padding: 10 }}
+      >
         <FontAwesome5 name="less-than" size={15} />
       </TouchableOpacity>
 
@@ -59,7 +63,7 @@ const CreatePatient: FC<Props> = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Patient.info");
+            navigation.navigate("Patient Info");
           }}
           style={styles.btn2}
         >

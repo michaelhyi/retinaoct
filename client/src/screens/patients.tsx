@@ -8,7 +8,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { format } from "date-fns";
 import Screen from "../components/screen";
 import { Feather } from "@expo/vector-icons";
 import { DataTable } from "react-native-paper";
@@ -48,7 +47,7 @@ const Patients: FC<Props> = ({ navigation }) => {
           />
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Create Patient");
+              navigation.navigate("Create Patients Screen");
             }}
             style={{ marginLeft: "auto" }}
           >
