@@ -1,20 +1,14 @@
 import { FC } from "react";
-import { StyleSheet, Dimensions, View, Text } from "react-native";
+import { Text } from "react-native";
+
+import Screen from "../components/screen";
 
 const Settings: FC = (): JSX.Element => {
   return (
-    <View style={styles.container}>
+    <Screen>
       <Text>Settings Screen</Text>
-    </View>
+    </Screen>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default Settings;

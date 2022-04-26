@@ -1,16 +1,15 @@
 import { FC } from "react";
 import {
   StyleSheet,
-  Dimensions,
   View,
   Text,
-  Image,
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import Screen from "../components/screen";
 import { Feather } from "@expo/vector-icons";
 import { DataTable } from "react-native-paper";
+
+import Screen from "../components/screen";
 
 interface Props {
   navigation: {

@@ -10,7 +10,7 @@ import {
 import Home from "../screens/home";
 import PatientsStack from "./patients-stack";
 import Scans from "../screens/scans";
-import RightResults from "../screens/right-results";
+import Settings from "../screens/settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -63,7 +63,7 @@ const Tabs: FC = (): JSX.Element => {
       />
       <Tab.Screen
         name="Settings"
-        component={RightResults}
+        component={Settings}
         options={{
           tabBarIcon: () => (
             <FontAwesome name="gear" size={25} style={styles.icons} />

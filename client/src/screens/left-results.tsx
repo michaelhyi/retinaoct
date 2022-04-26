@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, View, Image, TouchableOpacity, Text } from "react-native";
+
 import Screen from "../components/screen";
 
 const LeftResults: FC = (): JSX.Element => {

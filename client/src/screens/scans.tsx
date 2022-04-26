@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+
 import HeaderBtn from "../components/header-btn";
 import Screen from "../components/screen";
-import { FontAwesome } from "@expo/vector-icons";
 
 const Scans: FC = (): JSX.Element => {
   return (

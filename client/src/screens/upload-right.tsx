@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import Screen from "../components/screen";
 import { FontAwesome5 } from "@expo/vector-icons";
+
+import Screen from "../components/screen";
 
 const UploadRight: FC = (): JSX.Element => {
   return (

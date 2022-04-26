@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import Screen from "../components/screen";
 import { FontAwesome5 } from "@expo/vector-icons";
+
+import Screen from "../components/screen";
 
 const UploadLeft: FC = (): JSX.Element => {
   return (
@@ -27,7 +28,6 @@ const UploadLeft: FC = (): JSX.Element => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.{" "}
           </Text>
         </View>
-
         <TouchableOpacity
           style={{
             borderRadius: 15,

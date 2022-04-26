@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 
-import Btn from "../components/btn";
 import Screen from "../components/screen";
 import HomeHeader from "../components/home-header";
 import RecentPatient from "../components/recent-patient";

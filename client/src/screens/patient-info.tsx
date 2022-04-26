@@ -1,10 +1,18 @@
 import { FC } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
-import Screen from "../components/screen";
-import ScanBtn from "../components/scan-btn";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 
-const PatientInfo: FC = (): JSX.Element => {
+import Screen from "../components/screen";
+import ScanBtn from "../components/scan-btn";
+
+interface Props {
+  navigation: {
+    navigate: (name: string) => void;
+    goBack: () => void;
+  };
+}
+
+const PatientInfo: FC<Props> = ({ navigation }): JSX.Element => {
   return (
     <Screen>
       <View style={styles.container}>
@@ -36,6 +44,7 @@ const PatientInfo: FC = (): JSX.Element => {
           <Text style={styles.bluetext}>View All</Text>
         </View>
         <TouchableOpacity
+          onPress={() => navigation.navigate("Create Scan")}
           style={{
             width: "100%",
             borderRadius: 15,
