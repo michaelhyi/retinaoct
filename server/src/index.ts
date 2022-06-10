@@ -5,8 +5,9 @@ import express from "express";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
+import { Patient } from "./entities/Patient";
+import { Scan } from "./entities/Scan";
 import { User } from "./entities/User";
-import { HelloResolver } from "./resolvers/hello";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
@@ -17,7 +18,7 @@ const main = async () => {
     password: "postgres",
     logging: true,
     synchronize: true,
-    entities: [User],
+    entities: [User, Patient, Scan],
   });
 
   const app = express();

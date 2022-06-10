@@ -4,42 +4,47 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Patient } from "./Patient";
-import { Scan } from "./Scan";
+import { User } from "./User";
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity {
+export class Scan extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Field()
-  @Column({ unique: true })
-  email!: string;
-
   @Column()
-  password!: string;
+  eye: string;
 
   @Field()
   @Column()
-  first_name!: string;
+  diagnosis!: string;
 
   @Field()
   @Column()
-  last_name!: string;
+  note!: string;
 
   @Field()
-  @OneToMany(() => Patient, (patient) => patient.doctor)
-  patients: Patient[];
+  @Column()
+  doctor_id!: number;
 
   @Field()
-  @OneToMany(() => Scan, (scan) => scan.doctor)
-  scans: Scan[];
+  @ManyToOne(() => User, (user) => user.scans)
+  doctor!: User;
+
+  @Field()
+  @Column()
+  patient_id!: number;
+
+  @Field()
+  @ManyToOne(() => Patient, (patient) => patient.scans)
+  patient!: Patient;
 
   @Field(() => String)
   @CreateDateColumn()
