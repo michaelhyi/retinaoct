@@ -1,0 +1,12 @@
+query getPatients($doctorId: Int!, $limit: Int) {
+  getPatients(doctorId: $doctorId, limit: $limit) {
+    id
+    mrn
+    doctorId
+    updatedAt
+    notes
+    scans {
+      id
+    }
+  }
+}

@@ -9,12 +9,6 @@ const HomeHeader: FC = (): JSX.Element => {
         style={{
           fontFamily: "Montserrat-SemiBold",
           fontSize: 48,
-          shadowColor: "black",
-          shadowOpacity: 0.25,
-          shadowOffset: {
-            width: 0,
-            height: 2,
-          },
         }}
       >
         Home

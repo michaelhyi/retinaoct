@@ -19,7 +19,7 @@ const Screen: FC<Props> = ({ children }): JSX.Element => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#F2F2F2",
     paddingTop:
       Constants.statusBarHeight + Dimensions.get("window").height / 15,
   },

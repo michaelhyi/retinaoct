@@ -1,15 +1,18 @@
-import { FC } from "react";
+import { Feather } from "@expo/vector-icons";
+import React, { useContext } from "react";
 import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
   StyleSheet,
-  View,
   Text,
   TextInput,
-  TouchableOpacity,
+  View,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { DataTable } from "react-native-paper";
-
+import { useGetPatientsQuery } from "../generated/graphql";
 import Screen from "../components/screen";
+import { context } from "../utils/context";
+import PatientCard from "../components/patientCard";
 
 interface Props {
   navigation: {
@@ -17,7 +20,22 @@ interface Props {
   };
 }
 
-const Patients: FC<Props> = ({ navigation }) => {
+const Patients: React.FC<Props> = ({ navigation }) => {
+  const { user } = useContext(context);
+  const [{ data, fetching }] = useGetPatientsQuery({
+    variables: {
+      doctorId: user,
+    },
+  });
+
+  if (fetching) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
+
   return (
     <Screen>
       <View style={styles.header}>
@@ -25,169 +43,27 @@ const Patients: FC<Props> = ({ navigation }) => {
           style={{
             fontFamily: "Montserrat-SemiBold",
             fontSize: 40,
-            shadowColor: "black",
-            shadowOpacity: 0.25,
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
           }}
         >
           Patient Directory
         </Text>
-        <View
-          style={{ width: "100%", flexDirection: "row", alignItems: "center" }}
-        >
-          <Feather name="search" size={30} />
+        <View style={styles.input}>
+          <Feather name="search" size={20} style={{ marginRight: 12 }} />
           <TextInput
-            style={styles.input}
+            style={{ flex: 1, zIndex: 1 }}
             placeholder="Search"
             placeholderTextColor="#000000"
           />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Create Patients Screen");
-            }}
-            style={{ marginLeft: "auto" }}
-          >
-            <Feather name="user-plus" size={30} />
-          </TouchableOpacity>
         </View>
+        <FlatList
+          data={data?.getPatients}
+          renderItem={(item) => <PatientCard item={item.item} />}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={
+            <View style={{ height: Dimensions.get("window").height / 5 }} />
+          }
+        />
       </View>
-      <DataTable>
-        <DataTable.Header>
-          <DataTable.Title>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              MRN
-            </Text>
-          </DataTable.Title>
-          <DataTable.Title>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              LAST UPDATED
-            </Text>
-          </DataTable.Title>
-        </DataTable.Header>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-        <DataTable.Row>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              000000
-            </Text>
-          </DataTable.Cell>
-          <DataTable.Cell>
-            <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 14 }}>
-              12/2/22 2:48 PM
-            </Text>
-          </DataTable.Cell>
-        </DataTable.Row>
-      </DataTable>
     </Screen>
   );
 };
@@ -198,12 +74,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   input: {
-    height: 40,
+    flexDirection: "row",
+    alignItems: "center",
     margin: 12,
-    padding: 10,
-    borderRadius: 15,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 12,
     backgroundColor: "#E5E5E5",
-    width: "60%",
+    width: "100%",
   },
 });
 

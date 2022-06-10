@@ -20,6 +20,10 @@ export class Scan extends BaseEntity {
 
   @Field()
   @Column()
+  url!: string;
+
+  @Field()
+  @Column()
   eye: string;
 
   @Field()

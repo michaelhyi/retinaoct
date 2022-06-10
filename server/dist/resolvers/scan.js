@@ -12,15 +12,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PatientResolver = void 0;
+exports.ScanResolver = void 0;
+const Scan_1 = require("../entities/Scan");
 const type_graphql_1 = require("type-graphql");
-const Patient_1 = require("../entities/Patient");
-const types_1 = require("../utils/types");
-let PatientResolver = class PatientResolver {
-    async getPatients(doctorId, limit) {
-        let patients;
+let ScanResolver = class ScanResolver {
+    async getScans(doctorId, limit) {
+        let scans;
         if (limit) {
-            patients = await Patient_1.Patient.find({
+            scans = await Scan_1.Scan.find({
                 where: { doctorId },
                 order: {
                     updatedAt: "DESC",
@@ -29,57 +28,49 @@ let PatientResolver = class PatientResolver {
             });
         }
         else {
-            patients = await Patient_1.Patient.find({
+            scans = await Scan_1.Scan.find({
                 where: { doctorId },
                 order: {
                     updatedAt: "DESC",
                 },
             });
         }
-        return patients;
+        return scans;
     }
-    async createPatient(mrn, doctorId, notes) {
-        let patient;
-        try {
-            patient = await Patient_1.Patient.create({
-                mrn,
-                doctorId,
-                notes,
-            }).save();
-        }
-        catch (e) {
-            if (e.detail.includes("already exists") ||
-                e.detail.includes("duplicate key")) {
-                return {
-                    error: {
-                        field: "MRN",
-                        message: "Patient already exists.",
-                    },
-                };
-            }
-        }
-        return { patient };
+    async createScan(url, eye, diagnosis, note, doctorId, patientId) {
+        const scan = await Scan_1.Scan.create({
+            url,
+            eye,
+            diagnosis,
+            note,
+            doctorId,
+            patientId,
+        }).save();
+        return scan;
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => [Patient_1.Patient]),
+    (0, type_graphql_1.Query)(() => [Scan_1.Scan]),
     __param(0, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
     __param(1, (0, type_graphql_1.Arg)("limit", () => type_graphql_1.Int, { nullable: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
-], PatientResolver.prototype, "getPatients", null);
+], ScanResolver.prototype, "getScans", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => types_1.PatientResponse),
-    __param(0, (0, type_graphql_1.Arg)("mrn")),
-    __param(1, (0, type_graphql_1.Arg)("doctorId")),
-    __param(2, (0, type_graphql_1.Arg)("notes")),
+    (0, type_graphql_1.Mutation)(() => Scan_1.Scan),
+    __param(0, (0, type_graphql_1.Arg)("url")),
+    __param(1, (0, type_graphql_1.Arg)("eye")),
+    __param(2, (0, type_graphql_1.Arg)("diagnosis")),
+    __param(3, (0, type_graphql_1.Arg)("note")),
+    __param(4, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
+    __param(5, (0, type_graphql_1.Arg)("patientId", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number, String]),
+    __metadata("design:paramtypes", [String, String, String, String, Number, Number]),
     __metadata("design:returntype", Promise)
-], PatientResolver.prototype, "createPatient", null);
-PatientResolver = __decorate([
+], ScanResolver.prototype, "createScan", null);
+ScanResolver = __decorate([
     (0, type_graphql_1.Resolver)()
-], PatientResolver);
-exports.PatientResolver = PatientResolver;
-//# sourceMappingURL=patient.js.map
+], ScanResolver);
+exports.ScanResolver = ScanResolver;
+//# sourceMappingURL=scan.js.map

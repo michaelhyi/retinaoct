@@ -33,7 +33,7 @@ __decorate([
 ], Patient.prototype, "doctorId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.patients, { nullable: true }),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.patients),
     __metadata("design:type", User_1.User)
 ], Patient.prototype, "doctor", void 0);
 __decorate([

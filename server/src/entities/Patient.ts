@@ -28,7 +28,7 @@ export class Patient extends BaseEntity {
   doctorId!: number;
 
   @Field()
-  @ManyToOne(() => User, (user) => user.patients, { nullable: true })
+  @ManyToOne(() => User, (user) => user.patients)
   doctor: User;
 
   @Field()

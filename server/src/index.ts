@@ -9,6 +9,7 @@ import { Patient } from "./entities/Patient";
 import { Scan } from "./entities/Scan";
 import { User } from "./entities/User";
 import { PatientResolver } from "./resolvers/patient";
+import { ScanResolver } from "./resolvers/scan";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
@@ -22,6 +23,8 @@ const main = async () => {
     entities: [User, Patient, Scan],
   });
 
+  await Scan.delete({});
+
   const app = express();
 
   app.use(
@@ -34,7 +37,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [UserResolver, PatientResolver],
+      resolvers: [UserResolver, PatientResolver, ScanResolver],
       validate: false,
     }),
   });

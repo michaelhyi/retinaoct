@@ -1,13 +1,32 @@
+import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Patient } from "../entities/Patient";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { PatientResponse } from "../utils/types";
-import { User } from "../entities/User";
 
 @Resolver()
 export class PatientResolver {
   @Query(() => [Patient])
-  async getPatients(@Arg("doctorId") doctorId: number): Promise<Patient[]> {
-    const patients = await Patient.find({ where: { doctorId } });
+  async getPatients(
+    @Arg("doctorId", () => Int) doctorId: number,
+    @Arg("limit", () => Int, { nullable: true }) limit: number | null
+  ): Promise<Patient[]> {
+    let patients;
+    if (limit) {
+      patients = await Patient.find({
+        where: { doctorId },
+        order: {
+          updatedAt: "DESC",
+        },
+        take: limit,
+      });
+    } else {
+      patients = await Patient.find({
+        where: { doctorId },
+        order: {
+          updatedAt: "DESC",
+        },
+      });
+    }
+
     return patients;
   }
 

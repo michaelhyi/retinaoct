@@ -14,6 +14,7 @@ const Patient_1 = require("./entities/Patient");
 const Scan_1 = require("./entities/Scan");
 const User_1 = require("./entities/User");
 const patient_1 = require("./resolvers/patient");
+const scan_1 = require("./resolvers/scan");
 const user_1 = require("./resolvers/user");
 const main = async () => {
     await (0, typeorm_1.createConnection)({
@@ -25,6 +26,7 @@ const main = async () => {
         synchronize: true,
         entities: [User_1.User, Patient_1.Patient, Scan_1.Scan],
     });
+    await Scan_1.Scan.delete({});
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
         origin: "http://localhost:3000",
@@ -33,7 +35,7 @@ const main = async () => {
     const apolloServer = new apollo_server_express_1.ApolloServer({
         plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()],
         schema: await (0, type_graphql_1.buildSchema)({
-            resolvers: [user_1.UserResolver, patient_1.PatientResolver],
+            resolvers: [user_1.UserResolver, patient_1.PatientResolver, scan_1.ScanResolver],
             validate: false,
         }),
     });

@@ -1,8 +1,12 @@
-import { FC } from "react";
+import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-const RecentPatient: FC = (): JSX.Element => {
+interface Props {
+  patient: any;
+}
+
+const RecentPatient: React.FC<Props> = ({ patient }): JSX.Element => {
   return (
     <TouchableOpacity
       style={{
@@ -22,7 +26,7 @@ const RecentPatient: FC = (): JSX.Element => {
               fontSize: 14,
             }}
           >
-            000000
+            {patient.mrn}
           </Text>
           <Text
             style={{
@@ -33,7 +37,7 @@ const RecentPatient: FC = (): JSX.Element => {
               color: "#999999",
             }}
           >
-            12/11/21 12:59 AM
+            {patient.updatedAt}
           </Text>
         </View>
       </View>
@@ -46,13 +50,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     padding: 20,
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
     flexGrow: 1,
     marginRight: 15,
     backgroundColor: "white",
