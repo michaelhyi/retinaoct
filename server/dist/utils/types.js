@@ -9,9 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserResponse = void 0;
+exports.PatientResponse = exports.UserResponse = void 0;
 const User_1 = require("../entities/User");
 const type_graphql_1 = require("type-graphql");
+const Patient_1 = require("../entities/Patient");
 let Error = class Error {
 };
 __decorate([
@@ -39,4 +40,18 @@ UserResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], UserResponse);
 exports.UserResponse = UserResponse;
+let PatientResponse = class PatientResponse {
+};
+__decorate([
+    (0, type_graphql_1.Field)(() => Patient_1.Patient, { nullable: true }),
+    __metadata("design:type", Patient_1.Patient)
+], PatientResponse.prototype, "patient", void 0);
+__decorate([
+    (0, type_graphql_1.Field)(() => Error, { nullable: true }),
+    __metadata("design:type", Error)
+], PatientResponse.prototype, "error", void 0);
+PatientResponse = __decorate([
+    (0, type_graphql_1.ObjectType)()
+], PatientResponse);
+exports.PatientResponse = PatientResponse;
 //# sourceMappingURL=types.js.map

@@ -13,6 +13,7 @@ const typeorm_1 = require("typeorm");
 const Patient_1 = require("./entities/Patient");
 const Scan_1 = require("./entities/Scan");
 const User_1 = require("./entities/User");
+const patient_1 = require("./resolvers/patient");
 const user_1 = require("./resolvers/user");
 const main = async () => {
     await (0, typeorm_1.createConnection)({
@@ -32,7 +33,7 @@ const main = async () => {
     const apolloServer = new apollo_server_express_1.ApolloServer({
         plugins: [(0, apollo_server_core_1.ApolloServerPluginLandingPageGraphQLPlayground)()],
         schema: await (0, type_graphql_1.buildSchema)({
-            resolvers: [user_1.UserResolver],
+            resolvers: [user_1.UserResolver, patient_1.PatientResolver],
             validate: false,
         }),
     });

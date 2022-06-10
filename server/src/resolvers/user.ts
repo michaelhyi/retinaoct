@@ -6,16 +6,17 @@ import { UserResponse } from "../utils/types";
 @Resolver()
 export class UserResolver {
   @Query(() => [User])
-  getUsers(): Promise<User[]> {
-    return User.find();
+  async getUsers(): Promise<User[]> {
+    const users = await User.find();
+    return users;
   }
 
   @Mutation(() => UserResponse)
   async register(
     @Arg("email") email: string,
     @Arg("password") password: string,
-    @Arg("first_name") first_name: string,
-    @Arg("last_name") last_name: string
+    @Arg("firstName") firstName: string,
+    @Arg("lastName") lastName: string
   ): Promise<UserResponse> {
     if (!email.includes("@")) {
       return {
@@ -40,11 +41,14 @@ export class UserResolver {
       user = await User.create({
         email,
         password: await argon2.hash(password),
-        first_name,
-        last_name,
+        firstName,
+        lastName,
       }).save();
     } catch (e) {
-      if (e.detail.includes("already exists")) {
+      if (
+        e.detail.includes("already exists") ||
+        e.detail.includes("duplicate key")
+      ) {
         return {
           error: {
             field: "Email",

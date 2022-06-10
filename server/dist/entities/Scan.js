@@ -37,10 +37,10 @@ __decorate([
     __metadata("design:type", String)
 ], Scan.prototype, "note", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)(() => type_graphql_1.Int),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Scan.prototype, "doctor_id", void 0);
+], Scan.prototype, "doctorId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.scans),
@@ -50,7 +50,7 @@ __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Scan.prototype, "patient_id", void 0);
+], Scan.prototype, "patientId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => Patient_1.Patient),
     (0, typeorm_1.ManyToOne)(() => Patient_1.Patient, (patient) => patient.scans),
@@ -60,12 +60,12 @@ __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], Scan.prototype, "created_at", void 0);
+], Scan.prototype, "createdAt", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], Scan.prototype, "updated_at", void 0);
+], Scan.prototype, "updatedAt", void 0);
 Scan = __decorate([
     (0, type_graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)()

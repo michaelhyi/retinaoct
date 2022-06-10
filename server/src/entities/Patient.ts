@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -23,12 +23,12 @@ export class Patient extends BaseEntity {
   @Column({ unique: true })
   mrn!: string;
 
-  @Field()
+  @Field(() => Int)
   @Column()
-  doctor_id: number;
+  doctorId!: number;
 
   @Field()
-  @ManyToOne(() => User, (user) => user.patients)
+  @ManyToOne(() => User, (user) => user.patients, { nullable: true })
   doctor: User;
 
   @Field()
@@ -36,14 +36,14 @@ export class Patient extends BaseEntity {
   notes: string;
 
   @Field(() => [Scan])
-  @OneToMany(() => Scan, (scan) => scan.patient)
+  @OneToMany(() => Scan, (scan) => scan.patient, { eager: true })
   scans: Scan[];
 
   @Field(() => String)
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @Field(() => String)
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 }

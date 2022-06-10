@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -30,9 +30,9 @@ export class Scan extends BaseEntity {
   @Column()
   note!: string;
 
-  @Field()
+  @Field(() => Int)
   @Column()
-  doctor_id!: number;
+  doctorId!: number;
 
   @Field()
   @ManyToOne(() => User, (user) => user.scans)
@@ -40,7 +40,7 @@ export class Scan extends BaseEntity {
 
   @Field()
   @Column()
-  patient_id!: number;
+  patientId!: number;
 
   @Field(() => Patient)
   @ManyToOne(() => Patient, (patient) => patient.scans)
@@ -48,9 +48,9 @@ export class Scan extends BaseEntity {
 
   @Field(() => String)
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @Field(() => String)
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 }

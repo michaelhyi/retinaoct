@@ -27,25 +27,25 @@ export class User extends BaseEntity {
 
   @Field()
   @Column()
-  first_name!: string;
+  firstName!: string;
 
   @Field()
   @Column()
-  last_name!: string;
+  lastName!: string;
 
   @Field(() => [Patient])
-  @OneToMany(() => Patient, (patient) => patient.doctor)
+  @OneToMany(() => Patient, (patient) => patient.doctor, { eager: true })
   patients: Patient[];
 
   @Field(() => [Scan])
-  @OneToMany(() => Scan, (scan) => scan.doctor)
+  @OneToMany(() => Scan, (scan) => scan.doctor, { eager: true })
   scans: Scan[];
 
   @Field(() => String)
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @Field(() => String)
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 }

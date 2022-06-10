@@ -8,6 +8,7 @@ import { createConnection } from "typeorm";
 import { Patient } from "./entities/Patient";
 import { Scan } from "./entities/Scan";
 import { User } from "./entities/User";
+import { PatientResolver } from "./resolvers/patient";
 import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
@@ -33,7 +34,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [UserResolver],
+      resolvers: [UserResolver, PatientResolver],
       validate: false,
     }),
   });

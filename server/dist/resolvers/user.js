@@ -21,10 +21,11 @@ const type_graphql_1 = require("type-graphql");
 const User_1 = require("../entities/User");
 const types_1 = require("../utils/types");
 let UserResolver = class UserResolver {
-    getUsers() {
-        return User_1.User.find();
+    async getUsers() {
+        const users = await User_1.User.find();
+        return users;
     }
-    async register(email, password, first_name, last_name) {
+    async register(email, password, firstName, lastName) {
         if (!email.includes("@")) {
             return {
                 error: {
@@ -46,12 +47,13 @@ let UserResolver = class UserResolver {
             user = await User_1.User.create({
                 email,
                 password: await argon2_1.default.hash(password),
-                first_name,
-                last_name,
+                firstName,
+                lastName,
             }).save();
         }
         catch (e) {
-            if (e.detail.includes("already exists")) {
+            if (e.detail.includes("already exists") ||
+                e.detail.includes("duplicate key")) {
                 return {
                     error: {
                         field: "Email",
@@ -94,8 +96,8 @@ __decorate([
     (0, type_graphql_1.Mutation)(() => types_1.UserResponse),
     __param(0, (0, type_graphql_1.Arg)("email")),
     __param(1, (0, type_graphql_1.Arg)("password")),
-    __param(2, (0, type_graphql_1.Arg)("first_name")),
-    __param(3, (0, type_graphql_1.Arg)("last_name")),
+    __param(2, (0, type_graphql_1.Arg)("firstName")),
+    __param(3, (0, type_graphql_1.Arg)("lastName")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, String, String, String]),
     __metadata("design:returntype", Promise)

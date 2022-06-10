@@ -27,13 +27,13 @@ __decorate([
     __metadata("design:type", String)
 ], Patient.prototype, "mrn", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)(() => type_graphql_1.Int),
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Patient.prototype, "doctor_id", void 0);
+], Patient.prototype, "doctorId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.patients),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.patients, { nullable: true }),
     __metadata("design:type", User_1.User)
 ], Patient.prototype, "doctor", void 0);
 __decorate([
@@ -43,19 +43,19 @@ __decorate([
 ], Patient.prototype, "notes", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => [Scan_1.Scan]),
-    (0, typeorm_1.OneToMany)(() => Scan_1.Scan, (scan) => scan.patient),
+    (0, typeorm_1.OneToMany)(() => Scan_1.Scan, (scan) => scan.patient, { eager: true }),
     __metadata("design:type", Array)
 ], Patient.prototype, "scans", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.CreateDateColumn)(),
     __metadata("design:type", Date)
-], Patient.prototype, "created_at", void 0);
+], Patient.prototype, "createdAt", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => String),
     (0, typeorm_1.UpdateDateColumn)(),
     __metadata("design:type", Date)
-], Patient.prototype, "updated_at", void 0);
+], Patient.prototype, "updatedAt", void 0);
 Patient = __decorate([
     (0, type_graphql_1.ObjectType)(),
     (0, typeorm_1.Entity)()
