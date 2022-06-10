@@ -1,11 +1,13 @@
-import "reflect-metadata";
-import { createConnection } from "typeorm";
-import express from "express";
-import cors from "cors";
-import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { ApolloServer } from "apollo-server-express";
+import cors from "cors";
+import express from "express";
+import "reflect-metadata";
 import { buildSchema } from "type-graphql";
+import { createConnection } from "typeorm";
+import { User } from "./entities/User";
 import { HelloResolver } from "./resolvers/hello";
+import { UserResolver } from "./resolvers/user";
 
 const main = async () => {
   await createConnection({
@@ -15,7 +17,7 @@ const main = async () => {
     password: "postgres",
     logging: true,
     synchronize: true,
-    entities: [],
+    entities: [User],
   });
 
   const app = express();
@@ -30,7 +32,7 @@ const main = async () => {
   const apolloServer = new ApolloServer({
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
     schema: await buildSchema({
-      resolvers: [HelloResolver],
+      resolvers: [UserResolver],
       validate: false,
     }),
   });

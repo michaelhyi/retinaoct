@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "apollo-server-express": "^3.8.2",
+    "argon2": "^0.28.5",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "graphql": "15.8.0",
