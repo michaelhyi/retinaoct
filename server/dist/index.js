@@ -10,6 +10,8 @@ const express_1 = __importDefault(require("express"));
 require("reflect-metadata");
 const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
+const Patient_1 = require("./entities/Patient");
+const Scan_1 = require("./entities/Scan");
 const User_1 = require("./entities/User");
 const user_1 = require("./resolvers/user");
 const main = async () => {
@@ -20,7 +22,7 @@ const main = async () => {
         password: "postgres",
         logging: true,
         synchronize: true,
-        entities: [User_1.User],
+        entities: [User_1.User, Patient_1.Patient, Scan_1.Scan],
     });
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
@@ -43,7 +45,7 @@ const main = async () => {
         console.log("Server started on localhost:4000");
     });
 };
-main().catch((err) => {
-    console.error(err);
+main().catch((e) => {
+    console.error(e);
 });
 //# sourceMappingURL=index.js.map

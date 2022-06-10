@@ -42,7 +42,7 @@ export class Scan extends BaseEntity {
   @Column()
   patient_id!: number;
 
-  @Field()
+  @Field(() => Patient)
   @ManyToOne(() => Patient, (patient) => patient.scans)
   patient!: Patient;
 

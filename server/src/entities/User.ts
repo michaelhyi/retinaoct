@@ -33,11 +33,11 @@ export class User extends BaseEntity {
   @Column()
   last_name!: string;
 
-  @Field()
+  @Field(() => [Patient])
   @OneToMany(() => Patient, (patient) => patient.doctor)
   patients: Patient[];
 
-  @Field()
+  @Field(() => [Scan])
   @OneToMany(() => Scan, (scan) => scan.doctor)
   scans: Scan[];
 

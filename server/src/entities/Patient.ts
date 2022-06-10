@@ -35,7 +35,7 @@ export class Patient extends BaseEntity {
   @Column()
   notes: string;
 
-  @Field()
+  @Field(() => [Scan])
   @OneToMany(() => Scan, (scan) => scan.patient)
   scans: Scan[];
 

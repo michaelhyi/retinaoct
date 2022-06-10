@@ -17,31 +17,81 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const argon2_1 = __importDefault(require("argon2"));
-const User_1 = require("../entities/User");
 const type_graphql_1 = require("type-graphql");
+const User_1 = require("../entities/User");
+const types_1 = require("../utils/types");
 let UserResolver = class UserResolver {
-    hello() {
-        return "Hello World!";
+    getUsers() {
+        return User_1.User.find();
     }
     async register(email, password, first_name, last_name) {
-        const hashedPassword = await argon2_1.default.hash(password);
-        const user = await User_1.User.create({
-            email,
-            password: hashedPassword,
-            first_name,
-            last_name,
-        }).save();
-        return user;
+        if (!email.includes("@")) {
+            return {
+                error: {
+                    field: "Email",
+                    message: "Invalid email.",
+                },
+            };
+        }
+        if (password.length <= 2) {
+            return {
+                error: {
+                    field: "Password",
+                    message: "Password length must be greater than 2 characters.",
+                },
+            };
+        }
+        let user;
+        try {
+            user = await User_1.User.create({
+                email,
+                password: await argon2_1.default.hash(password),
+                first_name,
+                last_name,
+            }).save();
+        }
+        catch (e) {
+            if (e.detail.includes("already exists")) {
+                return {
+                    error: {
+                        field: "Email",
+                        message: "Email already exists.",
+                    },
+                };
+            }
+        }
+        return { user };
+    }
+    async login(email, password) {
+        const user = await User_1.User.findOne({ where: { email } });
+        if (!user) {
+            return {
+                error: {
+                    field: "Email",
+                    message: "A user with that email does not exist.",
+                },
+            };
+        }
+        const verified = await argon2_1.default.verify(user.password, password);
+        if (!verified) {
+            return {
+                error: {
+                    field: "Password",
+                    message: "Incorrect password.",
+                },
+            };
+        }
+        return { user };
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => String),
+    (0, type_graphql_1.Query)(() => [User_1.User]),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], UserResolver.prototype, "hello", null);
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "getUsers", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => User_1.User),
+    (0, type_graphql_1.Mutation)(() => types_1.UserResponse),
     __param(0, (0, type_graphql_1.Arg)("email")),
     __param(1, (0, type_graphql_1.Arg)("password")),
     __param(2, (0, type_graphql_1.Arg)("first_name")),
@@ -50,6 +100,14 @@ __decorate([
     __metadata("design:paramtypes", [String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "register", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => types_1.UserResponse),
+    __param(0, (0, type_graphql_1.Arg)("email")),
+    __param(1, (0, type_graphql_1.Arg)("password")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "login", null);
 UserResolver = __decorate([
     (0, type_graphql_1.Resolver)()
 ], UserResolver);
