@@ -5,3 +5,4 @@ Technologies:
 - PostgreSQL
 - GraphQL
 - Typeorm
+- URQL
