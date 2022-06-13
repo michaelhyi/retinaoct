@@ -7,6 +7,10 @@ interface Props {
 }
 
 const RecentPatient: React.FC<Props> = ({ patient }) => {
+  if (!patient) {
+    return null;
+  }
+
   return (
     <TouchableOpacity
       style={{

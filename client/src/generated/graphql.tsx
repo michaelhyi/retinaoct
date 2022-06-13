@@ -148,6 +148,13 @@ export type GetPatientsQueryVariables = Exact<{
 
 export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
 
+export type GetScansQueryVariables = Exact<{
+  doctorId: Scalars['Int'];
+}>;
+
+
+export type GetScansQuery = { __typename?: 'Query', getScans: Array<{ __typename?: 'Scan', id: number, url: string, updatedAtString: string, diagnosis: string }> };
+
 
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
@@ -185,4 +192,18 @@ export const GetPatientsDocument = gql`
 
 export function useGetPatientsQuery(options: Omit<Urql.UseQueryArgs<GetPatientsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetPatientsQuery>({ query: GetPatientsDocument, ...options });
+};
+export const GetScansDocument = gql`
+    query getScans($doctorId: Int!) {
+  getScans(doctorId: $doctorId) {
+    id
+    url
+    updatedAtString
+    diagnosis
+  }
+}
+    `;
+
+export function useGetScansQuery(options: Omit<Urql.UseQueryArgs<GetScansQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetScansQuery>({ query: GetScansDocument, ...options });
 };

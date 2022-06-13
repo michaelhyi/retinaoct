@@ -1,35 +1,10 @@
-import { useContext } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import HomeHeader from "../components/HomeHeader";
-import RecentPatient from "../components/RecentPatient";
 import Layout from "../components/Layout";
-import { useGetPatientsQuery } from "../generated/graphql";
-import { context } from "../utils/context";
+import RecentPatients from "../components/RecentPatients";
+import RecentScans from "../components/RecentScans";
 
 const Home = () => {
-  const { user } = useContext(context);
-  const [{ data, fetching }] = useGetPatientsQuery({
-    variables: {
-      doctorId: user,
-      limit: 4,
-    },
-  });
-
-  if (fetching) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator />
-      </View>
-    );
-  }
-
   return (
     <Layout>
       <HomeHeader />
@@ -47,26 +22,8 @@ const Home = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 20,
-        }}
-      >
-        <RecentPatient patient={data?.getPatients[0]} />
-        <RecentPatient patient={data?.getPatients[1]} />
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          marginTop: 20,
-        }}
-      >
-        <RecentPatient patient={data?.getPatients[2]} />
-        <RecentPatient patient={data?.getPatients[3]} />
-      </View>
+      <RecentPatients />
+
       <View style={{ flexDirection: "row", marginTop: 24 }}>
         <Text style={styles.header}>Recent Scans</Text>
         <TouchableOpacity style={{ marginLeft: "auto" }}>
@@ -81,27 +38,7 @@ const Home = () => {
           </Text>
         </TouchableOpacity>
       </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginTop: 20,
-        }}
-      >
-        <TouchableOpacity>
-          <Image source={require("../assets/scan.png")} />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image source={require("../assets/scan.png")} />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image source={require("../assets/scan.png")} />
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Image source={require("../assets/scan.png")} />
-        </TouchableOpacity>
-      </View>
+      <RecentScans />
     </Layout>
   );
 };
