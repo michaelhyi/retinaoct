@@ -146,7 +146,7 @@ export type GetPatientsQueryVariables = Exact<{
 }>;
 
 
-export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, notes: string, updatedAtString: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
+export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
 
 
 export const LoginDocument = gql`
@@ -174,8 +174,8 @@ export const GetPatientsDocument = gql`
     mrn
     doctorId
     updatedAt
-    notes
     updatedAtString
+    notes
     scans {
       id
     }

@@ -43,6 +43,7 @@ export class PatientResolver {
         mrn,
         doctorId,
         notes,
+        updatedAtString: format(new Date(), "P p"),
       }).save();
     } catch (e) {
       if (

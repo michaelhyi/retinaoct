@@ -13,6 +13,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PatientResolver = void 0;
+const date_fns_1 = require("date-fns");
 const type_graphql_1 = require("type-graphql");
 const Patient_1 = require("../entities/Patient");
 const types_1 = require("../utils/types");
@@ -45,6 +46,7 @@ let PatientResolver = class PatientResolver {
                 mrn,
                 doctorId,
                 notes,
+                updatedAtString: (0, date_fns_1.format)(new Date(), "P p"),
             }).save();
         }
         catch (e) {

@@ -46,4 +46,8 @@ export class Patient extends BaseEntity {
   @Field(() => String)
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Field()
+  @Column()
+  updatedAtString: string;
 }

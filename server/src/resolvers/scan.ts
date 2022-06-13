@@ -1,6 +1,6 @@
-import { Scan } from "../entities/Scan";
-import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { format } from "date-fns";
+import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { Scan } from "../entities/Scan";
 
 @Resolver()
 export class ScanResolver {
@@ -46,6 +46,7 @@ export class ScanResolver {
       note,
       doctorId,
       patientId,
+      updatedAtString: format(new Date(), "P p"),
     }).save();
 
     return scan;

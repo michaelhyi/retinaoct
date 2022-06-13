@@ -57,4 +57,8 @@ export class Scan extends BaseEntity {
   @Field(() => String)
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Field()
+  @Column()
+  updatedAtString: string;
 }

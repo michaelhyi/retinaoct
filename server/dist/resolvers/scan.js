@@ -13,8 +13,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScanResolver = void 0;
-const Scan_1 = require("../entities/Scan");
+const date_fns_1 = require("date-fns");
 const type_graphql_1 = require("type-graphql");
+const Scan_1 = require("../entities/Scan");
 let ScanResolver = class ScanResolver {
     async getScans(doctorId, limit) {
         let scans;
@@ -45,6 +46,7 @@ let ScanResolver = class ScanResolver {
             note,
             doctorId,
             patientId,
+            updatedAtString: (0, date_fns_1.format)(new Date(), "P p"),
         }).save();
         return scan;
     }
