@@ -1,13 +1,12 @@
-import { format, parseISO } from "date-fns";
+import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import {
-  View,
+  Dimensions,
   StyleSheet,
   Text,
-  Dimensions,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
 
 interface Props {
   item: {

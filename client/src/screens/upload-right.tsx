@@ -1,12 +1,10 @@
-import { FC } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Layout from "../components/Layout";
 
-import Screen from "../components/screen";
-
-const UploadRight: FC = (): JSX.Element => {
+const UploadRight = () => {
   return (
-    <Screen>
+    <Layout>
       <TouchableOpacity style={{ padding: 10 }}>
         <FontAwesome5 name="less-than" size={15} />
       </TouchableOpacity>
@@ -56,7 +54,7 @@ const UploadRight: FC = (): JSX.Element => {
           <Text style={styles.whitetext}>Submit</Text>
         </TouchableOpacity>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

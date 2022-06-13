@@ -1,15 +1,13 @@
-import { FC } from "react";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
+import Layout from "../components/Layout";
 
-import Screen from "../components/screen";
-
-const Create: FC = (): JSX.Element => {
+const Create = () => {
   return (
-    <Screen>
+    <Layout>
       <View>
         <Text>Create</Text>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

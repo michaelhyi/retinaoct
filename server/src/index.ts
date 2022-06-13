@@ -23,8 +23,6 @@ const main = async () => {
     entities: [User, Patient, Scan],
   });
 
-  await Scan.delete({});
-
   const app = express();
 
   app.use(

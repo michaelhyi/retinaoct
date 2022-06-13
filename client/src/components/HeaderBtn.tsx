@@ -1,27 +1,27 @@
-import { FC } from "react";
+import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 
 interface Props {
   onPress?: () => void;
   header?: string;
-  left?: string;
-  right?: string;
+  desc?: string;
+  date?: string;
   marginTop?: number;
   icon?: JSX.Element;
   color?: string;
   style?: any;
 }
 
-const ScanBtn: FC<Props> = ({
+const HeaderBtn: React.FC<Props> = ({
   onPress,
   header,
-  left,
-  right,
+  desc,
+  date,
   marginTop,
   icon,
   color,
   style,
-}): JSX.Element => {
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -32,7 +32,7 @@ const ScanBtn: FC<Props> = ({
         ...style,
       }}
     >
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View style={{ flexDirection: "row" }}>
         {icon}
         <View style={{ flexDirection: "column" }}>
           <Text
@@ -49,23 +49,23 @@ const ScanBtn: FC<Props> = ({
             style={{
               marginLeft: 10,
               padding: 1,
-              fontSize: 16,
+              fontSize: 12,
               fontFamily: "Montserrat-Regular",
               color: "#999999",
             }}
           >
-            {left}
+            {desc}
           </Text>
           <Text
             style={{
               marginLeft: 10,
               padding: 1,
-              fontSize: 16,
+              fontSize: 12,
               fontFamily: "Montserrat-Regular",
               color: "#999999",
             }}
           >
-            {right}
+            {date}
           </Text>
         </View>
       </View>
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ScanBtn;
+export default HeaderBtn;

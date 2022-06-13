@@ -1,13 +1,13 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useContext } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Screen from "../components/screen";
+import Layout from "../components/Layout";
 import { context } from "../utils/context";
 
-const Settings = (): JSX.Element => {
+const Settings = () => {
   const { setUser } = useContext(context);
   return (
-    <Screen>
+    <Layout>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <TouchableOpacity
           onPress={async () => {
@@ -25,7 +25,7 @@ const Settings = (): JSX.Element => {
           <Text>Logout</Text>
         </TouchableOpacity>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

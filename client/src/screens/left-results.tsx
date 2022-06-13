@@ -1,11 +1,9 @@
-import { FC } from "react";
-import { StyleSheet, View, Image, TouchableOpacity, Text } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Layout from "../components/Layout";
 
-import Screen from "../components/screen";
-
-const LeftResults: FC = (): JSX.Element => {
+const LeftResults = () => {
   return (
-    <Screen>
+    <Layout>
       <View style={styles.container}>
         <Image
           style={{
@@ -39,7 +37,7 @@ const LeftResults: FC = (): JSX.Element => {
           <Text style={styles.whitetext}>Learn More</Text>
         </TouchableOpacity>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

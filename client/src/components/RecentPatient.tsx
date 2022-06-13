@@ -1,12 +1,12 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
   patient: any;
 }
 
-const RecentPatient: React.FC<Props> = ({ patient }): JSX.Element => {
+const RecentPatient: React.FC<Props> = ({ patient }) => {
   return (
     <TouchableOpacity
       style={{
@@ -23,7 +23,7 @@ const RecentPatient: React.FC<Props> = ({ patient }): JSX.Element => {
               marginLeft: 10,
               padding: 1,
               fontFamily: "Montserrat-Regular",
-              fontSize: 14,
+              fontSize: 13,
             }}
           >
             {patient.mrn}
@@ -32,12 +32,12 @@ const RecentPatient: React.FC<Props> = ({ patient }): JSX.Element => {
             style={{
               marginLeft: 10,
               padding: 1,
-              fontSize: 12,
+              fontSize: 11,
               fontFamily: "Montserrat-Regular",
               color: "#999999",
             }}
           >
-            {patient.updatedAt}
+            {patient.updatedAtString}
           </Text>
         </View>
       </View>
@@ -47,12 +47,9 @@ const RecentPatient: React.FC<Props> = ({ patient }): JSX.Element => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    borderRadius: 10,
     padding: 20,
-    flexGrow: 1,
-    marginRight: 15,
-    backgroundColor: "white",
+    borderRadius: 15,
+    marginHorizontal: 6,
   },
 });
 

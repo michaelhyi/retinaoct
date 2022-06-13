@@ -1,19 +1,19 @@
-import { FC, useContext } from "react";
+import { useContext } from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
   ActivityIndicator,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import Screen from "../components/screen";
-import HomeHeader from "../components/home-header";
-import RecentPatient from "../components/recent-patient";
+import HomeHeader from "../components/HomeHeader";
+import RecentPatient from "../components/RecentPatient";
+import Layout from "../components/Layout";
 import { useGetPatientsQuery } from "../generated/graphql";
 import { context } from "../utils/context";
 
-const Home: FC = (): JSX.Element => {
+const Home = () => {
   const { user } = useContext(context);
   const [{ data, fetching }] = useGetPatientsQuery({
     variables: {
@@ -31,7 +31,7 @@ const Home: FC = (): JSX.Element => {
   }
 
   return (
-    <Screen>
+    <Layout>
       <HomeHeader />
       <View style={{ flexDirection: "row", marginTop: 30 }}>
         <Text style={styles.header}>Recent Patients</Text>
@@ -55,7 +55,7 @@ const Home: FC = (): JSX.Element => {
         }}
       >
         <RecentPatient patient={data?.getPatients[0]} />
-        <RecentPatient patient={data?.getPatients[0]} />
+        <RecentPatient patient={data?.getPatients[1]} />
       </View>
       <View
         style={{
@@ -64,8 +64,8 @@ const Home: FC = (): JSX.Element => {
           marginTop: 20,
         }}
       >
-        <RecentPatient patient={data?.getPatients[0]} />
-        <RecentPatient patient={data?.getPatients[0]} />
+        <RecentPatient patient={data?.getPatients[2]} />
+        <RecentPatient patient={data?.getPatients[3]} />
       </View>
       <View style={{ flexDirection: "row", marginTop: 24 }}>
         <Text style={styles.header}>Recent Scans</Text>
@@ -102,7 +102,7 @@ const Home: FC = (): JSX.Element => {
           <Image source={require("../assets/scan.png")} />
         </TouchableOpacity>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

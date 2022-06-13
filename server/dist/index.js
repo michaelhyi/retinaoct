@@ -26,7 +26,6 @@ const main = async () => {
         synchronize: true,
         entities: [User_1.User, Patient_1.Patient, Scan_1.Scan],
     });
-    await Scan_1.Scan.delete({});
     const app = (0, express_1.default)();
     app.use((0, cors_1.default)({
         origin: "http://localhost:3000",

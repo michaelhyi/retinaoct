@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface Props {
   onPress?: () => void;
@@ -12,7 +12,7 @@ interface Props {
   style?: any;
 }
 
-const Btn: FC<Props> = ({
+const Btn: React.FC<Props> = ({
   onPress,
   text,
   desc,
@@ -21,7 +21,7 @@ const Btn: FC<Props> = ({
   icon,
   color,
   style,
-}): JSX.Element => {
+}) => {
   return (
     <TouchableOpacity
       onPress={onPress}

@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Screen from "../components/screen";
+import Layout from "../components/Layout";
 import { useLoginMutation } from "../generated/graphql";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { context } from "../utils/context";
 
-const Landing: React.FC = () => {
+const Landing = () => {
   const { setUser } = useContext(context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [, login] = useLoginMutation();
 
   return (
-    <Screen>
+    <Layout>
       <View style={styles.container}>
         <View style={styles.icon} />
         <Text style={styles.logoText}>RetinaOCT</Text>
@@ -60,7 +60,7 @@ const Landing: React.FC = () => {
           </Text>
         </TouchableOpacity>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

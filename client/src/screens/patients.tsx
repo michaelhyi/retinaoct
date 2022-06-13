@@ -10,9 +10,9 @@ import {
   View,
 } from "react-native";
 import { useGetPatientsQuery } from "../generated/graphql";
-import Screen from "../components/screen";
+import Layout from "../components/Layout";
 import { context } from "../utils/context";
-import PatientCard from "../components/patientCard";
+import PatientCard from "../components/PatientCard";
 
 interface Props {
   navigation: {
@@ -37,7 +37,7 @@ const Patients: React.FC<Props> = ({ navigation }) => {
   }
 
   return (
-    <Screen>
+    <Layout>
       <View style={styles.header}>
         <Text
           style={{
@@ -64,7 +64,7 @@ const Patients: React.FC<Props> = ({ navigation }) => {
           }
         />
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

@@ -1,8 +1,8 @@
-import { FC } from "react";
-import { View, Text } from "react-native";
 import { format } from "date-fns";
+import React from "react";
+import { Text, View } from "react-native";
 
-const HomeHeader: FC = (): JSX.Element => {
+const HomeHeader: React.FC = () => {
   return (
     <View>
       <Text

@@ -1,5 +1,6 @@
 import { Scan } from "../entities/Scan";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { format } from "date-fns";
 
 @Resolver()
 export class ScanResolver {

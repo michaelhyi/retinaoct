@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import { ActivityIndicator } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
-import { createClient, Provider } from "urql";
-import { loadFonts } from "./utils/loadFonts";
-import Landing from "./screens/landing";
-import { IP_ADDRESS } from "../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Tabs from "./components/tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
+import { createClient, Provider } from "urql";
+import { IP_ADDRESS } from "../constants";
+import TabNavigator from "./components/TabNavigator";
+import Landing from "./screens/landing";
 import { context } from "./utils/context";
+import { loadFonts } from "./utils/loadFonts";
 
 const client = createClient({
   url: `http://${IP_ADDRESS}:4000/graphql`,
 });
 
-const App = (): JSX.Element => {
+const App = () => {
   let [fontsLoaded] = loadFonts();
   const [user, setUser] = useState(null);
 
@@ -40,7 +40,7 @@ const App = (): JSX.Element => {
       <Provider value={client}>
         <NavigationContainer>
           <StatusBar style="dark" />
-          {user ? <Tabs /> : <Landing />}
+          {user ? <TabNavigator /> : <Landing />}
         </NavigationContainer>
       </Provider>
     </context.Provider>

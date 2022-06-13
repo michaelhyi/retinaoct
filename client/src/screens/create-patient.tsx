@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -9,8 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
-
-import Screen from "../components/screen";
+import Layout from "../components/Layout";
 
 interface Props {
   navigation: {
@@ -19,11 +18,11 @@ interface Props {
   };
 }
 
-const CreatePatient: FC<Props> = ({ navigation }) => {
+const CreatePatient: React.FC<Props> = ({ navigation }) => {
   const [text, onChangeText] = useState(null);
 
   return (
-    <Screen>
+    <Layout>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{ padding: 10 }}
@@ -78,7 +77,7 @@ const CreatePatient: FC<Props> = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

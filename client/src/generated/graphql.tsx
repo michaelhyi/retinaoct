@@ -24,6 +24,7 @@ export type Error = {
 export type Mutation = {
   __typename?: 'Mutation';
   createPatient: PatientResponse;
+  createScan: Scan;
   login: UserResponse;
   register: UserResponse;
 };
@@ -33,6 +34,16 @@ export type MutationCreatePatientArgs = {
   doctorId: Scalars['Float'];
   mrn: Scalars['String'];
   notes: Scalars['String'];
+};
+
+
+export type MutationCreateScanArgs = {
+  diagnosis: Scalars['String'];
+  doctorId: Scalars['Int'];
+  eye: Scalars['String'];
+  note: Scalars['String'];
+  patientId: Scalars['Int'];
+  url: Scalars['String'];
 };
 
 
@@ -59,6 +70,7 @@ export type Patient = {
   notes: Scalars['String'];
   scans: Array<Scan>;
   updatedAt: Scalars['String'];
+  updatedAtString: Scalars['String'];
 };
 
 export type PatientResponse = {
@@ -70,11 +82,18 @@ export type PatientResponse = {
 export type Query = {
   __typename?: 'Query';
   getPatients: Array<Patient>;
+  getScans: Array<Scan>;
   getUsers: Array<User>;
 };
 
 
 export type QueryGetPatientsArgs = {
+  doctorId: Scalars['Int'];
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryGetScansArgs = {
   doctorId: Scalars['Int'];
   limit?: InputMaybe<Scalars['Int']>;
 };
@@ -91,6 +110,8 @@ export type Scan = {
   patient: Patient;
   patientId: Scalars['Float'];
   updatedAt: Scalars['String'];
+  updatedAtString: Scalars['String'];
+  url: Scalars['String'];
 };
 
 export type User = {
@@ -125,7 +146,7 @@ export type GetPatientsQueryVariables = Exact<{
 }>;
 
 
-export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
+export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, notes: string, updatedAtString: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
 
 
 export const LoginDocument = gql`
@@ -154,6 +175,7 @@ export const GetPatientsDocument = gql`
     doctorId
     updatedAt
     notes
+    updatedAtString
     scans {
       id
     }

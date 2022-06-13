@@ -1,12 +1,10 @@
-import { FC } from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import HeaderBtn from "../components/HeaderBtn";
+import Layout from "../components/Layout";
 
-import HeaderBtn from "../components/header-btn";
-import Screen from "../components/screen";
-
-const Scans: FC = (): JSX.Element => {
+const Scans = () => {
   return (
-    <Screen>
+    <Layout>
       <View>
         <Text
           style={{
@@ -125,7 +123,7 @@ const Scans: FC = (): JSX.Element => {
           </View>
         </View>
       </View>
-    </Screen>
+    </Layout>
   );
 };
 

@@ -5,6 +5,7 @@ query getPatients($doctorId: Int!, $limit: Int) {
     doctorId
     updatedAt
     notes
+    updatedAtString
     scans {
       id
     }

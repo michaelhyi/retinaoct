@@ -1,9 +1,8 @@
-import { FC } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
-
-import Screen from "../components/screen";
-import ScanBtn from "../components/scan-btn";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import ScanBtn from "../components/ScanBtn";
+import Layout from "../components/Layout";
 
 interface Props {
   navigation: {
@@ -12,9 +11,9 @@ interface Props {
   };
 }
 
-const PatientInfo: FC<Props> = ({ navigation }): JSX.Element => {
+const PatientInfo: React.FC<Props> = ({ navigation }) => {
   return (
-    <Screen>
+    <Layout>
       <View style={styles.container}>
         <TouchableOpacity style={{ padding: 10 }}>
           <FontAwesome5 name="less-than" size={15} />
@@ -78,7 +77,7 @@ const PatientInfo: FC<Props> = ({ navigation }): JSX.Element => {
           }
         />
       </View>
-    </Screen>
+    </Layout>
   );
 };
 
