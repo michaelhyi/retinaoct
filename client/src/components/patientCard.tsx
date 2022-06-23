@@ -11,7 +11,7 @@ import {
 interface Props {
   item: {
     mrn: string;
-    updatedAt: string;
+    updatedAtString: string;
   };
 }
 
@@ -24,7 +24,7 @@ const PatientCard: React.FC<Props> = ({ item }) => {
           {item.mrn}
         </Text>
         <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 14 }}>
-          {item.updatedAt}
+          {item.updatedAtString}
         </Text>
       </View>
     </TouchableOpacity>

@@ -18,25 +18,23 @@ const type_graphql_1 = require("type-graphql");
 const Patient_1 = require("../entities/Patient");
 const types_1 = require("../utils/types");
 let PatientResolver = class PatientResolver {
-    async getPatients(doctorId, limit) {
-        let patients;
-        if (limit) {
-            patients = await Patient_1.Patient.find({
-                where: { doctorId },
-                order: {
-                    updatedAt: "DESC",
-                },
-                take: limit,
-            });
-        }
-        else {
-            patients = await Patient_1.Patient.find({
-                where: { doctorId },
-                order: {
-                    updatedAt: "DESC",
-                },
-            });
-        }
+    async getPatients(doctorId) {
+        const patients = await Patient_1.Patient.find({
+            where: { doctorId },
+            order: {
+                id: "ASC",
+            },
+        });
+        return patients;
+    }
+    async getRecentPatients(doctorId) {
+        const patients = await Patient_1.Patient.find({
+            where: { doctorId },
+            order: {
+                updatedAt: "DESC",
+            },
+            take: 4,
+        });
         return patients;
     }
     async createPatient(mrn, doctorId, notes) {
@@ -66,11 +64,17 @@ let PatientResolver = class PatientResolver {
 __decorate([
     (0, type_graphql_1.Query)(() => [Patient_1.Patient]),
     __param(0, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
-    __param(1, (0, type_graphql_1.Arg)("limit", () => type_graphql_1.Int, { nullable: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], PatientResolver.prototype, "getPatients", null);
+__decorate([
+    (0, type_graphql_1.Query)(() => [Patient_1.Patient]),
+    __param(0, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], PatientResolver.prototype, "getRecentPatients", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => types_1.PatientResponse),
     __param(0, (0, type_graphql_1.Arg)("mrn")),

@@ -1,5 +1,5 @@
-query getPatients($doctorId: Int!) {
-  getPatients(doctorId: $doctorId) {
+query getRecentPatients($doctorId: Int!) {
+  getRecentPatients(doctorId: $doctorId) {
     id
     mrn
     doctorId

@@ -82,6 +82,7 @@ export type PatientResponse = {
 export type Query = {
   __typename?: 'Query';
   getPatients: Array<Patient>;
+  getRecentPatients: Array<Patient>;
   getScans: Array<Scan>;
   getUsers: Array<User>;
 };
@@ -89,7 +90,11 @@ export type Query = {
 
 export type QueryGetPatientsArgs = {
   doctorId: Scalars['Int'];
-  limit?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryGetRecentPatientsArgs = {
+  doctorId: Scalars['Int'];
 };
 
 
@@ -142,11 +147,17 @@ export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'Us
 
 export type GetPatientsQueryVariables = Exact<{
   doctorId: Scalars['Int'];
-  limit?: InputMaybe<Scalars['Int']>;
 }>;
 
 
 export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
+
+export type GetRecentPatientsQueryVariables = Exact<{
+  doctorId: Scalars['Int'];
+}>;
+
+
+export type GetRecentPatientsQuery = { __typename?: 'Query', getRecentPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
 
 export type GetScansQueryVariables = Exact<{
   doctorId: Scalars['Int'];
@@ -175,8 +186,8 @@ export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
 export const GetPatientsDocument = gql`
-    query getPatients($doctorId: Int!, $limit: Int) {
-  getPatients(doctorId: $doctorId, limit: $limit) {
+    query getPatients($doctorId: Int!) {
+  getPatients(doctorId: $doctorId) {
     id
     mrn
     doctorId
@@ -192,6 +203,25 @@ export const GetPatientsDocument = gql`
 
 export function useGetPatientsQuery(options: Omit<Urql.UseQueryArgs<GetPatientsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetPatientsQuery>({ query: GetPatientsDocument, ...options });
+};
+export const GetRecentPatientsDocument = gql`
+    query getRecentPatients($doctorId: Int!) {
+  getRecentPatients(doctorId: $doctorId) {
+    id
+    mrn
+    doctorId
+    updatedAt
+    updatedAtString
+    notes
+    scans {
+      id
+    }
+  }
+}
+    `;
+
+export function useGetRecentPatientsQuery(options: Omit<Urql.UseQueryArgs<GetRecentPatientsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetRecentPatientsQuery>({ query: GetRecentPatientsDocument, ...options });
 };
 export const GetScansDocument = gql`
     query getScans($doctorId: Int!) {

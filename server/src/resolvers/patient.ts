@@ -7,27 +7,28 @@ import { PatientResponse } from "../utils/types";
 export class PatientResolver {
   @Query(() => [Patient])
   async getPatients(
-    @Arg("doctorId", () => Int) doctorId: number,
-    @Arg("limit", () => Int, { nullable: true }) limit: number | null
+    @Arg("doctorId", () => Int) doctorId: number
   ): Promise<Patient[]> {
-    let patients;
-    if (limit) {
-      patients = await Patient.find({
-        where: { doctorId },
-        order: {
-          updatedAt: "DESC",
-        },
-        take: limit,
-      });
-    } else {
-      patients = await Patient.find({
-        where: { doctorId },
-        order: {
-          updatedAt: "DESC",
-        },
-      });
-    }
+    const patients = await Patient.find({
+      where: { doctorId },
+      order: {
+        id: "ASC",
+      },
+    });
+    return patients;
+  }
 
+  @Query(() => [Patient])
+  async getRecentPatients(
+    @Arg("doctorId", () => Int) doctorId: number
+  ): Promise<Patient[]> {
+    const patients = await Patient.find({
+      where: { doctorId },
+      order: {
+        updatedAt: "DESC",
+      },
+      take: 4,
+    });
     return patients;
   }
 

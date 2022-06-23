@@ -1,18 +1,17 @@
 import { Feather } from "@expo/vector-icons";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Dimensions,
   FlatList,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
-import { useGetPatientsQuery } from "../generated/graphql";
 import Layout from "../components/Layout";
-import { context } from "../utils/context";
 import PatientCard from "../components/PatientCard";
+import { useGetPatientsQuery } from "../generated/graphql";
+import { context } from "../utils/context";
 
 interface Props {
   navigation: {
@@ -27,6 +26,27 @@ const Patients: React.FC<Props> = ({ navigation }) => {
       doctorId: user,
     },
   });
+  const [search, setSearch] = useState("");
+  const [filteredData, setFilteredData] = useState<any>(null);
+
+  useEffect(() => {
+    if (!fetching && typeof data?.getPatients !== "undefined") {
+      setFilteredData(data.getPatients);
+    }
+  }, [data, fetching]);
+
+  const filter = (text: string) => {
+    if (text.length === 0) setSearch("");
+    else if (text && data) {
+      const newData = data.getPatients.filter((item: any) => {
+        const itemData = item.mrn ? item.mrn.toUpperCase() : "".toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+      setSearch(text);
+    }
+  };
 
   if (fetching) {
     return (
@@ -53,15 +73,17 @@ const Patients: React.FC<Props> = ({ navigation }) => {
             style={{ flex: 1, zIndex: 1 }}
             placeholder="Search"
             placeholderTextColor="#000000"
+            autoCapitalize="none"
+            value={search}
+            onChangeText={(text) => filter(text)}
+            underlineColorAndroid="transparent"
           />
         </View>
         <FlatList
-          data={data?.getPatients}
+          data={filteredData}
           renderItem={(item) => <PatientCard item={item.item} />}
           showsVerticalScrollIndicator={false}
-          ListFooterComponent={
-            <View style={{ height: Dimensions.get("window").height / 5 }} />
-          }
+          ListFooterComponent={<View style={{ height: 24 }} />}
         />
       </View>
     </Layout>

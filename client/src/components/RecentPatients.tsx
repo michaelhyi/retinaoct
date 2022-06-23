@@ -1,16 +1,15 @@
-import { useContext } from "react";
-import { ActivityIndicator, View, StyleSheet, Text } from "react-native";
-import { context } from "../utils/context";
-import { useGetPatientsQuery } from "../generated/graphql";
-import RecentPatient from "./RecentPatient";
 import { FontAwesome } from "@expo/vector-icons";
+import { useContext } from "react";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { useGetRecentPatientsQuery } from "../generated/graphql";
+import { context } from "../utils/context";
+import RecentPatient from "./RecentPatient";
 
 const RecentPatients = () => {
   const { user } = useContext(context);
-  const [{ data, fetching }] = useGetPatientsQuery({
+  const [{ data, fetching }] = useGetRecentPatientsQuery({
     variables: {
       doctorId: user,
-      limit: 4,
     },
   });
 
@@ -49,8 +48,8 @@ const RecentPatients = () => {
               marginTop: 20,
             }}
           >
-            <RecentPatient patient={data?.getPatients[0]} />
-            <RecentPatient patient={data?.getPatients[1]} />
+            <RecentPatient patient={data?.getRecentPatients[0]} />
+            <RecentPatient patient={data?.getRecentPatients[1]} />
           </View>
           <View
             style={{
@@ -59,8 +58,8 @@ const RecentPatients = () => {
               marginTop: 20,
             }}
           >
-            <RecentPatient patient={data?.getPatients[2]} />
-            <RecentPatient patient={data?.getPatients[3]} />
+            <RecentPatient patient={data?.getRecentPatients[2]} />
+            <RecentPatient patient={data?.getRecentPatients[3]} />
           </View>
         </>
       )}
