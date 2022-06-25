@@ -7,14 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Navigation } from "../utils/types";
 
 interface Props {
+  navigation: Navigation;
   item: any;
 }
 
-const ScanCard: React.FC<Props> = ({ item }) => {
+const ScanCard: React.FC<Props> = ({ navigation, item }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("View Scan")}
+      style={styles.container}
+    >
       <Image
         source={{ uri: item.url }}
         style={{ height: 75, width: 75, borderRadius: 12 }}

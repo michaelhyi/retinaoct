@@ -10,12 +10,10 @@ import {
 } from "react-native";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
 import Layout from "../components/Layout";
+import { Navigation } from "../utils/types";
 
 interface Props {
-  navigation: {
-    navigate: (name: string) => void;
-    goBack: () => void;
-  };
+  navigation: Navigation;
 }
 
 const CreatePatient: React.FC<Props> = ({ navigation }) => {

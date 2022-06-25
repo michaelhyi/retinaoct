@@ -1,18 +1,21 @@
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Navigation } from "../utils/types";
 
 interface Props {
+  navigation: Navigation;
   patient: any;
 }
 
-const RecentPatient: React.FC<Props> = ({ patient }) => {
+const RecentPatient: React.FC<Props> = ({ navigation, patient }) => {
   if (!patient) {
     return null;
   }
 
   return (
     <TouchableOpacity
+      onPress={() => navigation.navigate("View Patient")}
       style={{
         ...styles.container,
         backgroundColor: "white",

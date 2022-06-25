@@ -8,15 +8,14 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { Navigation } from "../utils/types";
 import Layout from "../components/Layout";
 import PatientCard from "../components/PatientCard";
 import { useGetPatientsQuery } from "../generated/graphql";
 import { context } from "../utils/context";
 
 interface Props {
-  navigation: {
-    navigate: (name: string) => void;
-  };
+  navigation: Navigation;
 }
 
 const Patients: React.FC<Props> = ({ navigation }) => {
@@ -81,7 +80,9 @@ const Patients: React.FC<Props> = ({ navigation }) => {
         </View>
         <FlatList
           data={filteredData}
-          renderItem={(item) => <PatientCard item={item.item} />}
+          renderItem={(item) => (
+            <PatientCard navigation={navigation} item={item.item} />
+          )}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={<View style={{ height: 24 }} />}
         />

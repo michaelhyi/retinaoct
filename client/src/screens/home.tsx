@@ -1,16 +1,25 @@
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Navigation } from "../utils/types";
 import HomeHeader from "../components/HomeHeader";
 import Layout from "../components/Layout";
 import RecentPatients from "../components/RecentPatients";
 import RecentScans from "../components/RecentScans";
 
-const Home = () => {
+interface Props {
+  navigation: Navigation;
+}
+
+const Home: React.FC<Props> = ({ navigation }) => {
   return (
     <Layout>
       <HomeHeader />
       <View style={{ flexDirection: "row", marginTop: 30 }}>
         <Text style={styles.header}>Recent Patients</Text>
-        <TouchableOpacity style={{ marginLeft: "auto" }}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Patients")}
+          style={{ marginLeft: "auto" }}
+        >
           <Text
             style={{
               fontFamily: "Montserrat-Medium",
@@ -22,11 +31,14 @@ const Home = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <RecentPatients />
+      <RecentPatients navigation={navigation} />
 
       <View style={{ flexDirection: "row", marginTop: 24 }}>
         <Text style={styles.header}>Recent Scans</Text>
-        <TouchableOpacity style={{ marginLeft: "auto" }}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Scans")}
+          style={{ marginLeft: "auto" }}
+        >
           <Text
             style={{
               fontFamily: "Montserrat-Medium",
@@ -38,7 +50,7 @@ const Home = () => {
           </Text>
         </TouchableOpacity>
       </View>
-      <RecentScans />
+      <RecentScans navigation={navigation} />
     </Layout>
   );
 };

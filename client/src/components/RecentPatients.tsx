@@ -1,11 +1,16 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { Navigation } from "../utils/types";
 import { useGetRecentPatientsQuery } from "../generated/graphql";
 import { context } from "../utils/context";
 import RecentPatient from "./RecentPatient";
 
-const RecentPatients = () => {
+interface Props {
+  navigation: Navigation;
+}
+
+const RecentPatients: React.FC<Props> = ({ navigation }) => {
   const { user } = useContext(context);
   const [{ data, fetching }] = useGetRecentPatientsQuery({
     variables: {
@@ -48,8 +53,14 @@ const RecentPatients = () => {
               marginTop: 20,
             }}
           >
-            <RecentPatient patient={data?.getRecentPatients[0]} />
-            <RecentPatient patient={data?.getRecentPatients[1]} />
+            <RecentPatient
+              navigation={navigation}
+              patient={data?.getRecentPatients[0]}
+            />
+            <RecentPatient
+              navigation={navigation}
+              patient={data?.getRecentPatients[1]}
+            />
           </View>
           <View
             style={{
@@ -58,8 +69,14 @@ const RecentPatients = () => {
               marginTop: 20,
             }}
           >
-            <RecentPatient patient={data?.getRecentPatients[2]} />
-            <RecentPatient patient={data?.getRecentPatients[3]} />
+            <RecentPatient
+              navigation={navigation}
+              patient={data?.getRecentPatients[2]}
+            />
+            <RecentPatient
+              navigation={navigation}
+              patient={data?.getRecentPatients[3]}
+            />
           </View>
         </>
       )}

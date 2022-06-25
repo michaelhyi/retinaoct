@@ -1,3 +1,5 @@
+import { FontAwesome } from "@expo/vector-icons";
+import React, { useContext } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -6,12 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { Navigation } from "../utils/types";
 import { useGetScansQuery } from "../generated/graphql";
-import { useContext } from "react";
 import { context } from "../utils/context";
 
-const RecentScans = () => {
+interface Props {
+  navigation: Navigation;
+}
+
+const RecentScans: React.FC<Props> = ({ navigation }) => {
   const { user } = useContext(context);
   const [{ data, fetching }] = useGetScansQuery({
     variables: {
@@ -55,7 +60,10 @@ const RecentScans = () => {
           showsHorizontalScrollIndicator={false}
           data={data?.getScans}
           renderItem={({ item }) => (
-            <TouchableOpacity style={{ marginTop: 16, marginRight: 22 }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("View Scan")}
+              style={{ marginTop: 16, marginRight: 22 }}
+            >
               <Image
                 source={{ uri: item.url }}
                 style={{ height: 75, width: 75, borderRadius: 15 }}

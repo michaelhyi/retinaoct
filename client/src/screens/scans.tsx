@@ -7,15 +7,14 @@ import {
   Text,
   View,
 } from "react-native";
+import { Navigation } from "../utils/types";
 import Layout from "../components/Layout";
 import ScanCard from "../components/ScanCard";
 import { useGetScansQuery } from "../generated/graphql";
 import { context } from "../utils/context";
 
 interface Props {
-  navigation: {
-    navigate: (name: string) => void;
-  };
+  navigation: Navigation;
 }
 
 const Scans: React.FC<Props> = ({ navigation }) => {
@@ -48,7 +47,9 @@ const Scans: React.FC<Props> = ({ navigation }) => {
         </Text>
         <FlatList
           data={data?.getScans}
-          renderItem={({ item }) => <ScanCard item={item} />}
+          renderItem={({ item }) => (
+            <ScanCard navigation={navigation} item={item} />
+          )}
           showsVerticalScrollIndicator={false}
           ListFooterComponent={
             <View style={{ height: Dimensions.get("window").height / 5 }} />

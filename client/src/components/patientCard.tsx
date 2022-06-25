@@ -7,17 +7,22 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Navigation } from "../utils/types";
 
 interface Props {
+  navigation: Navigation;
   item: {
     mrn: string;
     updatedAtString: string;
   };
 }
 
-const PatientCard: React.FC<Props> = ({ item }) => {
+const PatientCard: React.FC<Props> = ({ navigation, item }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("View Patient")}
+      style={styles.container}
+    >
       <FontAwesome name="user" size={50} color="#B6DCFE" />
       <View style={{ marginLeft: 24 }}>
         <Text style={{ fontFamily: "Montserrat-SemiBold", fontSize: 20 }}>

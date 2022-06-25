@@ -6,9 +6,9 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FC } from "react";
 import CreatePatient from "../screens/create-patient";
-import Home from "../screens/home";
 import Scans from "../screens/scans";
 import Settings from "../screens/settings";
+import HomeStack from "./HomeStack";
 import PatientsStack from "./PatientsStack";
 
 const Tab = createBottomTabNavigator();
@@ -23,7 +23,7 @@ const TabNavigator: FC = (): JSX.Element => {
     >
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
@@ -35,38 +35,12 @@ const TabNavigator: FC = (): JSX.Element => {
         }}
       />
       <Tab.Screen
-        name="Patients"
-        component={PatientsStack}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <MaterialCommunityIcons
-              name="folder-account"
-              size={25}
-              color={focused ? "#0075FF" : "black"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Add Patient"
+        name="Create"
         component={CreatePatient}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="add"
-              size={25}
-              color={focused ? "#0075FF" : "black"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Scans"
-        component={Scans}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <FontAwesome
-              name="folder"
               size={25}
               color={focused ? "#0075FF" : "black"}
             />

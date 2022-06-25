@@ -3,12 +3,10 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ScanBtn from "../components/ScanBtn";
 import Layout from "../components/Layout";
+import { Navigation } from "../utils/types";
 
 interface Props {
-  navigation: {
-    navigate: (name: string) => void;
-    goBack: () => void;
-  };
+  navigation: Navigation;
 }
 
 const PatientInfo: React.FC<Props> = ({ navigation }) => {
