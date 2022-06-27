@@ -25,6 +25,7 @@ const TabNavigator: FC = (): JSX.Element => {
         name="Home"
         component={HomeStack}
         options={{
+          tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="home"
@@ -38,6 +39,7 @@ const TabNavigator: FC = (): JSX.Element => {
         name="Create"
         component={CreatePatient}
         options={{
+          tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <Ionicons
               name="add"
@@ -51,6 +53,7 @@ const TabNavigator: FC = (): JSX.Element => {
         name="Settings"
         component={Settings}
         options={{
+          tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
             <FontAwesome
               name="gear"

@@ -10,10 +10,10 @@ const Stack = createStackNavigator();
 const HomeStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Home Screen"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Home Screen" component={Home} />
       <Stack.Screen name="View Patient" component={ViewPatient} />
       <Stack.Screen name="Patients" component={Patients} />
       <Stack.Screen name="View Scan" component={ViewScan} />

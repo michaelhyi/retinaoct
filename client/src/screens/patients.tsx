@@ -1,4 +1,4 @@
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { Navigation } from "../utils/types";
@@ -57,22 +58,46 @@ const Patients: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Layout>
-      <View style={styles.header}>
-        <Text
+      <>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity>
+            <AntDesign name="arrowleft" size={25} />
+          </TouchableOpacity>
+          <Text
+            style={{
+              zIndex: -1,
+              fontFamily: "Montserrat-SemiBold",
+              fontSize: 24,
+              position: "absolute",
+              left: 0,
+              right: 0,
+              textAlign: "center",
+            }}
+          >
+            Patient Directory
+          </Text>
+        </View>
+        <View
           style={{
-            fontFamily: "Montserrat-SemiBold",
-            fontSize: 40,
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 24,
+            borderRadius: 12,
+            padding: 12,
+            backgroundColor: "#E5E5E5",
+            width: "100%",
           }}
         >
-          Patient Directory
-        </Text>
-        <View style={styles.input}>
-          <Feather name="search" size={20} style={{ marginRight: 12 }} />
+          <Feather
+            name="search"
+            size={20}
+            style={{ marginLeft: 8, marginRight: 14 }}
+          />
           <TextInput
-            style={{ flex: 1, zIndex: 1 }}
-            placeholder="Search"
-            placeholderTextColor="#000000"
             autoCapitalize="none"
+            style={{ flex: 1, zIndex: 1 }}
+            placeholder="Search doctors"
+            placeholderTextColor="black"
             value={search}
             onChangeText={(text) => filter(text)}
             underlineColorAndroid="transparent"
@@ -86,26 +111,9 @@ const Patients: React.FC<Props> = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           ListFooterComponent={<View style={{ height: 24 }} />}
         />
-      </View>
+      </>
     </Layout>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  input: {
-    flexDirection: "row",
-    alignItems: "center",
-    margin: 12,
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: "#E5E5E5",
-    width: "100%",
-  },
-});
 
 export default Patients;
