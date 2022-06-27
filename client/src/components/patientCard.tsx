@@ -7,20 +7,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Navigation } from "../utils/types";
+import { Navigation, Patient } from "../utils/types";
 
 interface Props {
   navigation: Navigation;
-  item: {
-    mrn: string;
-    updatedAtString: string;
-  };
+  item: Patient;
 }
 
 const PatientCard: React.FC<Props> = ({ navigation, item }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("View Patient")}
+      onPress={() => navigation.navigate("View Patient", { patient: item })}
       style={styles.container}
     >
       <FontAwesome name="user" size={50} color="#B6DCFE" />

@@ -17,7 +17,7 @@ interface Props {
 const ScanCard: React.FC<Props> = ({ navigation, item }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("View Scan")}
+      onPress={() => navigation.navigate("View Scan", { scan: item })}
       style={styles.container}
     >
       <Image

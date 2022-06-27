@@ -61,7 +61,7 @@ const RecentScans: React.FC<Props> = ({ navigation }) => {
           data={data?.getScans}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("View Scan")}
+              onPress={() => navigation.navigate("View Scan", { scan: item })}
               style={{ marginTop: 16, marginRight: 22 }}
             >
               <Image

@@ -3,15 +3,15 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
-  StyleSheet,
   Text,
   View,
 } from "react-native";
-import { Navigation } from "../utils/types";
+import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
 import ScanCard from "../components/ScanCard";
 import { useGetScansQuery } from "../generated/graphql";
 import { context } from "../utils/context";
+import { Navigation } from "../utils/types";
 
 interface Props {
   navigation: Navigation;
@@ -35,36 +35,35 @@ const Scans: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Layout>
-      <View style={styles.header}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <BackButton navigation={navigation} />
         <Text
           style={{
-            marginRight: "auto",
+            zIndex: -1,
             fontFamily: "Montserrat-SemiBold",
-            fontSize: 40,
+            fontSize: 24,
+            position: "absolute",
+            left: 0,
+            right: 0,
+            textAlign: "center",
           }}
         >
-          Scan History
+          Past Scans
         </Text>
-        <FlatList
-          data={data?.getScans}
-          renderItem={({ item }) => (
-            <ScanCard navigation={navigation} item={item} />
-          )}
-          showsVerticalScrollIndicator={false}
-          ListFooterComponent={
-            <View style={{ height: Dimensions.get("window").height / 5 }} />
-          }
-        />
       </View>
+      <FlatList
+        style={{ marginTop: 24 }}
+        data={data?.getScans}
+        renderItem={({ item }) => (
+          <ScanCard navigation={navigation} item={item} />
+        )}
+        showsVerticalScrollIndicator={false}
+        ListFooterComponent={
+          <View style={{ height: Dimensions.get("window").height / 5 }} />
+        }
+      />
     </Layout>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default Scans;

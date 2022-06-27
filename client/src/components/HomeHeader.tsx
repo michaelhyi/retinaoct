@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 
 const HomeHeader: React.FC = () => {
   return (
-    <View>
+    <View style={{ marginTop: 32 }}>
       <Text
         style={{
           fontFamily: "Montserrat-SemiBold",

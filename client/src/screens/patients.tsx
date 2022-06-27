@@ -1,19 +1,18 @@
-import { AntDesign, Feather } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
-import { Navigation } from "../utils/types";
+import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
 import PatientCard from "../components/PatientCard";
 import { useGetPatientsQuery } from "../generated/graphql";
 import { context } from "../utils/context";
+import { Navigation } from "../utils/types";
 
 interface Props {
   navigation: Navigation;
@@ -60,9 +59,7 @@ const Patients: React.FC<Props> = ({ navigation }) => {
     <Layout>
       <>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableOpacity>
-            <AntDesign name="arrowleft" size={25} />
-          </TouchableOpacity>
+          <BackButton navigation={navigation} />
           <Text
             style={{
               zIndex: -1,

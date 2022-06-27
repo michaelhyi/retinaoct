@@ -1,16 +1,50 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
+import React from "react";
+import { Navigation } from "../utils/types";
 
-const ViewPatient = () => {
+interface Props {
+  navigation: Navigation;
+  route: {
+    params: {
+      patient: {
+        mrn: string;
+      };
+    };
+  };
+}
+
+const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
+  const { mrn } = route.params.patient;
+
   return (
     <Layout>
-      <View
-        style={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}
-      >
-        <Text>ViewPatient</Text>
+      <View style={styles.header}>
+        <BackButton navigation={navigation} />
+        <Text
+          style={{
+            zIndex: -1,
+            fontFamily: "Montserrat-SemiBold",
+            fontSize: 24,
+            position: "absolute",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+          }}
+        >
+          Patient #{mrn}
+        </Text>
       </View>
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+});
 
 export default ViewPatient;

@@ -1,7 +1,12 @@
 export interface Navigation {
-  navigate: (route: string) => void;
+  navigate: (
+    route: string,
+    params?: {
+      patient?: Patient;
+      scan?: Scan;
+    }
+  ) => void;
   goBack: () => void;
-  params: {};
 }
 
 export interface Patient {
