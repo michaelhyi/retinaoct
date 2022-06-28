@@ -13,6 +13,7 @@ import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
 import { useGetPatientScansQuery } from "../generated/graphql";
 import { Navigation, Patient } from "../utils/types";
+import * as ImagePicker from "expo-image-picker";
 
 interface Props {
   navigation: Navigation;
@@ -28,8 +29,25 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
   const [{ data, fetching }] = useGetPatientScansQuery({
     variables: {
       patientId: patient.id,
+      limit: 6,
     },
   });
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      navigation.navigate("Create Scan", {
+        image: result,
+        patient: patient,
+      });
+    }
+  };
 
   return (
     <Layout>
@@ -72,6 +90,7 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
             },
           }}
         />
+
         <Text
           style={{
             fontFamily: "Montserrat-Medium",
@@ -89,9 +108,9 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
         </Text>
       </View>
       <View
-        style={{ flexDirection: "row", alignItems: "center", marginTop: 24 }}
+        style={{ flexDirection: "row", alignItems: "center", marginTop: 128 }}
       >
-        <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 18 }}>
+        <Text style={{ fontFamily: "Montserrat-Medium", fontSize: 24 }}>
           Recent Scans
         </Text>
         <View
@@ -101,10 +120,16 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity style={{ marginRight: 12 }}>
+          <TouchableOpacity onPress={pickImage} style={{ marginRight: 12 }}>
             <Ionicons name="add" color="#87BEFF" size={30} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("View Patient Scans", {
+                patient,
+              })
+            }
+          >
             <FontAwesome name="folder" color="#87BEFF" size={25} />
           </TouchableOpacity>
         </View>
@@ -118,7 +143,7 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
           }}
         />
       ) : (
-        <View>
+        <View style={{ flexGrow: 1 }}>
           {data?.getPatientScans.length === 0 && !fetching ? (
             <View
               style={{

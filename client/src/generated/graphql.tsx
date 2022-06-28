@@ -40,7 +40,6 @@ export type MutationCreatePatientArgs = {
 export type MutationCreateScanArgs = {
   diagnosis: Scalars['String'];
   doctorId: Scalars['Int'];
-  eye: Scalars['String'];
   note: Scalars['String'];
   patientId: Scalars['Int'];
   url: Scalars['String'];
@@ -116,7 +115,6 @@ export type Scan = {
   diagnosis: Scalars['String'];
   doctor: User;
   doctorId: Scalars['Int'];
-  eye: Scalars['String'];
   id: Scalars['Float'];
   note: Scalars['String'];
   patient: Patient;
@@ -152,6 +150,17 @@ export type CreatePatientMutationVariables = Exact<{
 
 
 export type CreatePatientMutation = { __typename?: 'Mutation', createPatient: { __typename?: 'PatientResponse', patient?: { __typename?: 'Patient', id: number, mrn: string, doctorId: number, notes: string, createdAt: string, updatedAt: string, updatedAtString: string, doctor: { __typename?: 'User', id: number, firstName: string, lastName: string } } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+
+export type CreateScanMutationVariables = Exact<{
+  url: Scalars['String'];
+  diagnosis: Scalars['String'];
+  note: Scalars['String'];
+  doctorId: Scalars['Int'];
+  patientId: Scalars['Int'];
+}>;
+
+
+export type CreateScanMutation = { __typename?: 'Mutation', createScan: { __typename?: 'Scan', id: number, url: string, diagnosis: string, note: string, doctorId: number, patientId: number, updatedAtString: string } };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -218,6 +227,29 @@ export const CreatePatientDocument = gql`
 
 export function useCreatePatientMutation() {
   return Urql.useMutation<CreatePatientMutation, CreatePatientMutationVariables>(CreatePatientDocument);
+};
+export const CreateScanDocument = gql`
+    mutation createScan($url: String!, $diagnosis: String!, $note: String!, $doctorId: Int!, $patientId: Int!) {
+  createScan(
+    url: $url
+    diagnosis: $diagnosis
+    note: $note
+    doctorId: $doctorId
+    patientId: $patientId
+  ) {
+    id
+    url
+    diagnosis
+    note
+    doctorId
+    patientId
+    updatedAtString
+  }
+}
+    `;
+
+export function useCreateScanMutation() {
+  return Urql.useMutation<CreateScanMutation, CreateScanMutationVariables>(CreateScanDocument);
 };
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {

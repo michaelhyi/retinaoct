@@ -5,6 +5,7 @@ import {
   FlatList,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import BackButton from "../components/BackButton";
@@ -13,6 +14,8 @@ import PatientCard from "../components/PatientCard";
 import { useGetPatientsQuery } from "../generated/graphql";
 import { context } from "../utils/context";
 import { Navigation } from "../utils/types";
+import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 interface Props {
   navigation: Navigation;
@@ -73,6 +76,12 @@ const Patients: React.FC<Props> = ({ navigation }) => {
           >
             Patient Directory
           </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Create Patient")}
+            style={{ marginLeft: "auto" }}
+          >
+            <Ionicons name="add" size={30} />
+          </TouchableOpacity>
         </View>
         <View
           style={{

@@ -1,0 +1,23 @@
+mutation createScan(
+  $url: String!
+  $diagnosis: String!
+  $note: String!
+  $doctorId: Int!
+  $patientId: Int!
+) {
+  createScan(
+    url: $url
+    diagnosis: $diagnosis
+    note: $note
+    doctorId: $doctorId
+    patientId: $patientId
+  ) {
+    id
+    url
+    diagnosis
+    note
+    doctorId
+    patientId
+    updatedAtString
+  }
+}

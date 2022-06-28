@@ -23,7 +23,7 @@ __decorate([
 ], Patient.prototype, "id", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)({ unique: true }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Patient.prototype, "mrn", void 0);
 __decorate([

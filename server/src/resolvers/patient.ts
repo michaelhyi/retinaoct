@@ -38,29 +38,27 @@ export class PatientResolver {
     @Arg("doctorId", () => Int) doctorId: number,
     @Arg("notes") notes: string
   ): Promise<PatientResponse> {
-    let patient;
-    try {
-      patient = await Patient.create({
-        mrn,
-        doctorId,
-        notes,
-        updatedAtString: format(new Date(), "P p"),
-        scans: [],
-      }).save();
-    } catch (e) {
-      if (
-        e.detail.includes("already exists") ||
-        e.detail.includes("duplicate key")
-      ) {
-        return {
-          error: {
-            field: "MRN",
-            message: "Patient already exists.",
-          },
-        };
-      }
+    const patients = await Patient.find({
+      where: { doctorId },
+    });
+    const index = patients.map((v) => v.mrn).indexOf(mrn);
+
+    if (index > -1) {
+      return {
+        error: {
+          field: "MRN",
+          message: "Patient already exists.",
+        },
+      };
     }
 
+    const patient = await Patient.create({
+      mrn,
+      doctorId,
+      notes,
+      updatedAtString: format(new Date(), "P p"),
+      scans: [],
+    }).save();
     return { patient };
   }
 }

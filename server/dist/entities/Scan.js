@@ -30,11 +30,6 @@ __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Scan.prototype, "eye", void 0);
-__decorate([
-    (0, type_graphql_1.Field)(),
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
 ], Scan.prototype, "diagnosis", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),

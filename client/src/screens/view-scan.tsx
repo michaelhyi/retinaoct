@@ -14,7 +14,8 @@ interface Props {
 }
 
 const ViewScan: React.FC<Props> = ({ navigation, route }) => {
-  const { url, id, diagnosis, updatedAtString, note } = route.params.scan;
+  const { url, id, diagnosis, updatedAtString, note, patientId } =
+    route.params.scan;
 
   return (
     <Layout>
@@ -34,6 +35,9 @@ const ViewScan: React.FC<Props> = ({ navigation, route }) => {
           }}
         >
           Scan #{id}
+        </Text>
+        <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
+          Patient: {patientId}
         </Text>
         <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
           Diagnosis: {diagnosis}

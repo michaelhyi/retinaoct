@@ -59,10 +59,9 @@ let ScanResolver = class ScanResolver {
         }
         return scans;
     }
-    async createScan(url, eye, diagnosis, note, doctorId, patientId) {
+    async createScan(url, diagnosis, note, doctorId, patientId) {
         const scan = await Scan_1.Scan.create({
             url,
-            eye,
             diagnosis,
             note,
             doctorId,
@@ -91,13 +90,12 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => Scan_1.Scan),
     __param(0, (0, type_graphql_1.Arg)("url")),
-    __param(1, (0, type_graphql_1.Arg)("eye")),
-    __param(2, (0, type_graphql_1.Arg)("diagnosis")),
-    __param(3, (0, type_graphql_1.Arg)("note")),
-    __param(4, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
-    __param(5, (0, type_graphql_1.Arg)("patientId", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("diagnosis")),
+    __param(2, (0, type_graphql_1.Arg)("note")),
+    __param(3, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
+    __param(4, (0, type_graphql_1.Arg)("patientId", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, Number, Number]),
+    __metadata("design:paramtypes", [String, String, String, Number, Number]),
     __metadata("design:returntype", Promise)
 ], ScanResolver.prototype, "createScan", null);
 ScanResolver = __decorate([

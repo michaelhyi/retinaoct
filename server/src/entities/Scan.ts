@@ -24,10 +24,6 @@ export class Scan extends BaseEntity {
 
   @Field()
   @Column()
-  eye: string;
-
-  @Field()
-  @Column()
   diagnosis!: string;
 
   @Field()

@@ -59,7 +59,6 @@ export class ScanResolver {
   @Mutation(() => Scan)
   async createScan(
     @Arg("url") url: string,
-    @Arg("eye") eye: string,
     @Arg("diagnosis") diagnosis: string,
     @Arg("note") note: string,
     @Arg("doctorId", () => Int) doctorId: number,
@@ -67,7 +66,6 @@ export class ScanResolver {
   ): Promise<Scan> {
     const scan = await Scan.create({
       url,
-      eye,
       diagnosis,
       note,
       doctorId,

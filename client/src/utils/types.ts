@@ -1,3 +1,5 @@
+import * as ImagePicker from "expo-image-picker";
+
 export interface Navigation {
   navigate: (
     route: string,
@@ -5,6 +7,7 @@ export interface Navigation {
       patient?: Patient | any;
       scan?: Scan;
       mrn?: string;
+      image?: ImagePicker.ImagePickerResult;
     }
   ) => void;
   goBack: () => void;
@@ -25,7 +28,6 @@ export interface Patient {
 export interface Scan {
   id: number;
   url: string;
-  eye: string;
   diagnosis: string;
   note: string;
   doctorId: number;
