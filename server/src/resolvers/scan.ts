@@ -5,6 +5,32 @@ import { Scan } from "../entities/Scan";
 @Resolver()
 export class ScanResolver {
   @Query(() => [Scan])
+  async getPatientScans(
+    @Arg("patientId", () => Int) patientId: number,
+    @Arg("limit", () => Int, { nullable: true }) limit: number | null
+  ): Promise<Scan[]> {
+    let scans;
+    if (limit) {
+      scans = await Scan.find({
+        where: { patientId },
+        order: {
+          updatedAt: "DESC",
+        },
+        take: limit,
+      });
+    } else {
+      scans = await Scan.find({
+        where: { patientId },
+        order: {
+          updatedAt: "DESC",
+        },
+      });
+    }
+
+    return scans;
+  }
+
+  @Query(() => [Scan])
   async getScans(
     @Arg("doctorId", () => Int) doctorId: number,
     @Arg("limit", () => Int, { nullable: true }) limit: number | null

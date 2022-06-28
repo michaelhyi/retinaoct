@@ -33,7 +33,7 @@ __decorate([
 ], Patient.prototype, "doctorId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.patients),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.patients, { lazy: true }),
     __metadata("design:type", User_1.User)
 ], Patient.prototype, "doctor", void 0);
 __decorate([
@@ -43,7 +43,7 @@ __decorate([
 ], Patient.prototype, "notes", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => [Scan_1.Scan]),
-    (0, typeorm_1.OneToMany)(() => Scan_1.Scan, (scan) => scan.patient, { eager: true }),
+    (0, typeorm_1.OneToMany)(() => Scan_1.Scan, (scan) => scan.patient, { lazy: true }),
     __metadata("design:type", Array)
 ], Patient.prototype, "scans", void 0);
 __decorate([

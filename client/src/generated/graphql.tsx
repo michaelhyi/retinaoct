@@ -31,7 +31,7 @@ export type Mutation = {
 
 
 export type MutationCreatePatientArgs = {
-  doctorId: Scalars['Float'];
+  doctorId: Scalars['Int'];
   mrn: Scalars['String'];
   notes: Scalars['String'];
 };
@@ -81,10 +81,17 @@ export type PatientResponse = {
 
 export type Query = {
   __typename?: 'Query';
+  getPatientScans: Array<Scan>;
   getPatients: Array<Patient>;
   getRecentPatients: Array<Patient>;
   getScans: Array<Scan>;
   getUsers: Array<User>;
+};
+
+
+export type QueryGetPatientScansArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  patientId: Scalars['Int'];
 };
 
 
@@ -137,6 +144,15 @@ export type UserResponse = {
   user?: Maybe<User>;
 };
 
+export type CreatePatientMutationVariables = Exact<{
+  mrn: Scalars['String'];
+  doctorId: Scalars['Int'];
+  notes: Scalars['String'];
+}>;
+
+
+export type CreatePatientMutation = { __typename?: 'Mutation', createPatient: { __typename?: 'PatientResponse', patient?: { __typename?: 'Patient', id: number, mrn: string, doctorId: number, notes: string, createdAt: string, updatedAt: string, updatedAtString: string, doctor: { __typename?: 'User', id: number, firstName: string, lastName: string } } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -145,19 +161,27 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
+export type GetPatientScansQueryVariables = Exact<{
+  patientId: Scalars['Int'];
+  limit?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetPatientScansQuery = { __typename?: 'Query', getPatientScans: Array<{ __typename?: 'Scan', id: number, url: string, updatedAtString: string, diagnosis: string }> };
+
 export type GetPatientsQueryVariables = Exact<{
   doctorId: Scalars['Int'];
 }>;
 
 
-export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
+export type GetPatientsQuery = { __typename?: 'Query', getPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }>, doctor: { __typename?: 'User', id: number, firstName: string, lastName: string } }> };
 
 export type GetRecentPatientsQueryVariables = Exact<{
   doctorId: Scalars['Int'];
 }>;
 
 
-export type GetRecentPatientsQuery = { __typename?: 'Query', getRecentPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }> }> };
+export type GetRecentPatientsQuery = { __typename?: 'Query', getRecentPatients: Array<{ __typename?: 'Patient', id: number, mrn: string, doctorId: number, updatedAt: string, updatedAtString: string, notes: string, scans: Array<{ __typename?: 'Scan', id: number }>, doctor: { __typename?: 'User', id: number, firstName: string, lastName: string } }> };
 
 export type GetScansQueryVariables = Exact<{
   doctorId: Scalars['Int'];
@@ -167,6 +191,34 @@ export type GetScansQueryVariables = Exact<{
 export type GetScansQuery = { __typename?: 'Query', getScans: Array<{ __typename?: 'Scan', id: number, url: string, updatedAtString: string, diagnosis: string }> };
 
 
+export const CreatePatientDocument = gql`
+    mutation createPatient($mrn: String!, $doctorId: Int!, $notes: String!) {
+  createPatient(mrn: $mrn, doctorId: $doctorId, notes: $notes) {
+    patient {
+      id
+      mrn
+      doctorId
+      doctor {
+        id
+        firstName
+        lastName
+      }
+      notes
+      createdAt
+      updatedAt
+      updatedAtString
+    }
+    error {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useCreatePatientMutation() {
+  return Urql.useMutation<CreatePatientMutation, CreatePatientMutationVariables>(CreatePatientDocument);
+};
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -185,6 +237,20 @@ export const LoginDocument = gql`
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
+export const GetPatientScansDocument = gql`
+    query getPatientScans($patientId: Int!, $limit: Int) {
+  getPatientScans(patientId: $patientId, limit: $limit) {
+    id
+    url
+    updatedAtString
+    diagnosis
+  }
+}
+    `;
+
+export function useGetPatientScansQuery(options: Omit<Urql.UseQueryArgs<GetPatientScansQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetPatientScansQuery>({ query: GetPatientScansDocument, ...options });
+};
 export const GetPatientsDocument = gql`
     query getPatients($doctorId: Int!) {
   getPatients(doctorId: $doctorId) {
@@ -196,6 +262,11 @@ export const GetPatientsDocument = gql`
     notes
     scans {
       id
+    }
+    doctor {
+      id
+      firstName
+      lastName
     }
   }
 }
@@ -215,6 +286,11 @@ export const GetRecentPatientsDocument = gql`
     notes
     scans {
       id
+    }
+    doctor {
+      id
+      firstName
+      lastName
     }
   }
 }

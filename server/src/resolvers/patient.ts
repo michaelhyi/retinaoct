@@ -35,7 +35,7 @@ export class PatientResolver {
   @Mutation(() => PatientResponse)
   async createPatient(
     @Arg("mrn") mrn: string,
-    @Arg("doctorId") doctorId: number,
+    @Arg("doctorId", () => Int) doctorId: number,
     @Arg("notes") notes: string
   ): Promise<PatientResponse> {
     let patient;
@@ -45,6 +45,7 @@ export class PatientResolver {
         doctorId,
         notes,
         updatedAtString: format(new Date(), "P p"),
+        scans: [],
       }).save();
     } catch (e) {
       if (

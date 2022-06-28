@@ -78,10 +78,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 10,
     padding: 15,
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowRadius: 2,
-    shadowOffset: {
+    shadowcolor: "black",
+    shadowopacity: 0.25,
+    shadowradius: 2,
+    shadowoffset: {
       width: 0,
       height: 5,
     },

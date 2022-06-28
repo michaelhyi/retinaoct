@@ -9,5 +9,10 @@ query getRecentPatients($doctorId: Int!) {
     scans {
       id
     }
+    doctor {
+      id
+      firstName
+      lastName
+    }
   }
 }

@@ -17,6 +17,27 @@ const date_fns_1 = require("date-fns");
 const type_graphql_1 = require("type-graphql");
 const Scan_1 = require("../entities/Scan");
 let ScanResolver = class ScanResolver {
+    async getPatientScans(patientId, limit) {
+        let scans;
+        if (limit) {
+            scans = await Scan_1.Scan.find({
+                where: { patientId },
+                order: {
+                    updatedAt: "DESC",
+                },
+                take: limit,
+            });
+        }
+        else {
+            scans = await Scan_1.Scan.find({
+                where: { patientId },
+                order: {
+                    updatedAt: "DESC",
+                },
+            });
+        }
+        return scans;
+    }
     async getScans(doctorId, limit) {
         let scans;
         if (limit) {
@@ -51,6 +72,14 @@ let ScanResolver = class ScanResolver {
         return scan;
     }
 };
+__decorate([
+    (0, type_graphql_1.Query)(() => [Scan_1.Scan]),
+    __param(0, (0, type_graphql_1.Arg)("patientId", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("limit", () => type_graphql_1.Int, { nullable: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Object]),
+    __metadata("design:returntype", Promise)
+], ScanResolver.prototype, "getPatientScans", null);
 __decorate([
     (0, type_graphql_1.Query)(() => [Scan_1.Scan]),
     __param(0, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),

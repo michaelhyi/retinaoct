@@ -9,5 +9,10 @@ query getPatients($doctorId: Int!) {
     scans {
       id
     }
+    doctor {
+      id
+      firstName
+      lastName
+    }
   }
 }

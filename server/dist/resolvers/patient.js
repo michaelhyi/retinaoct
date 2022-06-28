@@ -45,6 +45,7 @@ let PatientResolver = class PatientResolver {
                 doctorId,
                 notes,
                 updatedAtString: (0, date_fns_1.format)(new Date(), "P p"),
+                scans: [],
             }).save();
         }
         catch (e) {
@@ -78,7 +79,7 @@ __decorate([
 __decorate([
     (0, type_graphql_1.Mutation)(() => types_1.PatientResponse),
     __param(0, (0, type_graphql_1.Arg)("mrn")),
-    __param(1, (0, type_graphql_1.Arg)("doctorId")),
+    __param(1, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
     __param(2, (0, type_graphql_1.Arg)("notes")),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Number, String]),

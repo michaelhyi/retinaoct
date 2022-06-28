@@ -34,11 +34,11 @@ export class User extends BaseEntity {
   lastName!: string;
 
   @Field(() => [Patient])
-  @OneToMany(() => Patient, (patient) => patient.doctor, { eager: true })
+  @OneToMany(() => Patient, (patient) => patient.doctor, { lazy: true })
   patients: Patient[];
 
   @Field(() => [Scan])
-  @OneToMany(() => Scan, (scan) => scan.doctor, { eager: true })
+  @OneToMany(() => Scan, (scan) => scan.doctor, { lazy: true })
   scans: Scan[];
 
   @Field(() => String)

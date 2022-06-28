@@ -42,12 +42,12 @@ __decorate([
 ], User.prototype, "lastName", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => [Patient_1.Patient]),
-    (0, typeorm_1.OneToMany)(() => Patient_1.Patient, (patient) => patient.doctor, { eager: true }),
+    (0, typeorm_1.OneToMany)(() => Patient_1.Patient, (patient) => patient.doctor, { lazy: true }),
     __metadata("design:type", Array)
 ], User.prototype, "patients", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => [Scan_1.Scan]),
-    (0, typeorm_1.OneToMany)(() => Scan_1.Scan, (scan) => scan.doctor, { eager: true }),
+    (0, typeorm_1.OneToMany)(() => Scan_1.Scan, (scan) => scan.doctor, { lazy: true }),
     __metadata("design:type", Array)
 ], User.prototype, "scans", void 0);
 __decorate([

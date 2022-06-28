@@ -28,7 +28,7 @@ export class Patient extends BaseEntity {
   doctorId!: number;
 
   @Field()
-  @ManyToOne(() => User, (user) => user.patients)
+  @ManyToOne(() => User, (user) => user.patients, { lazy: true })
   doctor: User;
 
   @Field()
@@ -36,7 +36,7 @@ export class Patient extends BaseEntity {
   notes: string;
 
   @Field(() => [Scan])
-  @OneToMany(() => Scan, (scan) => scan.patient, { eager: true })
+  @OneToMany(() => Scan, (scan) => scan.patient, { lazy: true })
   scans: Scan[];
 
   @Field(() => String)

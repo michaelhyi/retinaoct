@@ -1,15 +1,15 @@
+import { Ionicons } from "@expo/vector-icons";
+import Constants from "expo-constants";
 import React, { useState } from "react";
 import {
-  StyleSheet,
-  View,
-  Text,
+  Alert,
   Image,
-  Dimensions,
-  TouchableOpacity,
+  StyleSheet,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { FontAwesome5, Feather } from "@expo/vector-icons";
-import Layout from "../components/Layout";
 import { Navigation } from "../utils/types";
 
 interface Props {
@@ -17,111 +17,100 @@ interface Props {
 }
 
 const CreatePatient: React.FC<Props> = ({ navigation }) => {
-  const [text, onChangeText] = useState(null);
+  const [text, setText] = useState("");
 
   return (
-    <Layout>
-      <TouchableOpacity
-        onPress={() => navigation.goBack()}
-        style={{ padding: 10 }}
+    <View style={styles.container}>
+      <Image
+        style={{ width: 300, height: 250 }}
+        source={require("../assets/undraw_doctor_kw5l.png")}
+      />
+      <Text style={styles.header}>Enter Patient MRN</Text>
+      <Text style={styles.desc}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua.
+      </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 24,
+          width: "100%",
+          backgroundColor: "#E5E5E5",
+          borderRadius: 20,
+          padding: 18,
+        }}
       >
-        <FontAwesome5 name="less-than" size={15} />
-      </TouchableOpacity>
-
-      <View style={styles.container}>
-        <Image
-          style={{ marginTop: Dimensions.get("window").height / 12 }}
-          source={require("../assets/createpatient.png")}
-        />
-        <Text style={styles.header}>Enter Patient MRN</Text>
-        <Text style={styles.desc}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </Text>
-        <TouchableOpacity style={styles.btn1}>
-          <View
-            style={{
-              flexDirection: "row",
-              marginLeft: 20,
-              alignItems: "center",
-            }}
-          >
-            <Feather name="user" size={25} color="#999999" />
-            <TextInput
-              style={{
-                color: "#999999",
-                fontSize: 16,
-                marginLeft: 15,
-                fontFamily: "Montserrat-Regular",
-              }}
-              placeholder="Enter MRN"
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Patient Info");
+        <Ionicons name="person" size={25} color="#999999" />
+        <TextInput
+          value={text}
+          onChangeText={setText}
+          style={{
+            flex: 1,
+            color: "#999999",
+            fontSize: 16,
+            marginLeft: 15,
+            fontFamily: "Montserrat-Regular",
           }}
-          style={styles.btn2}
-        >
-          <Text
-            style={{
-              color: "white",
-              fontSize: 20,
-              fontFamily: "Montserrat-Medium",
-            }}
-          >
-            Create Patient
-          </Text>
-        </TouchableOpacity>
+          placeholder="Enter MRN"
+          placeholderTextColor="#999999"
+        />
       </View>
-    </Layout>
+      <TouchableOpacity
+        onPress={() => {
+          if (text.length !== 0) {
+            navigation.navigate("Patient Notes", {
+              mrn: text,
+            });
+          } else {
+            Alert.alert("Error!", "You must input an MRN!");
+          }
+        }}
+        style={styles.btn}
+      >
+        <Text
+          style={{
+            color: "white",
+            fontSize: 20,
+            fontFamily: "Montserrat-Medium",
+          }}
+        >
+          Next
+        </Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
+    flex: 1,
+    backgroundColor: "white",
+    paddingTop: Constants.statusBarHeight + 96,
+    paddingHorizontal: 24,
     alignItems: "center",
   },
   header: {
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: "Montserrat-Medium",
-    marginTop: 20,
+    marginTop: 8,
   },
   desc: {
+    paddingHorizontal: 24,
+    textAlign: "center",
     fontSize: 14,
     fontFamily: "Montserrat-Regular",
     marginTop: 10,
   },
-  btn1: {
-    marginTop: 20,
-    width: "100%",
-    height: Dimensions.get("window").height / 15,
-    backgroundColor: "#E5E5E5",
-    borderRadius: 20,
-    justifyContent: "center",
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowOffset: {
-      width: 4,
-      height: 4,
-    },
-  },
-  btn2: {
-    marginTop: 20,
-    width: "100%",
-    height: Dimensions.get("window").height / 15,
-    backgroundColor: "#B6DCFE",
-    borderRadius: 20,
-    justifyContent: "center",
+  btn: {
+    flexDirection: "row",
     alignItems: "center",
-    shadowColor: "black",
-    shadowOpacity: 0.25,
-    shadowOffset: {
-      width: 4,
-      height: 4,
-    },
+    width: "100%",
+    borderRadius: 20,
+    padding: 18,
+    marginTop: 20,
+    backgroundColor: "#B6DCFE",
+    justifyContent: "center",
   },
 });
 

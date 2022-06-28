@@ -1,15 +1,9 @@
-import {
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FC } from "react";
-import CreatePatient from "../screens/create-patient";
-import Scans from "../screens/scans";
 import Settings from "../screens/settings";
+import CreatePatientStack from "./CreatePatientStack";
 import HomeStack from "./HomeStack";
-import PatientsStack from "./PatientsStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +31,7 @@ const TabNavigator: FC = (): JSX.Element => {
       />
       <Tab.Screen
         name="Create"
-        component={CreatePatient}
+        component={CreatePatientStack}
         options={{
           tabBarLabel: () => null,
           tabBarIcon: ({ focused }) => (
