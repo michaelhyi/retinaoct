@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import BackButton from "../components/BackButton";
@@ -12,6 +13,8 @@ import ScanCard from "../components/ScanCard";
 import { useGetPatientScansQuery } from "../generated/graphql";
 import { Navigation, Patient } from "../utils/types";
 import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 interface Props {
   navigation: Navigation;
@@ -29,6 +32,22 @@ const ViewPatientScans: React.FC<Props> = ({ navigation, route }) => {
       patientId: patient.id,
     },
   });
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      navigation.navigate("Create Scan", {
+        image: result,
+        patient: patient,
+      });
+    }
+  };
 
   if (fetching) {
     return (
@@ -55,10 +74,14 @@ const ViewPatientScans: React.FC<Props> = ({ navigation, route }) => {
         >
           Past Scans
         </Text>
+        <TouchableOpacity onPress={pickImage} style={{ marginLeft: "auto" }}>
+          <Ionicons name="add" size={30} />
+        </TouchableOpacity>
       </View>
       {!fetching && data?.getPatientScans.length === 0 ? (
         <View
           style={{
+            zIndex: -2,
             position: "absolute",
             top: 0,
             left: 0,

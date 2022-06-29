@@ -1,8 +1,9 @@
-import { Text, View, StyleSheet, Image } from "react-native";
+import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import Layout from "../components/Layout";
 import React from "react";
 import BackButton from "../components/BackButton";
 import { Navigation, Scan } from "../utils/types";
+import { Feather } from "@expo/vector-icons";
 
 interface Props {
   navigation: Navigation;
@@ -21,6 +22,12 @@ const ViewScan: React.FC<Props> = ({ navigation, route }) => {
     <Layout>
       <View style={styles.header}>
         <BackButton navigation={navigation} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Edit Scan")}
+          style={{ marginLeft: "auto" }}
+        >
+          <Feather name="edit" size={22.5} />
+        </TouchableOpacity>
       </View>
       <View style={{ alignItems: "center", marginTop: 64 }}>
         <Image
@@ -37,7 +44,7 @@ const ViewScan: React.FC<Props> = ({ navigation, route }) => {
           Scan #{id}
         </Text>
         <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
-          Patient: {patientId}
+          Patient #{patientId}
         </Text>
         <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
           Diagnosis: {diagnosis}

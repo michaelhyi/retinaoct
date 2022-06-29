@@ -197,7 +197,7 @@ export type GetScansQueryVariables = Exact<{
 }>;
 
 
-export type GetScansQuery = { __typename?: 'Query', getScans: Array<{ __typename?: 'Scan', id: number, url: string, updatedAtString: string, diagnosis: string }> };
+export type GetScansQuery = { __typename?: 'Query', getScans: Array<{ __typename?: 'Scan', id: number, url: string, updatedAtString: string, diagnosis: string, patientId: number }> };
 
 
 export const CreatePatientDocument = gql`
@@ -338,6 +338,7 @@ export const GetScansDocument = gql`
     url
     updatedAtString
     diagnosis
+    patientId
   }
 }
     `;

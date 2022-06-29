@@ -4,5 +4,6 @@ query getScans($doctorId: Int!) {
     url
     updatedAtString
     diagnosis
+    patientId
   }
 }

@@ -1,4 +1,4 @@
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -14,8 +14,6 @@ import PatientCard from "../components/PatientCard";
 import { useGetPatientsQuery } from "../generated/graphql";
 import { context } from "../utils/context";
 import { Navigation } from "../utils/types";
-import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 
 interface Props {
   navigation: Navigation;

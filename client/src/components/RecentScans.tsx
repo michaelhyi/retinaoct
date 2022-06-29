@@ -45,6 +45,7 @@ const RecentScans: React.FC<Props> = ({ navigation }) => {
           <FontAwesome name="exclamation-circle" size={50} />
           <Text
             style={{
+              zIndex: -2,
               marginTop: 12,
               fontFamily: "Montserrat-SemiBold",
               fontSize: 24,
