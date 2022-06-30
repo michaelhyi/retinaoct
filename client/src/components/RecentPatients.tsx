@@ -24,7 +24,7 @@ const RecentPatients: React.FC<Props> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {!data && !fetching ? (
+      {data?.getRecentPatients.length === 0 && !fetching ? (
         <View
           style={{
             flexGrow: 1,
@@ -32,17 +32,19 @@ const RecentPatients: React.FC<Props> = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          <FontAwesome name="exclamation-circle" size={50} />
-          <Text
-            style={{
-              marginTop: 12,
-              fontFamily: "Montserrat-SemiBold",
-              fontSize: 24,
-              textAlign: "center",
-            }}
-          >
-            You have no patients!
-          </Text>
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome name="exclamation-circle" size={50} />
+            <Text
+              style={{
+                marginTop: 12,
+                fontFamily: "Montserrat-SemiBold",
+                fontSize: 24,
+                textAlign: "center",
+              }}
+            >
+              You have no patients!
+            </Text>
+          </View>
         </View>
       ) : (
         <>

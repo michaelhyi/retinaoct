@@ -5,9 +5,10 @@ export interface Navigation {
     route: string,
     params?: {
       patient?: Patient | any;
-      scan?: Scan;
+      scan?: Scan | any;
       mrn?: string;
       image?: ImagePicker.ImagePickerResult;
+      scanId?: number;
     }
   ) => void;
   goBack: () => void;
@@ -27,7 +28,7 @@ export interface Patient {
 
 export interface Scan {
   id: number;
-  url: string;
+  uri: string;
   diagnosis: string;
   note: string;
   doctorId: number;

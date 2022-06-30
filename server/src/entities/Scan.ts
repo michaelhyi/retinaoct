@@ -20,22 +20,22 @@ export class Scan extends BaseEntity {
 
   @Field()
   @Column()
-  url!: string;
+  uri!: string;
 
   @Field()
   @Column()
   diagnosis!: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  note!: string;
+  note: string;
 
   @Field(() => Int)
   @Column()
   doctorId!: number;
 
   @Field()
-  @ManyToOne(() => User, (user) => user.scans)
+  @ManyToOne(() => User, (user) => user.scans, { lazy: true })
   doctor!: User;
 
   @Field()
@@ -43,7 +43,7 @@ export class Scan extends BaseEntity {
   patientId!: number;
 
   @Field(() => Patient)
-  @ManyToOne(() => Patient, (patient) => patient.scans)
+  @ManyToOne(() => Patient, (patient) => patient.scans, { lazy: true })
   patient!: Patient;
 
   @Field(() => String)

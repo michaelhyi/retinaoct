@@ -1,19 +1,19 @@
 mutation createScan(
-  $url: String!
+  $uri: String!
   $diagnosis: String!
   $note: String!
   $doctorId: Int!
   $patientId: Int!
 ) {
   createScan(
-    url: $url
+    uri: $uri
     diagnosis: $diagnosis
     note: $note
     doctorId: $doctorId
     patientId: $patientId
   ) {
     id
-    url
+    uri
     diagnosis
     note
     doctorId

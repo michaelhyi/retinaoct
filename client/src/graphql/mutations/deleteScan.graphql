@@ -1,0 +1,3 @@
+mutation deleteScan($id: Int!) {
+  deleteScan(id: $id)
+}

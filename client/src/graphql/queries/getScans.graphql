@@ -1,9 +1,13 @@
 query getScans($doctorId: Int!) {
   getScans(doctorId: $doctorId) {
     id
-    url
+    uri
     updatedAtString
     diagnosis
     patientId
+    patient {
+      id
+      mrn
+    }
   }
 }

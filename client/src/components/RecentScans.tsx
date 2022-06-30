@@ -33,7 +33,7 @@ const RecentScans: React.FC<Props> = ({ navigation }) => {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       {data?.getScans.length === 0 && !fetching ? (
         <View
           style={{
@@ -42,18 +42,19 @@ const RecentScans: React.FC<Props> = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          <FontAwesome name="exclamation-circle" size={50} />
-          <Text
-            style={{
-              zIndex: -2,
-              marginTop: 12,
-              fontFamily: "Montserrat-SemiBold",
-              fontSize: 24,
-              textAlign: "center",
-            }}
-          >
-            You have no scans!
-          </Text>
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome name="exclamation-circle" size={50} />
+            <Text
+              style={{
+                marginTop: 12,
+                fontFamily: "Montserrat-SemiBold",
+                fontSize: 24,
+                textAlign: "center",
+              }}
+            >
+              You have no scans!
+            </Text>
+          </View>
         </View>
       ) : (
         <FlatList
@@ -63,12 +64,12 @@ const RecentScans: React.FC<Props> = ({ navigation }) => {
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate("View Scan", { scan: item as any })
+                navigation.navigate("View Scan", { scanId: item.id })
               }
               style={{ marginTop: 16, marginRight: 22 }}
             >
               <Image
-                source={{ uri: item.url }}
+                source={{ uri: item.uri }}
                 style={{ height: 75, width: 75, borderRadius: 15 }}
               />
             </TouchableOpacity>

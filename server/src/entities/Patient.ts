@@ -31,7 +31,7 @@ export class Patient extends BaseEntity {
   @ManyToOne(() => User, (user) => user.patients, { lazy: true })
   doctor: User;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
   notes: string;
 

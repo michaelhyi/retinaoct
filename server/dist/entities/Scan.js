@@ -25,14 +25,14 @@ __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Scan.prototype, "url", void 0);
+], Scan.prototype, "uri", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Scan.prototype, "diagnosis", void 0);
 __decorate([
-    (0, type_graphql_1.Field)(),
+    (0, type_graphql_1.Field)({ nullable: true }),
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Scan.prototype, "note", void 0);
@@ -43,7 +43,7 @@ __decorate([
 ], Scan.prototype, "doctorId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(),
-    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.scans),
+    (0, typeorm_1.ManyToOne)(() => User_1.User, (user) => user.scans, { lazy: true }),
     __metadata("design:type", User_1.User)
 ], Scan.prototype, "doctor", void 0);
 __decorate([
@@ -53,7 +53,7 @@ __decorate([
 ], Scan.prototype, "patientId", void 0);
 __decorate([
     (0, type_graphql_1.Field)(() => Patient_1.Patient),
-    (0, typeorm_1.ManyToOne)(() => Patient_1.Patient, (patient) => patient.scans),
+    (0, typeorm_1.ManyToOne)(() => Patient_1.Patient, (patient) => patient.scans, { lazy: true }),
     __metadata("design:type", Patient_1.Patient)
 ], Scan.prototype, "patient", void 0);
 __decorate([

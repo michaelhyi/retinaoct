@@ -1,9 +1,39 @@
 import { format } from "date-fns";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { getConnection } from "typeorm";
 import { Scan } from "../entities/Scan";
 
 @Resolver()
 export class ScanResolver {
+  @Query(() => Scan)
+  async getScan(@Arg("id", () => Int) id: number): Promise<Scan | undefined> {
+    const scan = await Scan.findOne({ where: { id } });
+    return scan;
+  }
+
+  @Mutation(() => Boolean)
+  async deleteScan(@Arg("id", () => Int) id: number): Promise<boolean> {
+    await Scan.delete({ id });
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async updateScan(
+    @Arg("id", () => Int) id: number,
+    @Arg("diagnosis") diagnosis: string,
+    @Arg("note", { nullable: true }) note: string
+  ): Promise<boolean> {
+    await getConnection()
+      .getRepository(Scan)
+      .createQueryBuilder()
+      .update({ diagnosis, note, updatedAtString: format(new Date(), "P p") })
+      .where({ id })
+      .returning("*")
+      .execute();
+
+    return true;
+  }
+
   @Query(() => [Scan])
   async getPatientScans(
     @Arg("patientId", () => Int) patientId: number,
@@ -58,14 +88,14 @@ export class ScanResolver {
 
   @Mutation(() => Scan)
   async createScan(
-    @Arg("url") url: string,
+    @Arg("uri") uri: string,
     @Arg("diagnosis") diagnosis: string,
     @Arg("note") note: string,
     @Arg("doctorId", () => Int) doctorId: number,
     @Arg("patientId", () => Int) patientId: number
   ): Promise<Scan> {
     const scan = await Scan.create({
-      url,
+      uri,
       diagnosis,
       note,
       doctorId,

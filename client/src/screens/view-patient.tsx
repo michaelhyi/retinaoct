@@ -33,6 +33,8 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
     },
   });
 
+  console.log(data);
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -172,12 +174,12 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("View Scan", { scan: item as any })
+                    navigation.navigate("View Scan", { scanId: item.id })
                   }
                   style={{ marginTop: 16, marginRight: 22 }}
                 >
                   <Image
-                    source={{ uri: item.url }}
+                    source={{ uri: item.uri }}
                     style={{ height: 75, width: 75, borderRadius: 15 }}
                   />
                 </TouchableOpacity>

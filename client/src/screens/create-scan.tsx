@@ -47,7 +47,7 @@ const CreateScan: React.FC<Props> = ({ navigation, route }) => {
       return;
     }
     await createScan({
-      url: image.uri,
+      uri: image.uri,
       diagnosis,
       note,
       doctorId: user,

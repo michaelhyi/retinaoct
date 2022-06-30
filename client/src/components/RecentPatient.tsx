@@ -5,7 +5,7 @@ import { Navigation, Patient } from "../utils/types";
 
 interface Props {
   navigation: Navigation;
-  patient: Patient;
+  patient: Patient | any;
 }
 
 const RecentPatient: React.FC<Props> = ({ navigation, patient }) => {

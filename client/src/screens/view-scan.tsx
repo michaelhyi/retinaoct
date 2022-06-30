@@ -1,67 +1,91 @@
-import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import Layout from "../components/Layout";
-import React from "react";
-import BackButton from "../components/BackButton";
-import { Navigation, Scan } from "../utils/types";
 import { Feather } from "@expo/vector-icons";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import BackButton from "../components/BackButton";
+import Layout from "../components/Layout";
+import { useGetScanQuery } from "../generated/graphql";
+import { Navigation } from "../utils/types";
 
 interface Props {
   navigation: Navigation;
   route: {
     params: {
-      scan: Scan;
+      scanId: number;
     };
   };
 }
 
 const ViewScan: React.FC<Props> = ({ navigation, route }) => {
-  const { url, id, diagnosis, updatedAtString, note, patientId } =
-    route.params.scan;
+  const [{ data, fetching }] = useGetScanQuery({
+    variables: {
+      id: route.params.scanId,
+    },
+  });
 
   return (
     <Layout>
       <View style={styles.header}>
         <BackButton navigation={navigation} />
         <TouchableOpacity
-          onPress={() => navigation.navigate("Edit Scan")}
+          onPress={() =>
+            navigation.navigate("Edit Scan", {
+              scan: data?.getScan,
+            })
+          }
           style={{ marginLeft: "auto" }}
         >
           <Feather name="edit" size={22.5} />
         </TouchableOpacity>
       </View>
-      <View style={{ alignItems: "center", marginTop: 64 }}>
-        <Image
-          source={{ uri: url }}
-          style={{ width: 300, height: 300, borderRadius: 15 }}
+      {fetching ? (
+        <ActivityIndicator
+          style={{
+            position: "absolute",
+            zIndex: -1000,
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         />
-        <Text
-          style={{
-            fontFamily: "Montserrat-Medium",
-            fontSize: 24,
-            marginTop: 24,
-          }}
-        >
-          Scan #{id}
-        </Text>
-        <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
-          Patient #{patientId}
-        </Text>
-        <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
-          Diagnosis: {diagnosis}
-        </Text>
-        <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
-          Date: {updatedAtString}
-        </Text>
-        <Text
-          style={{
-            fontFamily: "Montserrat-Regular",
-            fontSize: 16,
-            marginTop: 24,
-          }}
-        >
-          Note: {note}
-        </Text>
-      </View>
+      ) : (
+        <View style={{ alignItems: "center", marginTop: 64 }}>
+          <Image
+            source={{ uri: data?.getScan.uri }}
+            style={{ width: 300, height: 300, borderRadius: 15 }}
+          />
+          <Text
+            style={{
+              fontFamily: "Montserrat-Medium",
+              fontSize: 24,
+              marginTop: 24,
+            }}
+          >
+            Scan #{data?.getScan.id}
+          </Text>
+          <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
+            Patient #{data?.getScan.patient.mrn}
+          </Text>
+          <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
+            Diagnosis: {data?.getScan.diagnosis}
+          </Text>
+          <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
+            Date: {data?.getScan.updatedAtString}
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Montserrat-Regular",
+              fontSize: 16,
+              marginTop: 24,
+            }}
+          >
+            Note: {data?.getScan.note}
+          </Text>
+        </View>
+      )}
     </Layout>
   );
 };

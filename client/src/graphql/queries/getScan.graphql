@@ -1,0 +1,12 @@
+query getScan($id: Int!) {
+  getScan(id: $id) {
+    id
+    uri
+    diagnosis
+    note
+    patient {
+      mrn
+    }
+    updatedAtString
+  }
+}

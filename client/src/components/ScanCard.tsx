@@ -17,11 +17,11 @@ interface Props {
 const ScanCard: React.FC<Props> = ({ navigation, item }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("View Scan", { scan: item })}
+      onPress={() => navigation.navigate("View Scan", { scanId: item.id })}
       style={styles.container}
     >
       <Image
-        source={{ uri: item.url }}
+        source={{ uri: item.uri }}
         style={{ height: 75, width: 75, borderRadius: 12 }}
       />
       <View style={{ marginLeft: 24 }}>

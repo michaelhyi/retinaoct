@@ -15,8 +15,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ScanResolver = void 0;
 const date_fns_1 = require("date-fns");
 const type_graphql_1 = require("type-graphql");
+const typeorm_1 = require("typeorm");
 const Scan_1 = require("../entities/Scan");
 let ScanResolver = class ScanResolver {
+    async getScan(id) {
+        const scan = await Scan_1.Scan.findOne({ where: { id } });
+        return scan;
+    }
+    async deleteScan(id) {
+        await Scan_1.Scan.delete({ id });
+        return true;
+    }
+    async updateScan(id, diagnosis, note) {
+        await (0, typeorm_1.getConnection)()
+            .getRepository(Scan_1.Scan)
+            .createQueryBuilder()
+            .update({ diagnosis, note, updatedAtString: (0, date_fns_1.format)(new Date(), "P p") })
+            .where({ id })
+            .returning("*")
+            .execute();
+        return true;
+    }
     async getPatientScans(patientId, limit) {
         let scans;
         if (limit) {
@@ -59,9 +78,9 @@ let ScanResolver = class ScanResolver {
         }
         return scans;
     }
-    async createScan(url, diagnosis, note, doctorId, patientId) {
+    async createScan(uri, diagnosis, note, doctorId, patientId) {
         const scan = await Scan_1.Scan.create({
-            url,
+            uri,
             diagnosis,
             note,
             doctorId,
@@ -71,6 +90,29 @@ let ScanResolver = class ScanResolver {
         return scan;
     }
 };
+__decorate([
+    (0, type_graphql_1.Query)(() => Scan_1.Scan),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ScanResolver.prototype, "getScan", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ScanResolver.prototype, "deleteScan", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("diagnosis")),
+    __param(2, (0, type_graphql_1.Arg)("note", { nullable: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String, String]),
+    __metadata("design:returntype", Promise)
+], ScanResolver.prototype, "updateScan", null);
 __decorate([
     (0, type_graphql_1.Query)(() => [Scan_1.Scan]),
     __param(0, (0, type_graphql_1.Arg)("patientId", () => type_graphql_1.Int)),
@@ -89,7 +131,7 @@ __decorate([
 ], ScanResolver.prototype, "getScans", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Scan_1.Scan),
-    __param(0, (0, type_graphql_1.Arg)("url")),
+    __param(0, (0, type_graphql_1.Arg)("uri")),
     __param(1, (0, type_graphql_1.Arg)("diagnosis")),
     __param(2, (0, type_graphql_1.Arg)("note")),
     __param(3, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),
