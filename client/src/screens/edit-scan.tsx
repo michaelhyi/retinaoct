@@ -12,7 +12,10 @@ import { Navigation, Scan } from "../utils/types";
 import BackButton from "../components/BackButton";
 import DiagnosisDropdown from "../components/DiagnosisDropdown";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
-import { useUpdateScanMutation } from "../generated/graphql";
+import {
+  useDeleteScanMutation,
+  useUpdateScanMutation,
+} from "../generated/graphql";
 
 interface Props {
   navigation: Navigation;
@@ -28,6 +31,7 @@ const EditScan: React.FC<Props> = ({ navigation, route }) => {
   const [diagnosis, setDiagnosis] = useState(scan.diagnosis);
   const [note, setNote] = useState(scan.note);
   const [, updateScan] = useUpdateScanMutation();
+  const [, deleteScan] = useDeleteScanMutation();
 
   const handleUpdate = async () => {
     const result = await updateScan({
@@ -40,7 +44,27 @@ const EditScan: React.FC<Props> = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const handleDelete = async () => {};
+  const handleDelete = async () => {
+    Alert.alert(
+      "Delete Scan",
+      "Are you sure that you want to delete this scan? This action CANNOT be undone.",
+      [
+        {
+          text: "Confirm",
+          onPress: async () => {
+            await deleteScan({ id: scan.id });
+            Alert.alert("Success!", "Succesfully deleted scan!");
+            navigation.goBack();
+            navigation.goBack();
+          },
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+      ]
+    );
+  };
 
   return (
     <Layout>

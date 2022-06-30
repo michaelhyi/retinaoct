@@ -5,6 +5,7 @@ query getScan($id: Int!) {
     diagnosis
     note
     patient {
+      id
       mrn
     }
     updatedAtString

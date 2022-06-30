@@ -1,10 +1,42 @@
 import { format } from "date-fns";
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { getConnection } from "typeorm";
 import { Patient } from "../entities/Patient";
 import { PatientResponse } from "../utils/types";
 
 @Resolver()
 export class PatientResolver {
+  @Query(() => Patient)
+  async getPatient(
+    @Arg("id", () => Int) id: number
+  ): Promise<Patient | undefined> {
+    const patient = await Patient.findOne({ where: { id } });
+    return patient;
+  }
+
+  @Mutation(() => Boolean)
+  async deletePatient(@Arg("id", () => Int) id: number): Promise<boolean> {
+    await Patient.delete({ id });
+    return true;
+  }
+
+  @Mutation(() => Boolean)
+  async updatePatient(
+    @Arg("id", () => Int) id: number,
+    @Arg("mrn") mrn: string,
+    @Arg("notes", { nullable: true }) notes: string
+  ): Promise<boolean> {
+    await getConnection()
+      .getRepository(Patient)
+      .createQueryBuilder()
+      .update({ mrn, notes, updatedAtString: format(new Date(), "P p") })
+      .where({ id })
+      .returning("*")
+      .execute();
+
+    return true;
+  }
+
   @Query(() => [Patient])
   async getPatients(
     @Arg("doctorId", () => Int) doctorId: number

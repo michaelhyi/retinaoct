@@ -25,9 +25,11 @@ export type Mutation = {
   __typename?: 'Mutation';
   createPatient: PatientResponse;
   createScan: Scan;
+  deletePatient: Scalars['Boolean'];
   deleteScan: Scalars['Boolean'];
   login: UserResponse;
   register: UserResponse;
+  updatePatient: Scalars['Boolean'];
   updateScan: Scalars['Boolean'];
 };
 
@@ -48,6 +50,11 @@ export type MutationCreateScanArgs = {
 };
 
 
+export type MutationDeletePatientArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type MutationDeleteScanArgs = {
   id: Scalars['Int'];
 };
@@ -64,6 +71,13 @@ export type MutationRegisterArgs = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
   password: Scalars['String'];
+};
+
+
+export type MutationUpdatePatientArgs = {
+  id: Scalars['Int'];
+  mrn: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -94,12 +108,18 @@ export type PatientResponse = {
 
 export type Query = {
   __typename?: 'Query';
+  getPatient: Patient;
   getPatientScans: Array<Scan>;
   getPatients: Array<Patient>;
   getRecentPatients: Array<Patient>;
   getScan: Scan;
   getScans: Array<Scan>;
   getUsers: Array<User>;
+};
+
+
+export type QueryGetPatientArgs = {
+  id: Scalars['Int'];
 };
 
 
@@ -182,6 +202,13 @@ export type CreateScanMutationVariables = Exact<{
 
 export type CreateScanMutation = { __typename?: 'Mutation', createScan: { __typename?: 'Scan', id: number, uri: string, diagnosis: string, note?: string | null, doctorId: number, patientId: number, updatedAtString: string } };
 
+export type DeletePatientMutationVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type DeletePatientMutation = { __typename?: 'Mutation', deletePatient: boolean };
+
 export type DeleteScanMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -197,6 +224,15 @@ export type LoginMutationVariables = Exact<{
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
+export type UpdatePatientMutationVariables = Exact<{
+  id: Scalars['Int'];
+  mrn: Scalars['String'];
+  notes?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdatePatientMutation = { __typename?: 'Mutation', updatePatient: boolean };
+
 export type UpdateScanMutationVariables = Exact<{
   id: Scalars['Int'];
   diagnosis: Scalars['String'];
@@ -205,6 +241,13 @@ export type UpdateScanMutationVariables = Exact<{
 
 
 export type UpdateScanMutation = { __typename?: 'Mutation', updateScan: boolean };
+
+export type GetPatientQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetPatientQuery = { __typename?: 'Query', getPatient: { __typename?: 'Patient', id: number, mrn: string, notes?: string | null, updatedAtString: string, doctor: { __typename?: 'User', id: number, firstName: string, lastName: string } } };
 
 export type GetPatientScansQueryVariables = Exact<{
   patientId: Scalars['Int'];
@@ -233,7 +276,7 @@ export type GetScanQueryVariables = Exact<{
 }>;
 
 
-export type GetScanQuery = { __typename?: 'Query', getScan: { __typename?: 'Scan', id: number, uri: string, diagnosis: string, note?: string | null, updatedAtString: string, patient: { __typename?: 'Patient', mrn: string } } };
+export type GetScanQuery = { __typename?: 'Query', getScan: { __typename?: 'Scan', id: number, uri: string, diagnosis: string, note?: string | null, updatedAtString: string, patient: { __typename?: 'Patient', id: number, mrn: string } } };
 
 export type GetScansQueryVariables = Exact<{
   doctorId: Scalars['Int'];
@@ -294,6 +337,15 @@ export const CreateScanDocument = gql`
 export function useCreateScanMutation() {
   return Urql.useMutation<CreateScanMutation, CreateScanMutationVariables>(CreateScanDocument);
 };
+export const DeletePatientDocument = gql`
+    mutation deletePatient($id: Int!) {
+  deletePatient(id: $id)
+}
+    `;
+
+export function useDeletePatientMutation() {
+  return Urql.useMutation<DeletePatientMutation, DeletePatientMutationVariables>(DeletePatientDocument);
+};
 export const DeleteScanDocument = gql`
     mutation deleteScan($id: Int!) {
   deleteScan(id: $id)
@@ -321,6 +373,15 @@ export const LoginDocument = gql`
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
 };
+export const UpdatePatientDocument = gql`
+    mutation updatePatient($id: Int!, $mrn: String!, $notes: String) {
+  updatePatient(id: $id, mrn: $mrn, notes: $notes)
+}
+    `;
+
+export function useUpdatePatientMutation() {
+  return Urql.useMutation<UpdatePatientMutation, UpdatePatientMutationVariables>(UpdatePatientDocument);
+};
 export const UpdateScanDocument = gql`
     mutation updateScan($id: Int!, $diagnosis: String!, $note: String) {
   updateScan(id: $id, diagnosis: $diagnosis, note: $note)
@@ -329,6 +390,25 @@ export const UpdateScanDocument = gql`
 
 export function useUpdateScanMutation() {
   return Urql.useMutation<UpdateScanMutation, UpdateScanMutationVariables>(UpdateScanDocument);
+};
+export const GetPatientDocument = gql`
+    query getPatient($id: Int!) {
+  getPatient(id: $id) {
+    id
+    mrn
+    doctor {
+      id
+      firstName
+      lastName
+    }
+    notes
+    updatedAtString
+  }
+}
+    `;
+
+export function useGetPatientQuery(options: Omit<Urql.UseQueryArgs<GetPatientQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetPatientQuery>({ query: GetPatientDocument, ...options });
 };
 export const GetPatientScansDocument = gql`
     query getPatientScans($patientId: Int!, $limit: Int) {
@@ -404,6 +484,7 @@ export const GetScanDocument = gql`
     diagnosis
     note
     patient {
+      id
       mrn
     }
     updatedAtString

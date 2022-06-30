@@ -17,7 +17,7 @@ const RecentPatient: React.FC<Props> = ({ navigation, patient }) => {
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("View Patient", {
-          patient,
+          patientId: patient.id,
         })
       }
       style={{

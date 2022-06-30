@@ -15,9 +15,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PatientResolver = void 0;
 const date_fns_1 = require("date-fns");
 const type_graphql_1 = require("type-graphql");
+const typeorm_1 = require("typeorm");
 const Patient_1 = require("../entities/Patient");
 const types_1 = require("../utils/types");
 let PatientResolver = class PatientResolver {
+    async getPatient(id) {
+        const patient = await Patient_1.Patient.findOne({ where: { id } });
+        return patient;
+    }
+    async deletePatient(id) {
+        await Patient_1.Patient.delete({ id });
+        return true;
+    }
+    async updatePatient(id, mrn, notes) {
+        await (0, typeorm_1.getConnection)()
+            .getRepository(Patient_1.Patient)
+            .createQueryBuilder()
+            .update({ mrn, notes, updatedAtString: (0, date_fns_1.format)(new Date(), "P p") })
+            .where({ id })
+            .returning("*")
+            .execute();
+        return true;
+    }
     async getPatients(doctorId) {
         const patients = await Patient_1.Patient.find({
             where: { doctorId },
@@ -60,6 +79,29 @@ let PatientResolver = class PatientResolver {
         return { patient };
     }
 };
+__decorate([
+    (0, type_graphql_1.Query)(() => Patient_1.Patient),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], PatientResolver.prototype, "getPatient", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], PatientResolver.prototype, "deletePatient", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("mrn")),
+    __param(2, (0, type_graphql_1.Arg)("notes", { nullable: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String, String]),
+    __metadata("design:returntype", Promise)
+], PatientResolver.prototype, "updatePatient", null);
 __decorate([
     (0, type_graphql_1.Query)(() => [Patient_1.Patient]),
     __param(0, (0, type_graphql_1.Arg)("doctorId", () => type_graphql_1.Int)),

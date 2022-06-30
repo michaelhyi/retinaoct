@@ -1,6 +1,10 @@
 import { IP_ADDRESS } from "../../constants";
 import { createClient, dedupExchange, fetchExchange } from "urql";
 import { cacheExchange } from "@urql/exchange-graphcache";
+import {
+  DeletePatientMutationVariables,
+  DeleteScanMutationVariables,
+} from "../generated/graphql";
 
 export const client = createClient({
   url: `http://${IP_ADDRESS}:4000/graphql`,
@@ -9,6 +13,24 @@ export const client = createClient({
     cacheExchange({
       updates: {
         Mutation: {
+          updatePatient: (_result, _args, cache, _info) => {
+            const allFields = cache.inspectFields("Query");
+            const fieldInfos = allFields.filter(
+              (info) =>
+                info.fieldName === "getPatients" ||
+                info.fieldName === "getRecentPatients" ||
+                info.fieldName === "getPatient"
+            );
+            fieldInfos.forEach((fi) => {
+              cache.invalidate("Query", fi.fieldName, fi.arguments || {});
+            });
+          },
+          deletePatient: (_result, args, cache, _info) => {
+            cache.invalidate({
+              __typename: "Patient",
+              id: (args as DeletePatientMutationVariables).id,
+            });
+          },
           updateScan: (_result, _args, cache, _info) => {
             const allFields = cache.inspectFields("Query");
             const fieldInfos = allFields.filter(
@@ -19,6 +41,12 @@ export const client = createClient({
             );
             fieldInfos.forEach((fi) => {
               cache.invalidate("Query", fi.fieldName, fi.arguments || {});
+            });
+          },
+          deleteScan: (_result, args, cache, _info) => {
+            cache.invalidate({
+              __typename: "Scan",
+              id: (args as DeleteScanMutationVariables).id,
             });
           },
           createPatient: (_result, _args, cache, _info) => {

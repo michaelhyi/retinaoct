@@ -1,4 +1,5 @@
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import {
   ActivityIndicator,
@@ -11,29 +12,34 @@ import {
 } from "react-native";
 import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
-import { useGetPatientScansQuery } from "../generated/graphql";
-import { Navigation, Patient } from "../utils/types";
-import * as ImagePicker from "expo-image-picker";
+import {
+  useGetPatientQuery,
+  useGetPatientScansQuery,
+} from "../generated/graphql";
+import { Navigation } from "../utils/types";
 
 interface Props {
   navigation: Navigation;
   route: {
     params: {
-      patient: Patient;
+      patientId: number;
     };
   };
 }
 
 const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
-  const patient = route.params.patient;
-  const [{ data, fetching }] = useGetPatientScansQuery({
+  const patientId = route.params.patientId;
+  const [{ data: patient, fetching: fetchingPatient }] = useGetPatientQuery({
     variables: {
-      patientId: patient.id,
+      id: patientId,
+    },
+  });
+  const [{ data: scans, fetching: fetchingScans }] = useGetPatientScansQuery({
+    variables: {
+      patientId,
       limit: 6,
     },
   });
-
-  console.log(data);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -50,6 +56,24 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
       });
     }
   };
+
+  if (fetchingPatient) {
+    return (
+      <Layout>
+        <ActivityIndicator
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -69,7 +93,11 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
           Patient Details
         </Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Edit Patient", { patient })}
+          onPress={() =>
+            navigation.navigate("Edit Patient", {
+              patient: patient?.getPatient,
+            })
+          }
           style={{
             marginLeft: "auto",
           }}
@@ -100,13 +128,16 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
             marginTop: 24,
           }}
         >
-          MRN: #{patient.mrn}
+          MRN: #{patient?.getPatient.mrn}
         </Text>
         <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
-          Dr. {patient.doctor.firstName + " " + patient.doctor.lastName}
+          Dr.{" "}
+          {patient?.getPatient.doctor.firstName +
+            " " +
+            patient?.getPatient.doctor.lastName}
         </Text>
         <Text style={{ fontFamily: "Montserrat-Regular", fontSize: 16 }}>
-          Notes: {patient.notes}
+          Notes: {patient?.getPatient.notes}
         </Text>
       </View>
       <View
@@ -136,7 +167,7 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </View>
-      {fetching ? (
+      {fetchingScans ? (
         <ActivityIndicator
           style={{
             flexGrow: 1,
@@ -146,7 +177,7 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
         />
       ) : (
         <View style={{ flexGrow: 1 }}>
-          {data?.getPatientScans.length === 0 && !fetching ? (
+          {scans?.getPatientScans.length === 0 && !fetchingScans ? (
             <View
               style={{
                 flexGrow: 1,
@@ -170,7 +201,7 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
             <FlatList
               horizontal
               showsHorizontalScrollIndicator={false}
-              data={data?.getPatientScans}
+              data={scans?.getPatientScans}
               renderItem={({ item }) => (
                 <TouchableOpacity
                   onPress={() =>

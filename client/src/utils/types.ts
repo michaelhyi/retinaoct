@@ -9,6 +9,7 @@ export interface Navigation {
       mrn?: string;
       image?: ImagePicker.ImagePickerResult;
       scanId?: number;
+      patientId?: number;
     }
   ) => void;
   goBack: () => void;

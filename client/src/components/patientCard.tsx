@@ -17,7 +17,9 @@ interface Props {
 const PatientCard: React.FC<Props> = ({ navigation, item }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("View Patient", { patient: item })}
+      onPress={() =>
+        navigation.navigate("View Patient", { patientId: item.id })
+      }
       style={styles.container}
     >
       <FontAwesome name="user" size={50} color="#B6DCFE" />

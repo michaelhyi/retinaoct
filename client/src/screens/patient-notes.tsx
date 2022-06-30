@@ -92,7 +92,7 @@ const PatientNotes: React.FC<Props> = ({ navigation, route }) => {
           console.log(response);
           if (!response.data?.createPatient.error) {
             navigation.navigate("View Patient", {
-              patient: response.data?.createPatient.patient,
+              patientId: response.data?.createPatient.patient?.id,
             });
           }
         }}
