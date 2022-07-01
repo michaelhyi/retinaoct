@@ -38,7 +38,7 @@ const EditPatient: React.FC<Props> = ({ navigation, route }) => {
       mrn,
       notes,
     });
-    Alert.alert("Success!", "Scan succesfully updated!");
+    Alert.alert("Success!", "Patient succesfully updated!");
     navigation.goBack();
   };
 
@@ -134,7 +134,7 @@ const EditPatient: React.FC<Props> = ({ navigation, route }) => {
               marginLeft: 15,
               fontFamily: "Montserrat-Regular",
             }}
-            placeholder="Enter Scan Note"
+            placeholder="Enter Patient Notes"
             placeholderTextColor="#999999"
           />
         </View>
@@ -155,7 +155,7 @@ const EditPatient: React.FC<Props> = ({ navigation, route }) => {
               size={20}
               color="white"
             />
-            <Text style={styles.txt}>Update Scan</Text>
+            <Text style={styles.txt}>Update Patient</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleDelete}
@@ -173,7 +173,7 @@ const EditPatient: React.FC<Props> = ({ navigation, route }) => {
               color="white"
               size={20}
             />
-            <Text style={styles.txt}>Delete Scan</Text>
+            <Text style={styles.txt}>Delete Patient</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -186,7 +186,8 @@ const styles = StyleSheet.create({
     marginTop: 24,
     flexDirection: "row",
     alignItems: "center",
-    padding: 25,
+    paddingVertical: 25,
+    paddingHorizontal: 18,
     borderRadius: 12,
     marginHorizontal: 12,
     shadowOpacity: 0.25,

@@ -27,8 +27,10 @@ const CreatePatient: React.FC<Props> = ({ navigation }) => {
       />
       <Text style={styles.header}>Enter Patient MRN</Text>
       <Text style={styles.desc}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        This MRN should be unique for each patient. This identifier should
+        correspond with your own medical records, therefore a security breach
+        would not mean that patient data is comprised since MRN's are rendered
+        useless without the actual records.
       </Text>
       <View
         style={{

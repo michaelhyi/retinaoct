@@ -49,8 +49,8 @@ const PatientNotes: React.FC<Props> = ({ navigation, route }) => {
           marginTop: 10,
         }}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
+        Here, you should add important notes for your patient, such as
+        steps/precautions to take with certain eye diseases, etc.
       </Text>
       <View
         style={{
