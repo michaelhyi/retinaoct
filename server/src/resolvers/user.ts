@@ -1,10 +1,38 @@
 import argon2 from "argon2";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
+import { getConnection } from "typeorm";
 import { User } from "../entities/User";
 import { UserResponse } from "../utils/types";
 
 @Resolver()
 export class UserResolver {
+  @Mutation(() => Boolean)
+  async setAi(
+    @Arg("id", () => Int) id: number,
+    @Arg("ai", { nullable: true }) ai: boolean
+  ): Promise<boolean> {
+    await getConnection()
+      .getRepository(User)
+      .createQueryBuilder()
+      .update({ ai })
+      .where({ id })
+      .returning("*")
+      .execute();
+    return true;
+  }
+
+  @Query(() => Boolean)
+  async getAi(@Arg("id", () => Int) id: number): Promise<boolean> {
+    const user = await User.findOne({ where: { id } });
+    return user!.ai;
+  }
+
+  @Mutation(() => Boolean)
+  async deleteUser(@Arg("id", () => Int) id: number): Promise<boolean> {
+    await User.delete({ id });
+    return true;
+  }
+
   @Query(() => [User])
   async getUsers(): Promise<User[]> {
     const users = await User.find();
@@ -43,6 +71,7 @@ export class UserResolver {
         password: await argon2.hash(password),
         firstName,
         lastName,
+        ai: false,
       }).save();
     } catch (e) {
       if (

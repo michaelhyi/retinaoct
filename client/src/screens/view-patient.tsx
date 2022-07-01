@@ -52,7 +52,7 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
     if (!result.cancelled) {
       navigation.navigate("Create Scan", {
         image: result,
-        patient: patient,
+        patient: patient?.getPatient,
       });
     }
   };
@@ -159,7 +159,7 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("View Patient Scans", {
-                patient,
+                patient: patient?.getPatient,
               })
             }
           >

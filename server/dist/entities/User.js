@@ -41,6 +41,11 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "lastName", void 0);
 __decorate([
+    (0, type_graphql_1.Field)(),
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Boolean)
+], User.prototype, "ai", void 0);
+__decorate([
     (0, type_graphql_1.Field)(() => [Patient_1.Patient]),
     (0, typeorm_1.OneToMany)(() => Patient_1.Patient, (patient) => patient.doctor, { lazy: true }),
     __metadata("design:type", Array)

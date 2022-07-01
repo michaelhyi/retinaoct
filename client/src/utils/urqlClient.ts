@@ -13,6 +13,30 @@ export const client = createClient({
     cacheExchange({
       updates: {
         Mutation: {
+          clearAllPatients: (_result, _args, cache, _info) => {
+            const allFields = cache.inspectFields("Query");
+            const fieldInfos = allFields.filter(
+              (info) =>
+                info.fieldName === "getPatients" ||
+                info.fieldName === "getRecentPatients" ||
+                info.fieldName === "getPatient"
+            );
+            fieldInfos.forEach((fi) => {
+              cache.invalidate("Query", fi.fieldName, fi.arguments || {});
+            });
+          },
+          clearAllScans: (_result, _args, cache, _info) => {
+            const allFields = cache.inspectFields("Query");
+            const fieldInfos = allFields.filter(
+              (info) =>
+                info.fieldName === "getScan" ||
+                info.fieldName === "getScans" ||
+                info.fieldName === "getPatientScans"
+            );
+            fieldInfos.forEach((fi) => {
+              cache.invalidate("Query", fi.fieldName, fi.arguments || {});
+            });
+          },
           updatePatient: (_result, _args, cache, _info) => {
             const allFields = cache.inspectFields("Query");
             const fieldInfos = allFields.filter(

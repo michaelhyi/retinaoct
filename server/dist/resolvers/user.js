@@ -18,9 +18,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserResolver = void 0;
 const argon2_1 = __importDefault(require("argon2"));
 const type_graphql_1 = require("type-graphql");
+const typeorm_1 = require("typeorm");
 const User_1 = require("../entities/User");
 const types_1 = require("../utils/types");
 let UserResolver = class UserResolver {
+    async setAi(id, ai) {
+        await (0, typeorm_1.getConnection)()
+            .getRepository(User_1.User)
+            .createQueryBuilder()
+            .update({ ai })
+            .where({ id })
+            .returning("*")
+            .execute();
+        return true;
+    }
+    async getAi(id) {
+        const user = await User_1.User.findOne({ where: { id } });
+        return user.ai;
+    }
+    async deleteUser(id) {
+        await User_1.User.delete({ id });
+        return true;
+    }
     async getUsers() {
         const users = await User_1.User.find();
         return users;
@@ -49,6 +68,7 @@ let UserResolver = class UserResolver {
                 password: await argon2_1.default.hash(password),
                 firstName,
                 lastName,
+                ai: false,
             }).save();
         }
         catch (e) {
@@ -86,6 +106,28 @@ let UserResolver = class UserResolver {
         return { user };
     }
 };
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __param(1, (0, type_graphql_1.Arg)("ai", { nullable: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Boolean]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "setAi", null);
+__decorate([
+    (0, type_graphql_1.Query)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "getAi", null);
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "deleteUser", null);
 __decorate([
     (0, type_graphql_1.Query)(() => [User_1.User]),
     __metadata("design:type", Function),

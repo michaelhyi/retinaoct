@@ -5,6 +5,12 @@ import { Scan } from "../entities/Scan";
 
 @Resolver()
 export class ScanResolver {
+  @Mutation(() => Boolean)
+  async clearAllScans(@Arg("id", () => Int) id: number): Promise<boolean> {
+    await Scan.delete({ doctorId: id });
+    return true;
+  }
+
   @Query(() => Scan)
   async getScan(@Arg("id", () => Int) id: number): Promise<Scan | undefined> {
     const scan = await Scan.findOne({ where: { id } });

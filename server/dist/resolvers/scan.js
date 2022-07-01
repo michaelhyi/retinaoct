@@ -18,6 +18,10 @@ const type_graphql_1 = require("type-graphql");
 const typeorm_1 = require("typeorm");
 const Scan_1 = require("../entities/Scan");
 let ScanResolver = class ScanResolver {
+    async clearAllScans(id) {
+        await Scan_1.Scan.delete({ doctorId: id });
+        return true;
+    }
     async getScan(id) {
         const scan = await Scan_1.Scan.findOne({ where: { id } });
         return scan;
@@ -90,6 +94,13 @@ let ScanResolver = class ScanResolver {
         return scan;
     }
 };
+__decorate([
+    (0, type_graphql_1.Mutation)(() => Boolean),
+    __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ScanResolver.prototype, "clearAllScans", null);
 __decorate([
     (0, type_graphql_1.Query)(() => Scan_1.Scan),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),

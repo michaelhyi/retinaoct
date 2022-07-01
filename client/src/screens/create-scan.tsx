@@ -46,13 +46,14 @@ const CreateScan: React.FC<Props> = ({ navigation, route }) => {
       Alert.alert("Error", "You must make a diagnosis!");
       return;
     }
-    await createScan({
+    const result = await createScan({
       uri: image.uri,
       diagnosis,
       note,
       doctorId: user,
       patientId: patient.id,
     });
+    console.log(result);
 
     Alert.alert("Success!", "Scan successfully uploaded!");
     navigation.goBack();

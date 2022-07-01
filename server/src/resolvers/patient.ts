@@ -6,6 +6,12 @@ import { PatientResponse } from "../utils/types";
 
 @Resolver()
 export class PatientResolver {
+  @Mutation(() => Boolean)
+  async clearAllPatients(@Arg("id", () => Int) id: number): Promise<boolean> {
+    await Patient.delete({ doctorId: id });
+    return true;
+  }
+
   @Query(() => Patient)
   async getPatient(
     @Arg("id", () => Int) id: number

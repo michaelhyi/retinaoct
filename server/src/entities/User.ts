@@ -33,6 +33,10 @@ export class User extends BaseEntity {
   @Column()
   lastName!: string;
 
+  @Field()
+  @Column()
+  ai: boolean;
+
   @Field(() => [Patient])
   @OneToMany(() => Patient, (patient) => patient.doctor, { lazy: true })
   patients: Patient[];

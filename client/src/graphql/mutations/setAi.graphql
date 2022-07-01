@@ -1,0 +1,3 @@
+mutation setAi($id: Int!, $ai: Boolean) {
+  setAi(id: $id, ai: $ai)
+}
