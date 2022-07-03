@@ -1,3 +1,0 @@
-mutation updatePatient($id: Int!, $mrn: String!, $notes: String) {
-  updatePatient(id: $id, mrn: $mrn, notes: $notes)
-}

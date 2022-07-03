@@ -1,3 +1,0 @@
-mutation updateScan($id: Int!, $diagnosis: String!, $note: String) {
-  updateScan(id: $id, diagnosis: $diagnosis, note: $note)
-}

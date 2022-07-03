@@ -1,3 +1,0 @@
-query getAi($id: Int!) {
-  getAi(id: $id)
-}

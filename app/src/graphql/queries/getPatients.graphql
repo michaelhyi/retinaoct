@@ -1,0 +1,18 @@
+query getPatients($doctorId: Int!) {
+  getPatients(doctorId: $doctorId) {
+    id
+    mrn
+    doctorId
+    updatedAt
+    updatedAtString
+    notes
+    scans {
+      id
+    }
+    doctor {
+      id
+      firstName
+      lastName
+    }
+  }
+}

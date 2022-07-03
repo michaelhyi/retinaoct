@@ -1,3 +1,0 @@
-mutation clearAllPatients($id: Int!) {
-  clearAllPatients(id: $id)
-}

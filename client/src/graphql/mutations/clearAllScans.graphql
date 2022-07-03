@@ -1,3 +1,0 @@
-mutation clearAllScans($id: Int!) {
-  clearAllScans(id: $id)
-}

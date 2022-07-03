@@ -1,0 +1,22 @@
+mutation createPatient($mrn: String!, $doctorId: Int!, $notes: String!) {
+  createPatient(mrn: $mrn, doctorId: $doctorId, notes: $notes) {
+    patient {
+      id
+      mrn
+      doctorId
+      doctor {
+        id
+        firstName
+        lastName
+      }
+      notes
+      createdAt
+      updatedAt
+      updatedAtString
+    }
+    error {
+      field
+      message
+    }
+  }
+}
