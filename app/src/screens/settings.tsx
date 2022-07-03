@@ -7,29 +7,30 @@ import {
   useClearAllPatientsMutation,
   useClearAllScansMutation,
   useDeleteUserMutation,
-  useGetAiQuery,
+  useGetAiMutation,
   useSetAiMutation,
 } from "../generated/graphql";
 import { context } from "../utils/context";
 
 const Settings = () => {
   const { user, setUser } = useContext(context);
-  const [{ data, fetching }] = useGetAiQuery({
-    variables: {
-      id: user,
-    },
-  });
-  const [ai, setAi] = useState(data?.getAi);
+  const [ai, setAi] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [, getAi] = useGetAiMutation();
   const [, clearAllPatients] = useClearAllPatientsMutation();
   const [, clearAllScans] = useClearAllScansMutation();
   const [, deleteUser] = useDeleteUserMutation();
   const [, useSetAi] = useSetAiMutation();
 
   useEffect(() => {
-    setAi(data?.getAi);
-  }, [fetching, data]);
+    (async () => {
+      const response = await getAi({ id: user });
+      setAi(response.data?.getAi ? response.data.getAi : false);
+      setLoading(false);
+    })();
+  }, []);
 
-  if (fetching) {
+  if (loading) {
     return (
       <Layout>
         <ActivityIndicator
@@ -37,8 +38,8 @@ const Settings = () => {
             position: "absolute",
             top: 0,
             left: 0,
-            right: 0,
             bottom: 0,
+            right: 0,
             justifyContent: "center",
             alignItems: "center",
           }}

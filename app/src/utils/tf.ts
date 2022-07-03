@@ -4,15 +4,21 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { Dimensions } from "react-native";
 import { Base64Binary } from "./b64";
 
-const BITMAP_DIMENSION = 224;
+const BITMAP_DIMENSION = 150;
 const TENSORFLOW_CHANNEL = 3;
 const { height: DEVICE_HEIGHT, width: DEVICE_WIDTH } = Dimensions.get("window");
 const results = [
   {
-    diagnosis: "Melanoma",
+    diagnosis: "CNV",
   },
   {
-    diagnosis: "Not Melanoma",
+    diagnosis: "DME",
+  },
+  {
+    diagnosis: "DRUSEN",
+  },
+  {
+    diagnosis: "NORMAL",
   },
 ];
 
@@ -61,7 +67,7 @@ const predict = async (model: any, tensor: any) => {
 };
 
 export const process = async (scan: any): Promise<string> => {
-  const croppedData = await crop(scan.image, 300);
+  const croppedData = await crop(scan, 300);
 
   await tf.setBackend("cpu");
   await tf.ready();
@@ -78,6 +84,8 @@ export const process = async (scan: any): Promise<string> => {
   const highestPrediction = prediction.indexOf(
     Math.max.apply(null, prediction)
   );
+  console.log(prediction);
+  console.log(highestPrediction);
 
   return results[highestPrediction].diagnosis;
 };

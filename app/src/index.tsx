@@ -57,14 +57,14 @@ const App = () => {
   }
 
   return (
-    <context.Provider value={{ user, setUser }}>
-      <Provider value={client}>
+    <Provider value={client}>
+      <context.Provider value={{ user, setUser }}>
         <NavigationContainer>
           <StatusBar style="dark" />
           {user ? <TabNavigator /> : <LandingStack />}
         </NavigationContainer>
-      </Provider>
-    </context.Provider>
+      </context.Provider>
+    </Provider>
   );
 };
 

@@ -30,6 +30,7 @@ export type Mutation = {
   deletePatient: Scalars['Boolean'];
   deleteScan: Scalars['Boolean'];
   deleteUser: Scalars['Boolean'];
+  getAi: Scalars['Boolean'];
   getPatientIdByMrn: Scalars['Int'];
   login: UserResponse;
   register: UserResponse;
@@ -76,6 +77,11 @@ export type MutationDeleteScanArgs = {
 
 
 export type MutationDeleteUserArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type MutationGetAiArgs = {
   id: Scalars['Int'];
 };
 
@@ -139,7 +145,6 @@ export type PatientResponse = {
 
 export type Query = {
   __typename?: 'Query';
-  getAi: Scalars['Boolean'];
   getPatient: Patient;
   getPatientScans: Array<Scan>;
   getPatients: Array<Patient>;
@@ -147,11 +152,6 @@ export type Query = {
   getScan: Scan;
   getScans: Array<Scan>;
   getUsers: Array<User>;
-};
-
-
-export type QueryGetAiArgs = {
-  id: Scalars['Int'];
 };
 
 
@@ -326,12 +326,12 @@ export type UpdateScanMutationVariables = Exact<{
 
 export type UpdateScanMutation = { __typename?: 'Mutation', updateScan: boolean };
 
-export type GetAiQueryVariables = Exact<{
+export type GetAiMutationVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetAiQuery = { __typename?: 'Query', getAi: boolean };
+export type GetAiMutation = { __typename?: 'Mutation', getAi: boolean };
 
 export type GetPatientQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -555,13 +555,13 @@ export function useUpdateScanMutation() {
   return Urql.useMutation<UpdateScanMutation, UpdateScanMutationVariables>(UpdateScanDocument);
 };
 export const GetAiDocument = gql`
-    query getAi($id: Int!) {
+    mutation getAi($id: Int!) {
   getAi(id: $id)
 }
     `;
 
-export function useGetAiQuery(options: Omit<Urql.UseQueryArgs<GetAiQueryVariables>, 'query'>) {
-  return Urql.useQuery<GetAiQuery>({ query: GetAiDocument, ...options });
+export function useGetAiMutation() {
+  return Urql.useMutation<GetAiMutation, GetAiMutationVariables>(GetAiDocument);
 };
 export const GetPatientDocument = gql`
     query getPatient($id: Int!) {

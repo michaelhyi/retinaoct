@@ -115,7 +115,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "setAi", null);
 __decorate([
-    (0, type_graphql_1.Query)(() => Boolean),
+    (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),

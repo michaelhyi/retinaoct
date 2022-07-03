@@ -21,7 +21,7 @@ export class UserResolver {
     return true;
   }
 
-  @Query(() => Boolean)
+  @Mutation(() => Boolean)
   async getAi(@Arg("id", () => Int) id: number): Promise<boolean> {
     const user = await User.findOne({ where: { id } });
     return user!.ai;

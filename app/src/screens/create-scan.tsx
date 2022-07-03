@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { format } from "date-fns";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
   Image,
@@ -11,11 +11,13 @@ import {
   View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { ActivityIndicator } from "react-native-paper";
 import BackButton from "../components/BackButton";
 import DiagnosisDropdown from "../components/DiagnosisDropdown";
 import Layout from "../components/Layout";
-import { useCreateScanMutation } from "../generated/graphql";
+import { useCreateScanMutation, useGetAiMutation } from "../generated/graphql";
 import { context } from "../utils/context";
+import { process } from "../utils/tf";
 import { Navigation, Patient } from "../utils/types";
 
 interface Props {
@@ -24,6 +26,8 @@ interface Props {
     params: {
       image: {
         uri: string;
+        width: number;
+        height: number;
       };
       patient: Patient;
     };
@@ -32,11 +36,27 @@ interface Props {
 
 const CreateScan: React.FC<Props> = ({ navigation, route }) => {
   const { image, patient } = route.params;
+  const [loading, setLoading] = useState(true);
   const [diagnosis, setDiagnosis] = useState("");
+  const [ai, setAi] = useState(false);
   const [note, setNote] = useState("");
   const [text, setText] = useState("");
   const { user } = useContext(context);
   const [, createScan] = useCreateScanMutation();
+  const [, getAi] = useGetAiMutation();
+
+  useEffect(() => {
+    (async () => {
+      const response = await getAi({ id: user });
+      setAi(response.data?.getAi ? response.data.getAi : false);
+      if (response.data?.getAi) {
+        const result = await process(image);
+        console.log(result);
+        setDiagnosis(result);
+      }
+      setLoading(false);
+    })();
+  }, []);
 
   const handleSubmit = async () => {
     if (diagnosis === "Other") {
@@ -59,6 +79,24 @@ const CreateScan: React.FC<Props> = ({ navigation, route }) => {
     navigation.goBack();
   };
 
+  if (loading) {
+    return (
+      <Layout>
+        <ActivityIndicator
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -79,6 +117,16 @@ const CreateScan: React.FC<Props> = ({ navigation, route }) => {
           >
             {format(new Date(), "P p")}
           </Text>
+          {loading ? (
+            <ActivityIndicator
+              style={{
+                flexGrow: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            />
+          ) : null}
+          {!loading && ai ? <Text>AI Diagnosis: {diagnosis}</Text> : null}
           <DiagnosisDropdown value={diagnosis} setValue={setDiagnosis} />
           {diagnosis === "Other" ? (
             <View
