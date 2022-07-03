@@ -19,6 +19,14 @@ const typeorm_1 = require("typeorm");
 const Patient_1 = require("../entities/Patient");
 const types_1 = require("../utils/types");
 let PatientResolver = class PatientResolver {
+    async getPatientIdByMrn(mrn) {
+        const patient = await Patient_1.Patient.findOne({
+            where: {
+                mrn,
+            },
+        });
+        return patient === null || patient === void 0 ? void 0 : patient.id;
+    }
     async clearAllPatients(id) {
         await Patient_1.Patient.delete({ doctorId: id });
         return true;
@@ -83,6 +91,13 @@ let PatientResolver = class PatientResolver {
         return { patient };
     }
 };
+__decorate([
+    (0, type_graphql_1.Mutation)(() => type_graphql_1.Int),
+    __param(0, (0, type_graphql_1.Arg)("mrn")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], PatientResolver.prototype, "getPatientIdByMrn", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => Boolean),
     __param(0, (0, type_graphql_1.Arg)("id", () => type_graphql_1.Int)),

@@ -30,6 +30,7 @@ export type Mutation = {
   deletePatient: Scalars['Boolean'];
   deleteScan: Scalars['Boolean'];
   deleteUser: Scalars['Boolean'];
+  getPatientIdByMrn: Scalars['Int'];
   login: UserResponse;
   register: UserResponse;
   setAi: Scalars['Boolean'];
@@ -76,6 +77,11 @@ export type MutationDeleteScanArgs = {
 
 export type MutationDeleteUserArgs = {
   id: Scalars['Int'];
+};
+
+
+export type MutationGetPatientIdByMrnArgs = {
+  mrn: Scalars['String'];
 };
 
 
@@ -269,6 +275,13 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser: boolean };
 
+export type GetPatientIdByMrnMutationVariables = Exact<{
+  mrn: Scalars['String'];
+}>;
+
+
+export type GetPatientIdByMrnMutation = { __typename?: 'Mutation', getPatientIdByMrn: number };
+
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -276,6 +289,16 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, email: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
+
+export type RegisterMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UserResponse', user?: { __typename?: 'User', id: number, email: string, firstName: string, lastName: string, createdAt: string, updatedAt: string } | null, error?: { __typename?: 'Error', field: string, message: string } | null } };
 
 export type SetAiMutationVariables = Exact<{
   id: Scalars['Int'];
@@ -450,6 +473,15 @@ export const DeleteUserDocument = gql`
 export function useDeleteUserMutation() {
   return Urql.useMutation<DeleteUserMutation, DeleteUserMutationVariables>(DeleteUserDocument);
 };
+export const GetPatientIdByMrnDocument = gql`
+    mutation getPatientIdByMrn($mrn: String!) {
+  getPatientIdByMrn(mrn: $mrn)
+}
+    `;
+
+export function useGetPatientIdByMrnMutation() {
+  return Urql.useMutation<GetPatientIdByMrnMutation, GetPatientIdByMrnMutationVariables>(GetPatientIdByMrnDocument);
+};
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
@@ -467,6 +499,33 @@ export const LoginDocument = gql`
 
 export function useLoginMutation() {
   return Urql.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument);
+};
+export const RegisterDocument = gql`
+    mutation register($email: String!, $password: String!, $firstName: String!, $lastName: String!) {
+  register(
+    email: $email
+    password: $password
+    firstName: $firstName
+    lastName: $lastName
+  ) {
+    user {
+      id
+      email
+      firstName
+      lastName
+      createdAt
+      updatedAt
+    }
+    error {
+      field
+      message
+    }
+  }
+}
+    `;
+
+export function useRegisterMutation() {
+  return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
 };
 export const SetAiDocument = gql`
     mutation setAi($id: Int!, $ai: Boolean) {

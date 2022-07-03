@@ -1,7 +1,8 @@
 import { Feather } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
+import { context } from "../utils/context";
 import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
 import { useGetScanQuery } from "../generated/graphql";
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const ViewScan: React.FC<Props> = ({ navigation, route }) => {
+  const { user } = useContext(context);
   const [{ data, fetching }] = useGetScanQuery({
     variables: {
       id: route.params.scanId,
@@ -27,16 +29,18 @@ const ViewScan: React.FC<Props> = ({ navigation, route }) => {
     <Layout>
       <View style={styles.header}>
         <BackButton navigation={navigation} />
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Edit Scan", {
-              scan: data?.getScan,
-            })
-          }
-          style={{ marginLeft: "auto" }}
-        >
-          <Feather name="edit" size={22.5} />
-        </TouchableOpacity>
+        {user ? (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Edit Scan", {
+                scan: data?.getScan,
+              })
+            }
+            style={{ marginLeft: "auto" }}
+          >
+            <Feather name="edit" size={22.5} />
+          </TouchableOpacity>
+        ) : null}
       </View>
       {fetching ? (
         <ActivityIndicator

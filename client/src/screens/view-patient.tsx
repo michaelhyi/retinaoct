@@ -1,6 +1,6 @@
 import { FontAwesome, FontAwesome5, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import React from "react";
+import React, { useContext } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { context } from "../utils/context";
 import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
 import {
@@ -28,7 +29,9 @@ interface Props {
 }
 
 const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
+  const { user } = useContext(context);
   const patientId = route.params.patientId;
+
   const [{ data: patient, fetching: fetchingPatient }] = useGetPatientQuery({
     variables: {
       id: patientId,
@@ -92,18 +95,20 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
         >
           Patient Details
         </Text>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Edit Patient", {
-              patient: patient?.getPatient,
-            })
-          }
-          style={{
-            marginLeft: "auto",
-          }}
-        >
-          <FontAwesome5 name="user-edit" size={20} />
-        </TouchableOpacity>
+        {user ? (
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("Edit Patient", {
+                patient: patient?.getPatient,
+              })
+            }
+            style={{
+              marginLeft: "auto",
+            }}
+          >
+            <FontAwesome5 name="user-edit" size={20} />
+          </TouchableOpacity>
+        ) : null}
       </View>
       <View style={{ marginTop: 48, alignItems: "center" }}>
         <Ionicons
@@ -153,9 +158,11 @@ const ViewPatient: React.FC<Props> = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity onPress={pickImage} style={{ marginRight: 12 }}>
-            <Ionicons name="add" color="#87BEFF" size={30} />
-          </TouchableOpacity>
+          {user ? (
+            <TouchableOpacity onPress={pickImage} style={{ marginRight: 12 }}>
+              <Ionicons name="add" color="#87BEFF" size={30} />
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("View Patient Scans", {

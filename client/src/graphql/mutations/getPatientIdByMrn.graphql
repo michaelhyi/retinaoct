@@ -1,0 +1,3 @@
+mutation getPatientIdByMrn($mrn: String!) {
+  getPatientIdByMrn(mrn: $mrn)
+}

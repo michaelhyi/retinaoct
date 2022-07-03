@@ -18,7 +18,9 @@ const PatientCard: React.FC<Props> = ({ navigation, item }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("View Patient", { patientId: item.id })
+        navigation.navigate("View Patient", {
+          patientId: item.id,
+        })
       }
       style={styles.container}
     >

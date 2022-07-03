@@ -1,4 +1,6 @@
-import React from "react";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import React, { useContext } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -11,10 +13,8 @@ import BackButton from "../components/BackButton";
 import Layout from "../components/Layout";
 import ScanCard from "../components/ScanCard";
 import { useGetPatientScansQuery } from "../generated/graphql";
+import { context } from "../utils/context";
 import { Navigation, Patient } from "../utils/types";
-import { FontAwesome } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
 
 interface Props {
   navigation: Navigation;
@@ -26,6 +26,7 @@ interface Props {
 }
 
 const ViewPatientScans: React.FC<Props> = ({ navigation, route }) => {
+  const { user } = useContext(context);
   const patient = route.params.patient;
   const [{ data, fetching }] = useGetPatientScansQuery({
     variables: {
@@ -74,9 +75,11 @@ const ViewPatientScans: React.FC<Props> = ({ navigation, route }) => {
         >
           Past Scans
         </Text>
-        <TouchableOpacity onPress={pickImage} style={{ marginLeft: "auto" }}>
-          <Ionicons name="add" size={30} />
-        </TouchableOpacity>
+        {user ? (
+          <TouchableOpacity onPress={pickImage} style={{ marginLeft: "auto" }}>
+            <Ionicons name="add" size={30} />
+          </TouchableOpacity>
+        ) : null}
       </View>
       {!fetching && data?.getPatientScans.length === 0 ? (
         <View

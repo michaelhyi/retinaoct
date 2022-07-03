@@ -4,9 +4,9 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native-paper";
 import { Provider } from "urql";
+import LandingStack from "./components/LandingStack";
 import Layout from "./components/Layout";
 import TabNavigator from "./components/TabNavigator";
-import Landing from "./screens/landing";
 import Splash from "./screens/splash";
 import { context } from "./utils/context";
 import { loadFonts } from "./utils/loadFonts";
@@ -61,7 +61,7 @@ const App = () => {
       <Provider value={client}>
         <NavigationContainer>
           <StatusBar style="dark" />
-          {user ? <TabNavigator /> : <Landing />}
+          {user ? <TabNavigator /> : <LandingStack />}
         </NavigationContainer>
       </Provider>
     </context.Provider>
