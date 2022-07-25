@@ -1,0 +1,4 @@
+tensorflowjs
+matplotlib
+keras
+numpy==1.17
