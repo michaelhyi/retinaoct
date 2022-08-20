@@ -1,7 +1,6 @@
 from keras.preprocessing.image import ImageDataGenerator
-from constants import TRAIN_DIR, TEST_DIR, TARGET_SIZE, TRAIN_BATCH_SIZE, VAL_BATCH_SIZE
 
-def data_prep():
+def data(TRAIN_DIR, TARGET_SIZE, TRAIN_BATCH_SIZE, TEST_DIR, VAL_BATCH_SIZE):
   train_datagen = ImageDataGenerator(
       rescale=1./255,
       rotation_range=40,
