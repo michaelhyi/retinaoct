@@ -13,7 +13,7 @@ def data(TRAIN_DIR, TARGET_SIZE, TRAIN_BATCH_SIZE, TEST_DIR, VAL_BATCH_SIZE):
   )
   train = train_datagen.flow_from_directory(
     TRAIN_DIR,
-    target_size = TARGET_SIZE,
+    target_size = (TARGET_SIZE,TARGET_SIZE),
     class_mode = 'categorical',
     batch_size = TRAIN_BATCH_SIZE
   )
@@ -21,7 +21,7 @@ def data(TRAIN_DIR, TARGET_SIZE, TRAIN_BATCH_SIZE, TEST_DIR, VAL_BATCH_SIZE):
   val_datagen = ImageDataGenerator(rescale=1./255)
   val = val_datagen.flow_from_directory(
     TEST_DIR,
-    target_size = TARGET_SIZE,
+    target_size = (TARGET_SIZE,TARGET_SIZE),
     class_mode = 'categorical',
     batch_size = VAL_BATCH_SIZE
   )
