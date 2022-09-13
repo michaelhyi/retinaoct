@@ -1,22 +1,22 @@
 import argparse
+import json
 
 from data import data
-from retinaoct import RetinaOCT
-from vgg16 import VGG16
-from mobilenet import MobileNet
-from resnet50 import ResNet50
-from inceptionv3 import InceptionV3
-from efficientnetb7 import EfficientNetB7
+from retinaoct import RetinaOCTModel
+from vgg16 import VGG16Model
+from mobilenet import MobileNetModel
+from resnet50 import ResNet50Model
+from inceptionv3 import InceptionV3Model
+from efficientnetb7 import EfficientNetB7Model
+
+# metrics PER class
+# AUC or ROC curves
 
 # confusion matrix
 # redo grpahs
-# Final accuracy + loss
-# metrics PER class
 # gpu
-# scripts
-# add dropout to cnn
-# make everything just one run
-# print all results to json file, organize all images and graphs
+# organize all images and graphs
+# save images
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
@@ -26,42 +26,67 @@ if __name__ == '__main__':
   parser.add_argument('--val_dir', default='../data/val/', type=str)
 
   parser.add_argument('--target_size', default=224, type=int)
-  parser.add_argument('--epochs', default=15, type=int)
+  #default 15
+  parser.add_argument('--epochs', default=1, type=int)
   parser.add_argument('--train_batch_size', default=100, type=int)
   parser.add_argument('--val_batch_size', default=20, type=int)
-  parser.add_argument('--steps_per_epoch', default=835, type=int)
-  parser.add_argument('--val_steps', default=48, type=int)
+  #default 835
+  parser.add_argument('--steps_per_epoch', default=10, type=int)
+  #default 48
+  parser.add_argument('--val_steps', default=5, type=int)
   
   parser.add_argument('--loss', default='categorical_crossentropy', type=str)
   parser.add_argument('--optimizer', default='adam', type=str)
   
-  parser.add_argument('--model', default='retinaoct', type=str)
-  parser.add_argument('--saves_filepath', default='../saves/retinaoct.h5', type=str)
   parser.add_argument('--filepath', default='../saves/', type=str)
 
   args = parser.parse_args()
 
   train, val = data(args.train_dir, args.target_size, args.train_batch_size, args.test_dir, args.val_batch_size)
-
-  if args.model == 'RetinaOCT':
-    model = RetinaOCT(args, train, val)
-  elif args.model == 'VGG16':
-    model = VGG16(args, train, val)
-  elif args.model == 'ResNet50':
-    model = ResNet50(args, train, val)
-  elif args.model == 'InceptionV3':
-    model = InceptionV3(args, train, val)
-  elif args.model == 'MobileNet':
-    model = MobileNet(args, train, val)
-  elif args.model == 'EfficientNetB7':
-    model = EfficientNetB7(args, train, val)
   
-  model.build()
-  model.compile()
-  model.train()
+  results = []
 
-  model.plot_accuracy()
-  model.plot_loss()
+  for i in range(6):
+    print(i)
+    if i == 0:
+      name = 'RetinaOCT'
+      model = RetinaOCTModel(args, train, val, '../saves/retinaoct.h5', '../saves/retinaoct_checkpoint.h5')
+    elif i == 1:
+      name = 'VGG16'
+      model = VGG16Model(args, train, val, '../saves/vgg16.h5','../saves/vgg16_checkpoint.h5')
+    elif i == 2:
+      name = 'ResNet50'
+      model = ResNet50Model(args, train, val, '../saves/resnet50.h5', '../saves/resnet50_checkpoint.h5')
+    elif i == 3:
+      name = 'InceptionV3'
+      model = InceptionV3Model(args, train, val, '../saves/inceptionv3.h5', '../saves/inceptionv3_checkpoint.h5')
+    elif i == 4:
+      name = 'MobileNet'
+      model = MobileNetModel(args, train, val, '../saves/mobilenet.h5','../saves/mobilenet_checkpoint.h5')
+    else:
+      name = 'EfficientNetB7'
+      model = EfficientNetB7Model(args, train, val, '../saves/efficientnetb7.h5','../saves/efficientnetb7_checkpoint.h5')
+    
+    model.build()
+    model.compile()
+    model.fit()
 
-  if args.model == 'RetinaOCT':
-    model.save_tfjs()
+    # model.plot_accuracy()
+    # model.plot_loss()
+    # model.save()
+
+    # if i == 0:
+    #   model.save_tfjs()
+    
+    acc, loss, val_acc, val_loss = model.evaluate()
+    
+    results.append({
+      "name": name,
+      "acc": acc,
+      "loss": loss,
+      "val_acc": val_acc,
+      "val_loss": val_loss,
+    })
+    
+  with open("../results.json", "w") as f:
+    json.dump(results, f, indent=4)

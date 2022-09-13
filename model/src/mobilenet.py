@@ -3,18 +3,9 @@ from keras.layers import GlobalAveragePooling2D, Dense
 from keras.models import Model
 from basemodel import BaseModel
 
-class MobileNet(BaseModel):
-  def __init__(self, args, train, val):
-    super().__init__(args, train, val)
-
-  def addTopModel(bottom_model):
-    top_model = bottom_model.output
-    top_model = GlobalAveragePooling2D()(top_model)
-    top_model = Dense(1024, activation = "relu")(top_model)
-    top_model = Dense(1024, activation = "relu")(top_model)
-    top_model = Dense(512, activation = "relu")(top_model)
-    top_model = Dense(4, activation = "softmax")(top_model)
-    return top_model
+class MobileNetModel(BaseModel):
+  def __init__(self, args, train, val, saves_dir, checkpoint_dir):
+    super().__init__(args, train, val, saves_dir, checkpoint_dir)
   
   def build(self):
     mobilenet = MobileNet(weights = 'imagenet', 
@@ -27,7 +18,13 @@ class MobileNet(BaseModel):
     for (i,layer) in enumerate(mobilenet.layers):
       print(str(i) + " "+ layer.__class__.__name__, layer.trainable)
 
-    FC_Head = self.addTopModel(mobilenet)
+    top_model = mobilenet.output
+    top_model = GlobalAveragePooling2D()(top_model)
+    top_model = Dense(1024, activation = "relu")(top_model)
+    top_model = Dense(1024, activation = "relu")(top_model)
+    top_model = Dense(512, activation = "relu")(top_model)
+    top_model = Dense(4, activation = "softmax")(top_model)
+    FC_Head = top_model
     model = Model(inputs=mobilenet.input, outputs=FC_Head)
 
     model.summary()
