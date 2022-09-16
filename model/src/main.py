@@ -26,14 +26,11 @@ if __name__ == '__main__':
   parser.add_argument('--val_dir', default='../data/val/', type=str)
 
   parser.add_argument('--target_size', default=224, type=int)
-  #default 15
-  parser.add_argument('--epochs', default=1, type=int)
+  parser.add_argument('--epochs', default=15, type=int)
   parser.add_argument('--train_batch_size', default=100, type=int)
   parser.add_argument('--val_batch_size', default=20, type=int)
-  #default 835
-  parser.add_argument('--steps_per_epoch', default=10, type=int)
-  #default 48
-  parser.add_argument('--val_steps', default=5, type=int)
+  parser.add_argument('--steps_per_epoch', default=835, type=int)
+  parser.add_argument('--val_steps', default=48, type=int)
   
   parser.add_argument('--loss', default='categorical_crossentropy', type=str)
   parser.add_argument('--optimizer', default='adam', type=str)
