@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import tensorflowjs as tfjs
 from keras.callbacks import EarlyStopping, ModelCheckpoint
+from keras.metrics import Precision, Recall, TruePositives, TrueNegatives, FalsePositives, FalseNegatives
 
 class BaseModel:
   def __init__(self, args, train, val, saves_dir, checkpoint_dir):
@@ -13,7 +14,7 @@ class BaseModel:
   def compile(self):
     self.model.compile(loss=self.args.loss,
                        optimizer=self.args.optimizer,
-                       metrics=['accuracy'])
+                       metrics=['accuracy', Precision(), Recall(), TruePositives(), TrueNegatives(), FalsePositives(), FalseNegatives()])
 
   def fit(self):
     es = EarlyStopping(monitor = 'val_loss', mode='min', patience=5, restore_best_weights='true')
@@ -58,8 +59,14 @@ class BaseModel:
   
   def evaluate(self):
     acc = self.history.history['accuracy'][-1]
+    precision = self.history.history['precision'][-1]
+    recall = self.history.history['recall'][-1]
+    tp = self.history.history['true_positives'][-1]
+    tn = self.history.history['true_negatives'][-1]
+    fp = self.history.history['false_positives'][-1]
+    fn  = self.history.history['false_negatives'][-1]
     loss = self.history.history['loss'][-1]
     val_acc = self.history.history['val_accuracy'][-1]
     val_loss = self.history.history['val_loss'][-1]
-
-    return (acc, loss, val_acc, val_loss)
+    
+    return (acc, loss, val_acc, val_loss, precision, recall, tp, tn, fp, fn)
