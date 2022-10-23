@@ -9,15 +9,6 @@ from resnet50 import ResNet50Model
 from inceptionv3 import InceptionV3Model
 from efficientnetb7 import EfficientNetB7Model
 
-# metrics PER class
-# AUC or ROC curves
-
-# confusion matrix
-# redo grpahs
-# gpu
-# organize all images and graphs
-# save images
-
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
 
@@ -68,12 +59,13 @@ if __name__ == '__main__':
     model.compile()
     model.fit()
 
-    # model.plot_accuracy()
-    # model.plot_loss()
-    # model.save()
+    model.plot_accuracy()
+    model.plot_loss()
+    model.plot_confusion_matrix()
+    model.save()
 
-    # if i == 0:
-    #   model.save_tfjs()
+    if i == 0:
+      model.save_tfjs()
     
     acc, loss, val_acc, val_loss = model.evaluate()
     

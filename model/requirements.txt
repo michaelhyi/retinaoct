@@ -2,3 +2,4 @@ tensorflowjs
 matplotlib
 keras
 numpy
+sklearn

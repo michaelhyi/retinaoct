@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import tensorflowjs as tfjs
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.metrics import Precision, Recall, TruePositives, TrueNegatives, FalsePositives, FalseNegatives
+import numpy as np
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 class BaseModel:
   def __init__(self, args, train, val, saves_dir, checkpoint_dir):
@@ -47,6 +49,17 @@ class BaseModel:
     plt.xlabel('Epoch')
     plt.legend(['Train', 'Test'], loc = 'upper left')
     plt.show()
+  
+  def plot_confusion_matrix(self):
+    Y_pred = self.model.predict(self.val, 967 // self.args.val_batch_size+1)
+    y_pred = np.argmax(Y_pred, axis=1)
+
+    cm = confusion_matrix(self.val.classes, y_pred)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['CNV', 'DME', 'DRUSEN', 'NORMAL'])
+
+    disp.plot(cmap=plt.cm.Blues)
+    plt.show()
+
   
   def save(self):
     self.model.save(self.saves_dir)
